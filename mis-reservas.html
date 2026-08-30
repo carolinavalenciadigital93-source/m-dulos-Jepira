@@ -1,94 +1,239 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jepira | Mis Reservas</title>
+    <title>Jepira | Panel del Viajero</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> 
     <link rel="icon" href="logo_jepira.png" type="image/png">
     <style>
-        .container {
-            max-width: 1100px;
+        .dashboard-wrapper {
+            max-width: 900px;
             margin: 40px auto;
             padding: 0 20px;
+            min-height: 70vh;
         }
-        .user-header {
+
+        .dashboard-header {
+            background: #ffffff;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            background: #fff;
-            padding: 20px 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
         }
-        .user-header h2 {
+
+        .dashboard-header h2 {
             color: #1b4332;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-header p {
+            color: #666;
+            font-size: 0.9rem;
             margin: 0;
         }
-        .btn-outline {
+
+        .btn-primary {
+            padding: 10px 18px;
+            background-color: #2e7d32;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+        }
+
+        /* Tabs de navegación del panel */
+        .panel-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #2e7d32;
+            border-bottom-color: #2e7d32;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Estilos Sección Mi Perfil */
+        .profile-card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin-bottom: 30px;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #888;
+        }
+
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .profile-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .field-info label {
+            display: block;
+            font-size: 0.82rem;
+            color: #777;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .field-info span {
+            font-size: 0.95rem;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .btn-edit-field {
+            background: none;
+            border: none;
+            color: #2e7d32;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Estilos Sección Reservas */
+        .reservation-card {
+            background: #ffffff;
+            padding: 20px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .res-title {
+            font-weight: 700;
+            color: #1b4332;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .res-details {
+            font-size: 0.88rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .badge-confirmed {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+
+        .badge-pending {
+            background: #fff8e1;
+            color: #f57f17;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.82rem;
+        }
+
+        .btn-secondary {
             padding: 8px 16px;
-            border: 2px solid #2e7d32;
+            border: 1px solid #2e7d32;
             color: #2e7d32;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
         }
-        .btn-outline:hover {
+
+        .btn-secondary:hover {
             background: #2e7d32;
-            color: #fff;
-        }
-        .reservations-grid {
-            display: grid;
-            gap: 20px;
-        }
-        .card-reservation {
-            background: #fff;
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-        .res-info h3 {
-            margin: 0 0 8px 0;
-            color: #222;
-        }
-        .res-info p {
-            margin: 4px 0;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        .badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-        .badge-confirmada {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        .badge-pendiente {
-            background: #fff8e1;
-            color: #f57f17;
+            color: white;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header / Navegación Superior -->
     <header class="header-top">
         <div class="logo-section">
             <a href="index.html">
                 <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img"> 
             </a>
         </div>
+
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
@@ -96,57 +241,120 @@
                 <li><a href="rutas.html">Rutas</a></li>
             </ul>
         </nav>
+
         <div class="header-icons">
             <span class="currency">COP</span>
-            <a href="perfil.html" class="icon user" title="Mi Perfil"></a>
+            <a href="mis-reservas.html" class="icon user" title="Mi Cuenta"></a>
         </div>
     </header>
 
-    <!-- Contenido Principal -->
-    <main class="container">
-        <div class="user-header">
+    <main class="dashboard-wrapper">
+
+        <!-- Encabezado del Panel -->
+        <div class="dashboard-header">
             <div>
                 <h2>Panel del Viajero</h2>
-                <p style="color: #666; margin-top: 5px;">Gestiona tus viajes y reservas activas</p>
+                <p>Gestiona tus datos personales y tus reservas activas</p>
             </div>
-            <a href="rutas.html" class="btn-outline">+ Explorar más rutas</a>
+            <a href="rutas.html" class="btn-primary">+ Explorar más rutas</a>
         </div>
 
-        <h3>Mis Reservas Activas</h3>
-        <br>
-        <div class="reservations-grid">
-            <!-- Reserva 1 -->
-            <div class="card-reservation">
-                <div class="res-info">
-                    <h3>Ruta: Río Amazonas</h3>
-                    <p><strong>Fecha:</strong> 15 de Octubre, 2026</p>
-                    <p><strong>Huéspedes:</strong> 2 Personas</p>
-                    <p><strong>Código de Reserva:</strong> #JEP-9823</p>
+        <!-- Pestañas de Selección -->
+        <div class="panel-tabs">
+            <button class="tab-btn active" onclick="cambiarPestaña('perfil')">Mi Perfil</button>
+            <button class="tab-btn" onclick="cambiarPestaña('reservas')">Mis Reservas</button>
+        </div>
+
+        <!-- SECCIÓN 1: MI PERFIL -->
+        <div id="seccion-perfil" class="tab-content active">
+            <div class="profile-card">
+                
+                <!-- Foto de Perfil con Botón Editar -->
+                <div class="avatar-container">
+                    <div class="avatar-img" id="avatar-preview">👤</div>
+                    <label for="avatar-input" class="avatar-edit-btn" title="Cambiar foto">✏️</label>
+                    <input type="file" id="avatar-input" accept="image/*" style="display: none;" onchange="cargarImagen(event)">
+                </div>
+
+                <!-- Lista de Campos Estilo Imagen -->
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Nombre Completo</label>
+                        <span id="text-nombre">Jimmy Scott</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampo('Nombre Completo', 'text-nombre')">Edit</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>E-mail</label>
+                        <span id="text-email">jimmysco283@gmail.com</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampo('E-mail', 'text-email')">Edit</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Teléfono</label>
+                        <span id="text-telefono">3205467890</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampo('Teléfono', 'text-telefono')">Edit</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Documento de Identidad o NIT</label>
+                        <span id="text-doc">10456789</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampo('Documento de Identidad', 'text-doc')">Edit</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Teléfono Secundario / Emergencia</label>
+                        <span id="text-tel2">(+1) 012 345 6789</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampo('Teléfono Secundario', 'text-tel2')">Edit</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: MIS RESERVAS -->
+        <div id="seccion-reservas" class="tab-content">
+            
+            <div class="reservation-card">
+                <div>
+                    <div class="res-title">Ruta: Río Amazonas</div>
+                    <div class="res-details">
+                        <strong>Fecha:</strong> 15 de Octubre, 2026<br>
+                        <strong>Huéspedes:</strong> 2 Personas<br>
+                        <strong>Código:</strong> #JEP-9823
+                    </div>
                 </div>
                 <div>
-                    <span class="badge badge-confirmada">Reserva Confirmada</span>
-                </div>
-                <div>
-                    <a href="detalle_ruta.html?id=amazonas" class="btn-outline" style="font-size: 0.85rem;">Ver Itinerario</a>
+                    <span class="badge-confirmed">Reserva Confirmada</span>
+                    <a href="#" class="btn-secondary" style="margin-left: 10px;">Ver Itinerario</a>
                 </div>
             </div>
 
-            <!-- Reserva 2 -->
-            <div class="card-reservation">
-                <div class="res-info">
-                    <h3>Ruta: Valle del Cocora</h3>
-                    <p><strong>Fecha:</strong> 02 de Noviembre, 2026</p>
-                    <p><strong>Huéspedes:</strong> 1 Persona</p>
-                    <p><strong>Código de Reserva:</strong> #JEP-4412</p>
+            <div class="reservation-card">
+                <div>
+                    <div class="res-title">Ruta: Valle del Cocora</div>
+                    <div class="res-details">
+                        <strong>Fecha:</strong> 02 de Noviembre, 2026<br>
+                        <strong>Huéspedes:</strong> 1 Persona<br>
+                        <strong>Código:</strong> #JEP-4412
+                    </div>
                 </div>
                 <div>
-                    <span class="badge badge-pendiente">Pago Pendiente</span>
-                </div>
-                <div>
-                    <a href="confirmacion-reserva.html" class="btn-outline" style="font-size: 0.85rem;">Completar Pago</a>
+                    <span class="badge-pending">Pago Pendiente</span>
+                    <a href="#" class="btn-secondary" style="margin-left: 10px;">Completar Pago</a>
                 </div>
             </div>
+
         </div>
+
     </main>
 
     <!-- Footer Institucional -->
@@ -157,6 +365,7 @@
                 <p style="color: #555; margin: 0 0 6px 0; font-size: 0.9rem;">3217293985</p>
                 <p style="color: #555; margin: 0; font-size: 0.9rem;">contacto@jepira.com</p>
             </div>
+
             <div class="footer-col navigation" style="flex: 1 !important;">
                 <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Turismo Sostenible</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
@@ -165,10 +374,52 @@
                     <li style="margin-bottom: 6px;"><a href="rutas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Reservas</a></li>
                 </ul>
             </div>
+
             <div class="footer-col logo-container" style="flex: 1 !important; display: flex !important; justify-content: flex-end !important; align-items: center !important;">
                 <img src="logo_jepira.png" alt="Jepira Turismo Sostenible" class="footer-logo" style="width: 160px !important; max-width: 160px !important; height: auto !important; display: block !important;">
             </div>
         </div>
     </footer>
+
+    <!-- Scripts Interactivos -->
+    <script>
+        // Cambio entre pestañas (Mi Perfil / Mis Reservas)
+        function cambiarPestaña(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            if (tab === 'perfil') {
+                tabs[0].classList.add('active');
+                document.getElementById('seccion-perfil').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('seccion-reservas').classList.add('active');
+            }
+        }
+
+        // Editar campo de texto con un prompt sencillo
+        function editarCampo(nombreCampo, elementId) {
+            const elemento = document.getElementById(elementId);
+            const nuevoValor = prompt(`Ingresa tu nuevo ${nombreCampo}:`, elemento.textContent);
+            if (nuevoValor !== null && nuevoValor.trim() !== "") {
+                elemento.textContent = nuevoValor.trim();
+            }
+        }
+
+        // Cargar vista previa de la foto de perfil
+        function cargarImagen(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('avatar-preview');
+                output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
 </body>
 </html>
