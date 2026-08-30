@@ -24,29 +24,6 @@
             border-radius: 16px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.08);
             text-align: center;
-            position: relative;
-        }
-
-        .btn-back {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #2e7d32;
-            font-size: 0.88rem;
-            font-weight: 600;
-            text-decoration: none;
-            margin-bottom: 20px;
-            float: left;
-            transition: color 0.2s ease;
-        }
-
-        .btn-back:hover {
-            color: #1b5e20;
-            text-decoration: underline;
-        }
-
-        .clear-float {
-            clear: both;
         }
 
         .register-card-logo {
@@ -159,6 +136,21 @@
         .login-link a:hover {
             text-decoration: underline;
         }
+
+        .btn-back-bottom {
+            display: inline-block;
+            margin-top: 15px;
+            color: #2e7d32;
+            font-size: 0.88rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .btn-back-bottom:hover {
+            color: #1b5e20;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -188,10 +180,6 @@
     <!-- Formulario de Registro -->
     <main class="register-wrapper">
         <div class="register-container">
-            
-            <!-- Botón Volver -->
-            <a href="index.html" class="btn-back">← Volver al inicio</a>
-            <div class="clear-float"></div>
 
             <!-- Logo Centrado Superior -->
             <img src="logo_jepira.png" alt="Logo Jepira" class="register-card-logo">
@@ -233,6 +221,11 @@
 
             <div class="login-link">
                 ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
+            </div>
+
+            <!-- Botón Volver al Inicio en la parte inferior -->
+            <div>
+                <a href="index.html" class="btn-back-bottom">← Volver al inicio</a>
             </div>
         </div>
     </main>
@@ -301,4 +294,5 @@
     </script>
 </body>
 </html>
+
 
