@@ -38,6 +38,12 @@
             margin: 0;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .btn-primary {
             padding: 10px 18px;
             background-color: #2e7d32;
@@ -51,6 +57,24 @@
 
         .btn-primary:hover {
             background-color: #1b5e20;
+        }
+
+        .btn-logout {
+            padding: 10px 16px;
+            background-color: #fff;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-logout:hover {
+            background-color: #d32f2f;
+            color: white;
         }
 
         /* Tabs de navegación del panel */
@@ -256,13 +280,16 @@
                 <h2>Panel del Viajero</h2>
                 <p>Gestiona tus datos personales y tus reservas activas</p>
             </div>
-            <a href="rutas.html" class="btn-primary">+ Explorar más rutas</a>
+            <div class="header-actions">
+                <a href="rutas.html" class="btn-primary">+ Explorar más rutas</a>
+                <button id="btn-logout-user" class="btn-logout">Cerrar Sesión</button>
+            </div>
         </div>
 
         <!-- Pestañas de Selección -->
         <div class="panel-tabs">
-            <button class="tab-btn active" onclick="cambiarPestaña('perfil')">Mi Perfil</button>
-            <button class="tab-btn" onclick="cambiarPestaña('reservas')">Mis Reservas</button>
+            <button class="tab-btn active" id="tab-btn-perfil">Mi Perfil</button>
+            <button class="tab-btn" id="tab-btn-reservas">Mis Reservas</button>
         </div>
 
         <!-- SECCIÓN 1: MI PERFIL -->
@@ -273,48 +300,48 @@
                 <div class="avatar-container">
                     <div class="avatar-img" id="avatar-preview">👤</div>
                     <label for="avatar-input" class="avatar-edit-btn" title="Cambiar foto">✏️</label>
-                    <input type="file" id="avatar-input" accept="image/*" style="display: none;" onchange="cargarImagen(event)">
+                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
                 </div>
 
                 <!-- Lista de Campos Estilo Imagen -->
                 <div class="profile-field">
                     <div class="field-info">
                         <label>Nombre Completo</label>
-                        <span id="text-nombre">Jimmy Scott</span>
+                        <span id="text-nombre">Cargando...</span>
                     </div>
-                    <button class="btn-edit-field" onclick="editarCampo('Nombre Completo', 'text-nombre')">Edit</button>
+                    <button class="btn-edit-field" data-campo="Nombre Completo" data-target="text-nombre">Editar</button>
                 </div>
 
                 <div class="profile-field">
                     <div class="field-info">
                         <label>E-mail</label>
-                        <span id="text-email">jimmysco283@gmail.com</span>
+                        <span id="text-email">Cargando...</span>
                     </div>
-                    <button class="btn-edit-field" onclick="editarCampo('E-mail', 'text-email')">Edit</button>
+                    <button class="btn-edit-field" data-campo="E-mail" data-target="text-email">Editar</button>
                 </div>
 
                 <div class="profile-field">
                     <div class="field-info">
                         <label>Teléfono</label>
-                        <span id="text-telefono">3205467890</span>
+                        <span id="text-telefono">Cargando...</span>
                     </div>
-                    <button class="btn-edit-field" onclick="editarCampo('Teléfono', 'text-telefono')">Edit</button>
+                    <button class="btn-edit-field" data-campo="Teléfono" data-target="text-telefono">Editar</button>
                 </div>
 
                 <div class="profile-field">
                     <div class="field-info">
                         <label>Documento de Identidad o NIT</label>
-                        <span id="text-doc">10456789</span>
+                        <span id="text-doc">Sin registrar</span>
                     </div>
-                    <button class="btn-edit-field" onclick="editarCampo('Documento de Identidad', 'text-doc')">Edit</button>
+                    <button class="btn-edit-field" data-campo="Documento de Identidad" data-target="text-doc">Editar</button>
                 </div>
 
                 <div class="profile-field">
                     <div class="field-info">
                         <label>Teléfono Secundario / Emergencia</label>
-                        <span id="text-tel2">(+1) 012 345 6789</span>
+                        <span id="text-tel2">Sin registrar</span>
                     </div>
-                    <button class="btn-edit-field" onclick="editarCampo('Teléfono Secundario', 'text-tel2')">Edit</button>
+                    <button class="btn-edit-field" data-campo="Teléfono Secundario" data-target="text-tel2">Editar</button>
                 </div>
 
             </div>
@@ -322,37 +349,9 @@
 
         <!-- SECCIÓN 2: MIS RESERVAS -->
         <div id="seccion-reservas" class="tab-content">
-            
-            <div class="reservation-card">
-                <div>
-                    <div class="res-title">Ruta: Río Amazonas</div>
-                    <div class="res-details">
-                        <strong>Fecha:</strong> 15 de Octubre, 2026<br>
-                        <strong>Huéspedes:</strong> 2 Personas<br>
-                        <strong>Código:</strong> #JEP-9823
-                    </div>
-                </div>
-                <div>
-                    <span class="badge-confirmed">Reserva Confirmada</span>
-                    <a href="#" class="btn-secondary" style="margin-left: 10px;">Ver Itinerario</a>
-                </div>
+            <div id="contenedor-reservas">
+                <!-- Se renderizan dinámicamente desde JS -->
             </div>
-
-            <div class="reservation-card">
-                <div>
-                    <div class="res-title">Ruta: Valle del Cocora</div>
-                    <div class="res-details">
-                        <strong>Fecha:</strong> 02 de Noviembre, 2026<br>
-                        <strong>Huéspedes:</strong> 1 Persona<br>
-                        <strong>Código:</strong> #JEP-4412
-                    </div>
-                </div>
-                <div>
-                    <span class="badge-pending">Pago Pendiente</span>
-                    <a href="#" class="btn-secondary" style="margin-left: 10px;">Completar Pago</a>
-                </div>
-            </div>
-
         </div>
 
     </main>
@@ -381,36 +380,136 @@
         </div>
     </footer>
 
-    <!-- Scripts Interactivos -->
-    <script>
-        // Cambio entre pestañas (Mi Perfil / Mis Reservas)
-        function cambiarPestaña(tab) {
-            const tabs = document.querySelectorAll('.tab-btn');
-            const contents = document.querySelectorAll('.tab-content');
+    <!-- Módulo JS Principal e Integración de Reservas -->
+    <script type="module">
+        import { ReservationsModule } from './js/modules/reservations.js'; // Ajusta la ruta a tu estructura de carpetas si es necesario
 
-            tabs.forEach(btn => btn.classList.remove('active'));
-            contents.forEach(content => content.classList.remove('active'));
+        const reservationsModule = new ReservationsModule();
 
-            if (tab === 'perfil') {
-                tabs[0].classList.add('active');
-                document.getElementById('seccion-perfil').classList.add('active');
-            } else {
-                tabs[1].classList.add('active');
-                document.getElementById('seccion-reservas').classList.add('active');
+        // Obtener usuario autenticado actual desde localStorage
+        const currentUser = JSON.parse(localStorage.getItem('jepira_current_user')) || {
+            id: 'usr_demo',
+            name: 'Viajero Jepira',
+            email: 'viajero@jepira.com',
+            phone: '3000000000'
+        };
+
+        // 1. Manejo de Pestañas
+        const tabPerfil = document.getElementById('tab-btn-perfil');
+        const tabReservas = document.getElementById('tab-btn-reservas');
+        const seccionPerfil = document.getElementById('seccion-perfil');
+        const seccionReservas = document.getElementById('seccion-reservas');
+
+        tabPerfil.addEventListener('click', () => {
+            tabPerfil.classList.add('active');
+            tabReservas.classList.remove('active');
+            seccionPerfil.classList.add('active');
+            seccionReservas.classList.remove('active');
+        });
+
+        tabReservas.addEventListener('click', () => {
+            tabReservas.classList.add('active');
+            tabPerfil.classList.remove('active');
+            seccionReservas.classList.add('active');
+            seccionPerfil.classList.remove('active');
+        });
+
+        // 2. Cargar datos del perfil
+        function loadUserProfile() {
+            if (currentUser) {
+                document.getElementById('text-nombre').textContent = currentUser.name || 'Sin registrar';
+                document.getElementById('text-email').textContent = currentUser.email || 'Sin registrar';
+                document.getElementById('text-telefono').textContent = currentUser.phone || 'Sin registrar';
+                if (currentUser.document) document.getElementById('text-doc').textContent = currentUser.document;
+                if (currentUser.secondaryPhone) document.getElementById('text-tel2').textContent = currentUser.secondaryPhone;
             }
         }
 
-        // Editar campo de texto con un prompt sencillo
-        function editarCampo(nombreCampo, elementId) {
-            const elemento = document.getElementById(elementId);
-            const nuevoValor = prompt(`Ingresa tu nuevo ${nombreCampo}:`, elemento.textContent);
-            if (nuevoValor !== null && nuevoValor.trim() !== "") {
-                elemento.textContent = nuevoValor.trim();
+        // 3. Renderizar reservas del usuario
+        function renderReservations() {
+            const container = document.getElementById('contenedor-reservas');
+            if (!container) return;
+
+            if (!currentUser || !currentUser.id) {
+                container.innerHTML = `<p style="text-align:center; color:#666;">Debes iniciar sesión para ver tus reservas.</p>`;
+                return;
             }
+
+            const userReservations = reservationsModule.getReservationsByUser(currentUser.id);
+
+            if (userReservations.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px; background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                        <p style="color: #666; font-size: 1rem; margin-bottom: 15px;">Aún no tienes reservas activas.</p>
+                        <a href="rutas.html" class="btn-primary" style="display: inline-block;">Ver Rutas Disponibles</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = userReservations.map(res => {
+                const fechaFormat = new Date(res.bookingDate).toLocaleDateString('es-CO', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                const precioTotal = new Intl.NumberFormat('es-CO', { 
+                    style: 'currency', 
+                    currency: 'COP', 
+                    maximumFractionDigits: 0 
+                }).format(res.totalPrice);
+
+                return `
+                    <div class="reservation-card" id="card-${res.id}">
+                        <div>
+                            <div class="res-title">${res.routeTitle}</div>
+                            <div class="res-details">
+                                <strong>Fecha de reserva:</strong> ${fechaFormat}<br>
+                                <strong>Cupos reservados:</strong> ${res.seatsBooked}<br>
+                                <strong>Total:</strong> ${precioTotal}
+                            </div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                            <span class="badge-confirmed">Confirmada</span>
+                            <button class="btn-logout btn-cancelar-reserva" data-id="${res.id}" style="padding: 6px 12px; font-size: 0.8rem;">
+                                Cancelar Reserva
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Asignar eventos a los botones de cancelación
+            document.querySelectorAll('.btn-cancelar-reserva').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const resId = e.target.getAttribute('data-id');
+                    if (confirm("¿Estás seguro de cancelar esta reserva? Los cupos serán liberados.")) {
+                        const result = reservationsModule.cancelReservation(resId, currentUser.id);
+                        alert(result.message);
+                        if (result.success) {
+                            renderReservations();
+                        }
+                    }
+                });
+            });
         }
 
-        // Cargar vista previa de la foto de perfil
-        function cargarImagen(event) {
+        // 4. Edición rápida de campos de perfil
+        document.querySelectorAll('.btn-edit-field').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const campoNombre = e.target.getAttribute('data-campo');
+                const targetId = e.target.getAttribute('data-target');
+                const elemento = document.getElementById(targetId);
+                const nuevoValor = prompt(`Ingresa tu nuevo ${campoNombre}:`, elemento.textContent);
+                if (nuevoValor !== null && nuevoValor.trim() !== "") {
+                    elemento.textContent = nuevoValor.trim();
+                }
+            });
+        });
+
+        // 5. Cargar vista previa de imagen de perfil
+        document.getElementById('avatar-input').addEventListener('change', (event) => {
             const reader = new FileReader();
             reader.onload = function() {
                 const output = document.getElementById('avatar-preview');
@@ -419,7 +518,21 @@
             if(event.target.files[0]) {
                 reader.readAsDataURL(event.target.files[0]);
             }
-        }
+        });
+
+        // 6. Evento de Cerrar Sesión
+        document.getElementById('btn-logout-user').addEventListener('click', () => {
+            localStorage.removeItem('jepira_current_user');
+            window.location.href = 'index.html';
+        });
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserProfile();
+            renderReservations();
+        });
     </script>
+    
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
