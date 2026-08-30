@@ -16,9 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const formRegistro = document.getElementById('form-registro');
   if (formRegistro) {
     formRegistro.addEventListener('submit', (e) => {
-      e.preventDefault(); // Evita que la página se recargue
+      e.preventDefault();
 
-      // Capturar los valores del formulario
       const userData = {
         role: document.getElementById('reg-tipo').value,
         name: document.getElementById('reg-nombre').value,
@@ -27,21 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
         password: document.getElementById('reg-password').value
       };
 
-      // Ejecutar la función del módulo Users
       const response = usersApp.registerUser(userData);
       const contenedorMensaje = document.getElementById('mensaje-registro');
 
       if (response.success) {
-        contenedorMensaje.style.color = 'green';
+        contenedorMensaje.style.color = '#2e7d32';
         contenedorMensaje.textContent = response.message + ' Redirigiendo al login...';
         formRegistro.reset();
 
-        // Redirigir al Login después de 1.5 segundos
         setTimeout(() => {
           window.location.href = 'login.html';
         }, 1500);
       } else {
-        contenedorMensaje.style.color = 'red';
+        contenedorMensaje.style.color = '#d32f2f';
         contenedorMensaje.textContent = response.message;
       }
     });
@@ -57,16 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
+      const role = document.getElementById('login-tipo') ? document.getElementById('login-tipo').value : null;
 
-      // Intentar iniciar sesión con el módulo Users
-      const response = usersApp.login(email, password);
+      // Intentar iniciar sesión con el módulo Users (pasando rol como parámetro opcional si tu backend/módulo lo requiere)
+      const response = usersApp.login(email, password, role);
       const contenedorMensaje = document.getElementById('mensaje-login');
 
       if (response.success) {
-        contenedorMensaje.style.color = 'green';
+        contenedorMensaje.style.color = '#2e7d32';
         contenedorMensaje.textContent = '¡Bienvenido! Redirigiendo...';
 
-        // Redirigir según el tipo de usuario (Corporate o Explorer)
         setTimeout(() => {
           if (response.user.role === 'corporate') {
             window.location.href = 'panel-empresa.html';
@@ -75,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 1000);
       } else {
-        contenedorMensaje.style.color = 'red';
+        contenedorMensaje.style.color = '#d32f2f';
         contenedorMensaje.textContent = response.message;
       }
     });

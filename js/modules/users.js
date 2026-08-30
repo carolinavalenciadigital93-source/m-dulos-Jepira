@@ -8,17 +8,18 @@ export class UsersModule {
 
     // Registro de Usuarios (Explorer) y Pymes (Corporate)
     registerUser(userData) {
-        const users = Storage.get(this.usersKey);
+        const users = Storage.get(this.usersKey) || [];
         
         // Verificar correo existente
-        const exists = users.some(u => u.email === userData.email);
+        const exists = users.some(u => u.email.toLowerCase() === userData.email.toLowerCase());
         if (exists) {
             return { success: false, message: 'El correo electrónico ya se encuentra registrado.' };
         }
 
         const newUser = {
             id: Date.now(),
-            ...userData, // tipo ('explorer' o 'corporate'), nombre, teléfono, contraseña
+            ...userData, // role ('explorer' o 'corporate'), name, email, phone, password
+            email: userData.email.toLowerCase(),
             createdAt: new Date().toISOString()
         };
 
@@ -28,21 +29,30 @@ export class UsersModule {
     }
 
     // Inicio de sesión
-    login(email, password) {
-        const users = Storage.get(this.usersKey);
-        const user = users.find(u => u.email === email && u.password === password);
+    login(email, password, expectedRole = null) {
+        const users = Storage.get(this.usersKey) || [];
+        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
 
         if (!user) {
-            return { success: false, message: 'Credenciales incorrectas.' };
+            return { success: false, message: 'Correo o contraseña incorrectos.' };
         }
 
-        localStorage.setItem(this.currentUserKey, JSON.stringify(user));
+        // Si la vista especifica un rol (opcional), validamos que coincida con el perfil registrado
+        if (expectedRole && user.role !== expectedRole) {
+            const tipoCorrecto = user.role === 'corporate' ? 'Empresa Aliada' : 'Viajero';
+            return { 
+                success: false, 
+                message: `Esta cuenta está registrada como ${tipoCorrecto}. Por favor selecciona la pestaña correspondiente.` 
+            };
+        }
+
+        Storage.set(this.currentUserKey, user);
         return { success: true, message: 'Inicio de sesión exitoso.', user };
     }
 
     // Obtener sesión activa
     getCurrentUser() {
-        return JSON.parse(localStorage.getItem(this.currentUserKey)) || null;
+        return Storage.get(this.currentUserKey) || null;
     }
 
     // Cerrar sesión
