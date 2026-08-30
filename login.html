@@ -252,22 +252,32 @@
     </div>
 
     <!-- Footer Institucional -->
-    <footer class="main-footer">
-        <div class="footer-col">
-            <h4>Soporte</h4>
-            <p>3217293985</p>
-            <p>contacto@jepira.com</p>
+    <!-- Footer Institucional en login.html -->
+<footer class="main-footer">
+    <div class="footer-content" style="display: flex !important; justify-content: space-between !important; align-items: center !important; max-width: 1000px !important; margin: 0 auto !important;">
+        <!-- Columna 1: Soporte -->
+        <div class="footer-col support" style="flex: 1 !important;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Soporte</h3>
+            <p style="color: #555; margin: 0 0 6px 0; font-size: 0.9rem;">3217293985</p>
+            <p style="color: #555; margin: 0; font-size: 0.9rem;">contacto@jepira.com</p>
         </div>
-        <div class="footer-col">
-            <h4>Jepira Turismo Sostenible</h4>
-            <a href="index.html">Inicio</a>
-            <a href="#">Empresas Aliadas</a>
-            <a href="rutas.html">Reservas</a>
+
+        <!-- Columna 2: Navegación -->
+        <div class="footer-col navigation" style="flex: 1 !important;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Turismo Sostenible</h3>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 6px;"><a href="index.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Inicio</a></li>
+                <li style="margin-bottom: 6px;"><a href="empresas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Empresas Aliadas</a></li>
+                <li style="margin-bottom: 6px;"><a href="rutas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Reservas</a></li>
+            </ul>
         </div>
-        <div class="footer-col logo-col">
-            <img src="logo_jepira.png" alt="Jepira Logo">
+
+        <!-- Columna 3: Logo -->
+        <div class="footer-col logo-container" style="flex: 1 !important; display: flex !important; justify-content: flex-end !important; align-items: center !important;">
+            <img src="logo_jepira.png" alt="Jepira Turismo Sostenible" class="footer-logo" style="width: 160px !important; max-width: 160px !important; height: auto !important; display: block !important;">
         </div>
-    </footer>
+    </div>
+</footer>
 
     <!-- Script de Interacción para el Modal -->
     <script>
