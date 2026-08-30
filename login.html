@@ -8,20 +8,45 @@
     <link rel="stylesheet" href="style.css"> 
     <link rel="icon" href="logo_jepira.png" type="image/png">
     <style>
-        /* Estilos del contenedor de Login */
-        .login-container {
-            max-width: 420px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        .login-wrapper {
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
         }
+
+        .login-container {
+            width: 100%;
+            max-width: 520px;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .login-card-logo {
+            width: 140px;
+            max-width: 140px;
+            height: auto;
+            margin: 0 auto 15px auto;
+            display: block;
+        }
+
+        .login-container h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1b4332;
+            margin-bottom: 25px;
+        }
+
         .role-tabs {
             display: flex;
             margin-bottom: 25px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid #e0e0e0;
         }
+
         .tab-btn {
             flex: 1;
             padding: 12px;
@@ -30,47 +55,94 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
             font-size: 0.95rem;
-            color: #777;
+            color: #666;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: all 0.3s ease;
         }
+
         .tab-btn.active {
             color: #2e7d32;
             border-bottom-color: #2e7d32;
         }
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            text-align: left;
         }
+
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            font-size: 0.88rem;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #333;
         }
+
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 8px;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease;
         }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+        }
+
         .btn-submit {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: #2e7d32;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             transition: background 0.3s ease;
+            margin-top: 10px;
         }
+
         .btn-submit:hover {
             background-color: #1b5e20;
+        }
+
+        .forgot-password {
+            display: inline-block;
+            margin-top: 15px;
+            color: #2e7d32;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .register-link {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .register-link a {
+            color: #2e7d32;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -99,9 +171,12 @@
     </header>
 
     <!-- Formulario de Iniciar Sesión -->
-    <main style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
+    <main class="login-wrapper">
         <div class="login-container">
-            <h2 style="text-align: center; margin-bottom: 20px; color: #222;">Iniciar Sesión</h2>
+            <!-- Logo Centrado Superior -->
+            <img src="logo_jepira.png" alt="Logo Jepira" class="login-card-logo">
+            
+            <h2>Iniciar Sesión</h2>
             
             <!-- Selector de Rol -->
             <div class="role-tabs">
@@ -110,7 +185,6 @@
             </div>
 
             <form id="login-form">
-                <!-- Campo oculto para registrar el tipo de usuario -->
                 <input type="hidden" id="user-role" value="viajero">
 
                 <div class="form-group">
@@ -125,6 +199,12 @@
 
                 <button type="submit" class="btn-submit">Ingresar</button>
             </form>
+
+            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+            <div class="register-link">
+                ¿Aún no tienes cuenta? <a href="#">Crea tu perfil aquí</a>
+            </div>
         </div>
     </main>
 
@@ -152,7 +232,7 @@
         </div>
     </footer>
 
-    <!-- Lógica de redirección JavaScript -->
+    <!-- Script de Redirección -->
     <script>
         function seleccionarRol(rol) {
             document.getElementById('user-role').value = rol;
@@ -181,3 +261,4 @@
     </script>
 </body>
 </html>
+
