@@ -659,7 +659,7 @@ body {
 }
 
 /* ==========================================
-   7. FOOTER (AJUSTADO Y CORREGIDO)
+   7. FOOTER (2 COLUMNAS: TEXTO IZQ / LOGO DER)
    ========================================== */
 .main-footer {
     background: #f8f8f8;
@@ -668,67 +668,83 @@ body {
     width: 100%;
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between; 
-    align-items: flex-start;
+.footer-container {
     max-width: 1100px;
-    margin: 0 auto; 
-    padding: 0 30px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     box-sizing: border-box;
 }
 
-.footer-col {
-    flex: 1;
+/* Columna Izquierda */
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.footer-col h3 {
+.footer-block h3 {
     font-size: 1rem;
     font-weight: 700;
     color: #1a1a1a;
-    margin-bottom: 12px;
+    margin: 0 0 8px 0;
 }
 
-.footer-col.support p {
+.footer-block p {
     color: #555;
-    margin-bottom: 6px;
+    margin: 0 0 4px 0;
     font-size: 0.9rem;
 }
 
-.footer-col.navigation ul {
-    list-style: none; 
+.footer-links {
+    list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    gap: 15px;
 }
 
-.footer-col.navigation li {
-    margin-bottom: 6px;
-}
-
-.footer-col.navigation a {
-    text-decoration: none; 
-    color: #555; 
+.footer-links a {
+    text-decoration: none;
+    color: #3ebd8d;
+    font-weight: 600;
     font-size: 0.9rem;
     transition: color 0.2s ease;
 }
 
-.footer-col.navigation a:hover {
-    color: #3ebd8d;
+.footer-links a:hover {
+    color: #1a4c3b;
 }
 
-/* Control de tamaño y posición del logo */
-.footer-col.logo-container {
+/* Columna Derecha */
+.footer-right {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
 }
 
-.footer-logo,
-.main-footer img {
-    max-width: 140px !important;
-    width: 100% !important;
-    height: auto !important;
+.footer-logo {
+    max-width: 180px;
+    height: auto;
     display: block;
     object-fit: contain;
+}
+
+/* Adaptabilidad a Celulares */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+        padding: 0 20px;
+    }
+
+    .footer-right {
+        justify-content: flex-start;
+        width: 100%;
+    }
 }
 
 /* ==========================================
