@@ -565,8 +565,9 @@ body {
 }
 
 /* ==========================================
-   6. SECCIÓN OTROS DESTINOS (TARJETAS VERTICALES)
+   6. SECCIÓN OTROS DESTINOS (3 COLUMNAS UNIFICADAS)
    ========================================== */
+#otherDestinationsContainer,
 .other-destinations-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -574,6 +575,7 @@ body {
     margin-top: 25px;
 }
 
+.destination-card,
 .other-card-vertical {
     background: #ffffff;
     border: 1px solid #e5e7eb;
@@ -585,23 +587,21 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.destination-card:hover,
 .other-card-vertical:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.other-card-img {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-}
-
+.destination-card img,
 .other-card-img img {
     width: 100%;
-    height: 100%;
+    height: 190px;
     object-fit: cover;
+    display: block;
 }
 
+.destination-info,
 .other-card-body {
     padding: 20px;
     display: flex;
@@ -609,6 +609,7 @@ body {
     flex-grow: 1;
 }
 
+.destination-info h4,
 .other-card-body h3 {
     font-size: 1.15rem;
     font-weight: 700;
@@ -616,44 +617,31 @@ body {
     margin: 0 0 8px 0;
 }
 
+.destination-info p,
 .other-desc {
     font-size: 0.88rem;
     color: #6b7280;
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin: 0 0 16px 0;
     flex-grow: 1;
 }
 
-.other-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-    font-size: 0.95rem;
-}
-
-.other-rating {
-    font-weight: 600;
-    color: #111827;
-}
-
-.other-price {
-    color: #374151;
-}
-
+.destination-info .btn-secondary,
 .btn-details-other {
-    display: block;
+    align-self: flex-start;
+    display: inline-block;
     text-align: center;
     background-color: #2b533f;
     color: #ffffff;
-    padding: 10px 16px;
+    padding: 10px 18px;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     text-decoration: none;
     transition: background-color 0.2s ease;
 }
 
+.destination-info .btn-secondary:hover,
 .btn-details-other:hover {
     background-color: #1e3c2d;
 }
@@ -755,8 +743,9 @@ body {
     .search-field {
         margin-right: 0;
     }
+    #otherDestinationsContainer,
     .other-destinations-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -774,6 +763,13 @@ body {
         justify-content: center;
     }
     .detail-body-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    #otherDestinationsContainer,
+    .other-destinations-grid {
         grid-template-columns: 1fr;
     }
 }

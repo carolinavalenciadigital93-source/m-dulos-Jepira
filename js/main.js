@@ -164,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (currentRoute) {
+      // 1. Actualizar título y descripción
       detailTitle.textContent = currentRoute.title;
 
       const allParagraphs = document.querySelectorAll('main p');
@@ -173,29 +174,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      const imgPrincipal = document.getElementById('imgPrincipal') || document.querySelector('.hero-image img, main img');
-      if (imgPrincipal) {
-        imgPrincipal.src = currentRoute.image;
-        imgPrincipal.alt = currentRoute.title;
+      // 2. Actualizar imágenes superiores
+      const galleryImgs = document.querySelectorAll('.hero-image img, .gallery img, main img');
+      if (currentRoute.images && currentRoute.images.length > 0) {
+        galleryImgs.forEach((img, index) => {
+          if (currentRoute.images[index]) {
+            img.src = currentRoute.images[index];
+            img.alt = currentRoute.title;
+          }
+        });
+      } else if (currentRoute.image && galleryImgs.length > 0) {
+        galleryImgs[0].src = currentRoute.image;
+        galleryImgs[0].alt = currentRoute.title;
       }
 
+      // 3. Actualizar precio
       const priceElement = document.querySelector('.price-container strong, .price-tag, main .price');
       if (priceElement && currentRoute.price) {
         priceElement.textContent = `$${currentRoute.price.toLocaleString('es-CO')}`;
       }
 
+      // 4. Renderizar Otros Destinos (en 3 columnas estéticas)
       const otherContainer = document.getElementById('otherDestinationsContainer');
       if (otherContainer) {
         const otherRoutes = routes.filter(r => r.id !== currentRoute.id);
         otherContainer.innerHTML = '';
 
         otherRoutes.forEach(route => {
+          const imageSrc = route.image || (route.images ? route.images[0] : 'img/default.jpg');
+          const descriptionSnippet = route.description ? route.description.substring(0, 90) + '...' : 'Descubre este increíble destino.';
+
           const cardHTML = `
             <div class="destination-card">
-              <img src="${route.image}" alt="${route.title}">
+              <img src="${imageSrc}" alt="${route.title}">
               <div class="destination-info">
                 <h4>${route.title}</h4>
-                <p>${route.description ? route.description.substring(0, 80) + '...' : ''}</p>
+                <p>${descriptionSnippet}</p>
                 <a href="detalle-ruta.html?id=${route.id}" class="btn-secondary">Ver detalles</a>
               </div>
             </div>
@@ -205,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+
 
   // ==========================================
   // CONEXIÓN: MIS RESERVAS (mis-reservas.html)
