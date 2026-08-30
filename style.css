@@ -789,3 +789,16 @@ body {
     }
 }
 
+/* Restricción estricta del logo en el footer */
+.logo-container {
+    max-width: 200px !important;
+    overflow: hidden;
+}
+
+.logo-container img,
+.footer-logo {
+    width: 180px !important;
+    max-width: 180px !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
