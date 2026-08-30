@@ -152,13 +152,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const routeId = params.get('id');
     const routes = planningApp.getAllRoutes() || [];
 
-    let currentRoute = routes.find(r => r.id === routeId);
+    let currentRoute = null;
 
-    if (!currentRoute && routeId) {
-      const cleanId = routeId.replace('route_', '');
-      currentRoute = routes.find(r => r.id.includes(cleanId));
+    if (routeId) {
+      const cleanSearch = routeId.replace('route_', '').toLowerCase();
+      // Búsqueda inteligente por ID exacto, fragmento de ID o título
+      currentRoute = routes.find(r => 
+        r.id === routeId || 
+        r.id.toLowerCase().includes(cleanSearch) ||
+        r.title.toLowerCase().includes(cleanSearch)
+      );
     }
 
+    // Si no coincide la búsqueda o no viene ID, toma la primera como respaldo
     if (!currentRoute && routes.length > 0) {
       currentRoute = routes[0];
     }
@@ -174,8 +180,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // 2. Actualizar imágenes superiores
-      const galleryImgs = document.querySelectorAll('.hero-image img, .gallery img, main img');
+      // 2. Actualizar imágenes superiores (principal y galería)
+      const galleryImgs = document.querySelectorAll('.hero-image img, .gallery img, .gallery-grid img, main img');
       if (currentRoute.images && currentRoute.images.length > 0) {
         galleryImgs.forEach((img, index) => {
           if (currentRoute.images[index]) {
@@ -189,12 +195,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       // 3. Actualizar precio
-      const priceElement = document.querySelector('.price-container strong, .price-tag, main .price');
+      const priceElement = document.querySelector('.price-container strong, .price-tag, .price-big, main .price');
       if (priceElement && currentRoute.price) {
         priceElement.textContent = `$${currentRoute.price.toLocaleString('es-CO')}`;
       }
 
-      // 4. Renderizar Otros Destinos (en 3 columnas estéticas)
+      // 4. Renderizar Otros Destinos
       const otherContainer = document.getElementById('otherDestinationsContainer');
       if (otherContainer) {
         const otherRoutes = routes.filter(r => r.id !== currentRoute.id);
@@ -219,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-
 
   // ==========================================
   // CONEXIÓN: MIS RESERVAS (mis-reservas.html)
