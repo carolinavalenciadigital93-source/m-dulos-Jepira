@@ -565,7 +565,7 @@ body {
 }
 
 /* ==========================================
-   6. SECCIÓN OTROS DESTINOS (TARJETAS VERTICALES CORREGIDAS)
+   6. SECCIÓN OTROS DESTINOS (TARJETAS VERTICALES)
    ========================================== */
 .other-destinations-grid {
     display: grid;
@@ -666,15 +666,17 @@ body {
     padding: 50px 0;
     border-top: 1px solid #e0e0e0;
     width: 100%;
+    margin-top: 50px;
 }
 
+.footer-container,
 .footer-content {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 30px;
     box-sizing: border-box;
 }
 
@@ -683,65 +685,54 @@ body {
 }
 
 .footer-col h3 {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: #222222;
+    color: #111111;
     margin-top: 0;
     margin-bottom: 16px;
 }
 
-.footer-col.support p {
+.footer-col p {
     color: #555555;
     margin: 0 0 8px 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
-.footer-col.navigation ul {
+.footer-col ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.footer-col.navigation li {
+.footer-col ul li {
     margin-bottom: 8px;
 }
 
-.footer-col.navigation a {
+.footer-col a {
     text-decoration: none;
     color: #555555;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     transition: color 0.2s ease;
 }
 
-.footer-col.navigation a:hover {
+.footer-col a:hover {
     color: #3ebd8d;
 }
 
-/* Alineación y control de tamaño estricto del logo */
+.footer-col.footer-logo,
 .footer-col.logo-container {
     display: flex;
     justify-content: flex-end;
+    align-items: flex-start;
 }
 
-.footer-logo {
-    width: 220px !important;
-    max-width: 100% !important;
+.footer-logo img,
+.footer-col.logo-container img {
+    width: 180px !important;
+    max-width: 180px !important;
     height: auto !important;
-    object-fit: contain;
+    object-fit: contain !important;
     display: block;
-}
-
-/* Responsivo para pantallas pequeñas */
-@media (max-width: 768px) {
-    .footer-content {
-        flex-direction: column;
-        gap: 30px;
-        padding: 0 20px;
-    }
-
-    .footer-col.logo-container {
-        justify-content: flex-start;
-    }
 }
 
 /* ==========================================
@@ -770,36 +761,19 @@ body {
 }
 
 @media (max-width: 768px) {
+    .footer-container,
     .footer-content {
         flex-direction: column;
         align-items: center; 
         text-align: center;
         gap: 30px;
     }
+    .footer-col.footer-logo,
     .footer-col.logo-container {
         width: 100%; 
         justify-content: center;
-    }
-    .footer-col.logo-container img,
-    .footer-logo {
-        margin: 0 auto;
     }
     .detail-body-layout {
         grid-template-columns: 1fr;
     }
 }
-
-/* Restricción estricta del logo en el footer */
-.logo-container {
-    max-width: 200px !important;
-    overflow: hidden;
-}
-
-.logo-container img,
-.footer-logo {
-    width: 180px !important;
-    max-width: 180px !important;
-    height: auto !important;
-    object-fit: contain !important;
-}
-

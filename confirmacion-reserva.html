@@ -252,21 +252,30 @@
 
     <!-- Footer Institucional -->
     <footer class="main-footer">
+    <div class="footer-container">
+        <!-- Columna 1: Soporte -->
         <div class="footer-col">
-            <h4>Soporte</h4>
+            <h3>Soporte</h3>
             <p>3217293985</p>
-            <p>contacto@jepira.com</p>
+            <p><a href="mailto:contacto@jepira.com">contacto@jepira.com</a></p>
         </div>
+
+        <!-- Columna 2: Navegación -->
         <div class="footer-col">
-            <h4>Jepira Turismo Sostenible</h4>
-            <a href="index.html">Inicio</a>
-            <a href="empresas.html">Empresas Aliadas</a>
-            <a href="rutas.html">Reservas</a>
+            <h3>Jepira Turismo Sostenible</h3>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="empresas.html">Empresas Aliadas</a></li>
+                <li><a href="mis-reservas.html">Reservas</a></li>
+            </ul>
         </div>
-        <div class="footer-col logo-col">
-            <img src="img/logo_jepira.png" alt="Jepira Logo">
+
+        <!-- Columna 3: Logo -->
+        <div class="footer-col footer-logo">
+            <img src="img/logo_jepira.png" alt="Jepira Turismo Sostenible">
         </div>
-    </footer>
+    </div>
+</footer>
 
     <script>
         document.getElementById('form-checkout').addEventListener('submit', (e) => {
