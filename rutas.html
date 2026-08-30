@@ -39,31 +39,31 @@
         <aside class="filters-sidebar">
             <div class="filter-group">
                 <h3>Hospedaje <span>▼</span></h3>
-                <label><input type="checkbox" checked> Hotel</label>
-                <label><input type="checkbox"> Cabaña</label>
-                <label><input type="checkbox"> Casa</label>
-                <label><input type="checkbox" checked> Apartamento</label>
+                <label><input type="checkbox" data-filter-type="hospedaje" value="hotel" checked> Hotel</label>
+                <label><input type="checkbox" data-filter-type="hospedaje" value="cabaña"> Cabaña</label>
+                <label><input type="checkbox" data-filter-type="hospedaje" value="casa"> Casa</label>
+                <label><input type="checkbox" data-filter-type="hospedaje" value="apartamento" checked> Apartamento</label>
             </div>
 
             <div class="filter-group">
                 <h3>Precio <span>▼</span></h3>
-                <label><input type="checkbox" checked> Menor que $120.000</label>
-                <label><input type="checkbox" checked> De $100.000 a $300.000</label>
-                <label><input type="checkbox"> De $300.000 a $500.000</label>
+                <label><input type="checkbox" data-filter-type="precio" value="120" checked> Menor que $120.000</label>
+                <label><input type="checkbox" data-filter-type="precio" value="100-300" checked> De $100.000 a $300.000</label>
+                <label><input type="checkbox" data-filter-type="precio" value="300-500"> De $300.000 a $500.000</label>
             </div>
 
             <div class="filter-group">
                 <h3>Habitaciones <span>▼</span></h3>
-                <label><input type="checkbox" checked> Sencilla</label>
-                <label><input type="checkbox" checked> Doble</label>
-                <label><input type="checkbox"> Familias 4-5 personas</label>
+                <label><input type="checkbox" data-filter-type="habitaciones" value="sencilla" checked> Sencilla</label>
+                <label><input type="checkbox" data-filter-type="habitaciones" value="doble" checked> Doble</label>
+                <label><input type="checkbox" data-filter-type="habitaciones" value="familiar"> Familias 4-5 personas</label>
             </div>
 
             <div class="filter-group">
                 <h3>Tipo de Actividad <span>▼</span></h3>
-                <label><input type="checkbox" checked> Aventura</label>
-                <label><input type="checkbox" checked> Senderismo</label>
-                <label><input type="checkbox"> Camping</label>
+                <label><input type="checkbox" data-filter-type="actividad" value="aventura" checked> Aventura</label>
+                <label><input type="checkbox" data-filter-type="actividad" value="senderismo" checked> Senderismo</label>
+                <label><input type="checkbox" data-filter-type="actividad" value="camping"> Camping</label>
             </div>
         </aside>
 
@@ -71,15 +71,19 @@
         <section class="routes-content">
             
             <div class="search-bar-container">
-                <input type="text" class="routes-search-input" value="Rutas en Antioquia" placeholder="🔍 Buscar rutas...">
+                <input type="text" id="routeSearchInput" class="routes-search-input" value="Rutas en Antioquia" placeholder="🔍 Buscar rutas por nombre o lugar...">
             </div>
 
-            <h2 class="results-title">2 lugares, Antioquia</h2>
+            <h2 class="results-title"><span id="resultsCount">2</span> lugares, Antioquia</h2>
 
             <div class="route-cards-list">
                 
                 <!-- Tarjeta de Ruta 1 -->
-                <article class="route-horizontal-card">
+                <article class="route-horizontal-card" 
+                         data-hospedaje="hotel" 
+                         data-precio="250000" 
+                         data-habitaciones="doble" 
+                         data-actividad="aventura senderismo">
                     <div class="card-image-container">
                         <img src="Guatape.jpg" alt="Ruta Natural Guatapé">
                     </div>
@@ -103,7 +107,11 @@
                 </article>
 
                 <!-- Tarjeta de Ruta 2 -->
-                <article class="route-horizontal-card">
+                <article class="route-horizontal-card" 
+                         data-hospedaje="apartamento" 
+                         data-precio="500000" 
+                         data-habitaciones="doble" 
+                         data-actividad="senderismo">
                     <div class="card-image-container">
                         <img src="Amazonas.png" alt="Ruta Natural Senderismo">
                     </div>

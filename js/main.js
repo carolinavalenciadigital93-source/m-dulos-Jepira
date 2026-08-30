@@ -38,27 +38,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Funcionalidad de filtrado dinámico en rutas.html
-const filterCheckboxes = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
-const routeCards = document.querySelectorAll('.route-horizontal-card');
+// Funcionalidad interactiva de filtros en la página de rutas
+document.addEventListener('DOMContentLoaded', () => {
+    const filterCheckboxes = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
+    const routeCards = document.querySelectorAll('.route-horizontal-card');
 
-if (filterCheckboxes.length > 0 && routeCards.length > 0) {
-    filterCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            // Obtenemos todos los filtros seleccionados
-            const activeFilters = Array.from(filterCheckboxes)
-                .filter(i => i.checked)
-                .map(i => i.parentElement.textContent.trim().toLowerCase());
+    if (filterCheckboxes.length > 0 && routeCards.length > 0) {
+        
+        function filterRoutes() {
+            // Obtener lista de textos seleccionados en minúscula
+            const selectedFilters = Array.from(filterCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.parentElement.textContent.trim().toLowerCase());
 
-            // Recorremos cada tarjeta para mostrar u ocultar según coincida
             routeCards.forEach(card => {
                 const cardText = card.textContent.toLowerCase();
-                
-                // Si la tarjeta incluye algún criterio seleccionado o no hay nada filtrado
-                const isVisible = activeFilters.some(filter => cardText.includes(filter)) || activeFilters.length === 0;
-                
-                card.style.display = isVisible ? 'flex' : 'none';
+                const cardCategory = (card.getAttribute('data-category') || '').toLowerCase();
+
+                // Si no hay ningún filtro marcado, mostramos todas las tarjetas
+                if (selectedFilters.length === 0) {
+                    card.style.display = 'flex';
+                    return;
+                }
+
+                // Verificar si la tarjeta coincide con al menos uno de los filtros seleccionados
+                const matches = selectedFilters.some(filter => 
+                    cardText.includes(filter) || cardCategory.includes(filter)
+                );
+
+                card.style.display = matches ? 'flex' : 'none';
             });
+        }
+
+        // Asignar el evento change a todas las casillas
+        filterCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', filterRoutes);
         });
-    });
-}
+    }
+});
+
