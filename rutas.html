@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jepira | Catálogo de Rutas Turísticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo_jepira.png" type="image/png">
+</head>
+<body>
+
+    <!-- Header / Navegación Superior -->
+    <header class="header-top">
+        <div class="logo-section">
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Empresas Aliadas</a></li>
+                <li><a href="rutas.html" class="active">Rutas y reservas</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <span class="currency">COP</span>
+            <a href="perfil-usuario.html" class="profile-icon">👤</a>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal Catálogo con Filtros -->
+    <main class="catalog-layout">
+
+        <!-- Barra Lateral de Filtros (Izquierda) -->
+        <aside class="filters-sidebar">
+            
+            <div class="filter-group">
+                <h3>Hospedaje</h3>
+                <label><input type="checkbox" checked> Hotel</label>
+                <label><input type="checkbox"> Cabaña</label>
+                <label><input type="checkbox"> Casa</label>
+                <label><input type="checkbox" checked> Apartamento</label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Precio</h3>
+                <label><input type="checkbox" checked> Menor que $120.000</label>
+                <label><input type="checkbox" checked> De $100.000 a $300.000</label>
+                <label><input type="checkbox"> De $300.000 a $500.000</label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Habitaciones</h3>
+                <label><input type="checkbox" checked> Sencilla</label>
+                <label><input type="checkbox" checked> Doble</label>
+                <label><input type="checkbox"> Familias 4-5 personas</label>
+            </div>
+
+            <div class="filter-group">
+                <h3>Tipo de Actividad</h3>
+                <label><input type="checkbox" checked> Aventura</label>
+                <label><input type="checkbox" checked> Senderismo</label>
+                <label><input type="checkbox"> Camping</label>
+            </div>
+
+        </aside>
+
+        <!-- Sección de Resultados / Listado de Rutas (Derecha) -->
+        <section class="routes-results-container">
+            
+            <!-- Buscador Superior de Rutas -->
+            <div class="search-bar-container">
+                <input type="text" placeholder="🔍 Rutas en Antioquia" id="catalog-search-input">
+            </div>
+
+            <h2 class="results-title">2 lugares, Antioquia</h2>
+
+            <!-- Tarjeta de Ruta 1 -->
+            <article class="route-card-horizontal">
+                <div class="card-image-box">
+                    <img src="Guatape.jpg" alt="Ruta Natural Guatapé">
+                </div>
+                <div class="card-info-box">
+                    <div class="card-header">
+                        <span class="type-tag">Hotel Natura</span>
+                        <button class="wishlist-btn">♡</button>
+                    </div>
+                    <h3><a href="detalle_ruta.html">Ruta Natural Guatapé</a></h3>
+                    <p class="description">
+                        Descubre la majestuosidad de la Piedra del Peñol a través de una ruta sostenible, 
+                        disfrutando de vistas panorámicas del embalse de Guatapé mientras apoyas iniciativas locales.
+                    </p>
+                    <p class="features">• Hospedaje para 2 Personas • acomodación doble • 1 baño • Wifi • Aire acondicionado</p>
+                    
+                    <div class="card-footer">
+                        <div class="rating-box">★ 4.84 (324 recomendaciones)</div>
+                        <div class="price-box">
+                            <span class="price-total">$750.000 total</span>
+                            <strong class="price-per-day">$250.000 <small>/ Por día</small></strong>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Tarjeta de Ruta 2 -->
+            <article class="route-card-horizontal">
+                <div class="card-image-box">
+                    <img src="mono.jpg" alt="Ruta Natural Senderismo">
+                </div>
+                <div class="card-info-box">
+                    <div class="card-header">
+                        <span class="type-tag">Apartamento Campestre</span>
+                        <button class="wishlist-btn">♡</button>
+                    </div>
+                    <h3><a href="detalle_ruta.html">Ruta Natural Senderismo</a></h3>
+                    <p class="description">
+                        Vive esta aventura rodeado de naturaleza. Conecta con el paisaje y disfruta de la fauna y flora local 
+                        apoyando prácticas sostenibles que preservan este entorno único.
+                    </p>
+                    <p class="features">• Hospedaje 2 Personas • acomodación doble • 1 baño • Wifi • Aire acondicionado</p>
+                    
+                    <div class="card-footer">
+                        <div class="rating-box">★ 5 (120 recomendaciones)</div>
+                        <div class="price-box">
+                            <span class="price-total">$1.500.000 total</span>
+                            <strong class="price-per-day">$500.000 <small>/ Por día</small></strong>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+    <!-- Footer Institucional -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>Soporte</h4>
+            <p>3217293985</p>
+            <p>contacto@jepira.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Jepira Turismo Sostenible</h4>
+            <a href="index.html">Inicio</a>
+            <a href="#">Empresas Aliadas</a>
+            <a href="rutas.html">Reservas</a>
+        </div>
+        <div class="footer-col logo-col">
+            <img src="logo_jepira.png" alt="Jepira Logo">
+        </div>
+    </footer>
+
+</body>
+</html>

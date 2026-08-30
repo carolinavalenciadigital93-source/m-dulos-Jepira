@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jepira | Empresas Aliadas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo_jepira.png" type="image/png">
+    <style>
+        .empresas-container {
+            max-width: 1200px;
+            margin: 40px auto 70px auto;
+            padding: 0 20px;
+        }
+
+        .empresas-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+        }
+
+        .empresas-header h1 {
+            font-size: 30px;
+            color: #1c3b2b;
+            margin-bottom: 10px;
+        }
+
+        .empresas-header p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .empresas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .empresa-card {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .empresa-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .empresa-badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .empresa-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #2e7d32;
+        }
+
+        .empresa-rating {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1c3b2b;
+            background: #f0fdf4;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid #bbf7d0;
+        }
+
+        .empresa-info h3 {
+            font-size: 18px;
+            color: #2b2b2b;
+            margin-bottom: 6px;
+        }
+
+        .empresa-location {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .empresa-desc {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn-ver-rutas-empresa {
+            display: block;
+            text-align: center;
+            background-color: #2e7d32;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+
+        .btn-ver-rutas-empresa:hover {
+            background-color: #236127;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navegación Superior -->
+    <header class="header-top">
+        <div class="logo-section">
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="empresas.html" class="active">Empresas Aliadas</a></li>
+                <li><a href="rutas.html">Rutas y reservas</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <span class="currency">COP</span>
+            <a href="login.html" class="profile-icon">👤</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="empresas-container">
+        
+        <div class="empresas-header">
+            <h1>Nuestras Empresas Aliadas</h1>
+            <p>Conoce a las agencias locales, operadores certificados y guías nativos que promueven un turismo responsable e inolvidable.</p>
+        </div>
+
+        <div class="empresas-grid">
+
+            <!-- Empresa 1 -->
+            <div class="empresa-card">
+                <div>
+                    <div class="empresa-badge-row">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Guías Guatapé" class="empresa-logo">
+                        <span class="empresa-rating">⭐ 4.8 (32)</span>
+                    </div>
+                    <div class="empresa-info">
+                        <h3>Guías Ecoturísticos Guatapé</h3>
+                        <p class="empresa-location">📍 Guatapé, Antioquia</p>
+                        <p class="empresa-desc">Especialistas en recorridos de senderismo, caminatas guiadas por embalses e itinerarios con bajo impacto ambiental.</p>
+                    </div>
+                </div>
+                <a href="rutas.html" class="btn-ver-rutas-empresa">Ver rutas ofrecidas</a>
+            </div>
+
+            <!-- Empresa 2 -->
+            <div class="empresa-card">
+                <div>
+                    <div class="empresa-badge-row">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Ecotours La Guajira" class="empresa-logo">
+                        <span class="empresa-rating">⭐ 4.9 (48)</span>
+                    </div>
+                    <div class="empresa-info">
+                        <h3>Ecotours Ancestrales Wayúu</h3>
+                        <p class="empresa-location">📍 Cabo de la Vela, La Guajira</p>
+                        <p class="empresa-desc">Operador nativo enfocado en la inmersión cultural respetuosa, gastronomía autóctona y preservación del entorno costero.</p>
+                    </div>
+                </div>
+                <a href="rutas.html" class="btn-ver-rutas-empresa">Ver rutas ofrecidas</a>
+            </div>
+
+            <!-- Empresa 3 -->
+            <div class="empresa-card">
+                <div>
+                    <div class="empresa-badge-row">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Andes Expediciones" class="empresa-logo">
+                        <span class="empresa-rating">⭐ 4.7 (19)</span>
+                    </div>
+                    <div class="empresa-info">
+                        <h3>Andes Expediciones</h3>
+                        <p class="empresa-location">📍 Santa Rosa de Cabal, Risaralda</p>
+                        <p class="empresa-desc">Rutas en bosques de niebla, avistamiento de aves y experiencias termales con compromiso de conservación biológica.</p>
+                    </div>
+                </div>
+                <a href="rutas.html" class="btn-ver-rutas-empresa">Ver rutas ofrecidas</a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer Institucional -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>Soporte</h4>
+            <p>3217293985</p>
+            <p>contacto@jepira.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Jepira Turismo Sostenible</h4>
+            <a href="index.html">Inicio</a>
+            <a href="empresas.html">Empresas Aliadas</a>
+            <a href="rutas.html">Reservas</a>
+        </div>
+        <div class="footer-col logo-col">
+            <img src="logo_jepira.png" alt="Jepira Logo">
+        </div>
+    </footer>
+
+</body>
+</html>

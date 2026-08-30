@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jepira | Confirmar Reserva y Pago</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo_jepira.png" type="image/png">
+    <style>
+        .checkout-container {
+            max-width: 1000px;
+            margin: 40px auto 70px auto;
+            padding: 0 20px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+
+        .checkout-box {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        }
+
+        .checkout-box h2 {
+            font-size: 20px;
+            color: #1c3b2b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .form-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkout-field {
+            margin-bottom: 15px;
+        }
+
+        .checkout-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .checkout-field input, .checkout-field select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            flex: 1;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .payment-option.active {
+            border-color: #2e7d32;
+            background-color: #f0fdf4;
+            color: #2e7d32;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1c3b2b;
+        }
+
+        .btn-confirm-pay {
+            width: 100%;
+            background-color: #2e7d32;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-confirm-pay:hover {
+            background-color: #236127;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navegación Superior -->
+    <header class="header-top">
+        <div class="logo-section">
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="empresas.html">Empresas Aliadas</a></li>
+                <li><a href="rutas.html">Rutas y reservas</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <span class="currency">COP</span>
+            <a href="login.html" class="profile-icon">👤</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal: Checkout -->
+    <main class="checkout-container">
+        
+        <h1 style="font-size: 26px; color: #1c3b2b; margin-bottom: 25px;">Finalizar Reserva</h1>
+
+        <div class="checkout-grid">
+
+            <!-- Columna Izquierda: Datos del Comprador y Pago -->
+            <div class="checkout-box">
+                <h2>1. Datos del Titular</h2>
+                <form id="form-checkout">
+                    <div class="form-row-2">
+                        <div class="checkout-field">
+                            <label>Nombre Completo</label>
+                            <input type="text" value="Jimmy Scott" required>
+                        </div>
+                        <div class="checkout-field">
+                            <label>Documento de Identidad</label>
+                            <input type="text" value="10456789" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="checkout-field">
+                            <label>Correo Electrónico</label>
+                            <input type="email" value="jimmysco283@gmail.com" required>
+                        </div>
+                        <div class="checkout-field">
+                            <label>Teléfono Movil</label>
+                            <input type="tel" value="3205467890" required>
+                        </div>
+                    </div>
+
+                    <h2 style="margin-top: 20px;">2. Método de Pago</h2>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-option active">💳 Tarjeta / PSE</div>
+                        <div class="payment-option">📲 Nequi / Daviplata</div>
+                    </div>
+
+                    <div class="checkout-field">
+                        <label>Número de Tarjeta / Cuenta</label>
+                        <input type="text" placeholder="•••• •••• •••• ••••" required>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="checkout-field">
+                            <label>Fecha Exp.</label>
+                            <input type="text" placeholder="MM/AA" required>
+                        </div>
+                        <div class="checkout-field">
+                            <label>CVC / CVC2</label>
+                            <input type="password" placeholder="•••" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-confirm-pay">Confirmar y Pagar Reserva</button>
+                </form>
+            </div>
+
+            <!-- Columna Derecha: Resumen de Compra -->
+            <div class="checkout-box" style="height: fit-content;">
+                <h2>Resumen del Viaje</h2>
+                
+                <div style="display: flex; gap: 12px; margin-bottom: 15px;">
+                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Guatapé" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;">
+                    <div>
+                        <h4 style="font-size: 15px; color: #1e293b;">Ruta Natural Guatapé</h4>
+                        <p style="font-size: 12px; color: #64748b;">3 Días / 2 Noches</p>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <span>Fechas:</span>
+                    <strong>15 Nov 2026 - 18 Nov 2026</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Personas:</span>
+                    <strong>2 Pasajeros</strong>
+                </div>
+                <div class="summary-item">
+                    <span>Tarifa ($250.000 x 3 días):</span>
+                    <span>$750.000 COP</span>
+                </div>
+                <div class="summary-item">
+                    <span>Tasa de Servicio / Sostenibilidad:</span>
+                    <span>$0 COP</span>
+                </div>
+
+                <div class="summary-total">
+                    <span>Total a Pagar:</span>
+                    <span>$750.000 COP</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer Institucional -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>Soporte</h4>
+            <p>3217293985</p>
+            <p>contacto@jepira.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Jepira Turismo Sostenible</h4>
+            <a href="index.html">Inicio</a>
+            <a href="empresas.html">Empresas Aliadas</a>
+            <a href="rutas.html">Reservas</a>
+        </div>
+        <div class="footer-col logo-col">
+            <img src="logo_jepira.png" alt="Jepira Logo">
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('form-checkout').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Pago procesado con éxito! Tu reserva ha sido confirmada.');
+            window.location.href = 'mis-reservas.html';
+        });
+    </script>
+
+</body>
+</html>

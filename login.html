@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jepira | Iniciar Sesión y Recuperar Contraseña</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo_jepira.png" type="image/png">
+    <style>
+        .login-wrapper {
+            display: block;
+            max-width: 460px;
+            margin: 50px auto 70px auto;
+            padding: 35px 30px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eaeaea;
+            text-align: center;
+        }
+
+        .login-logo-img {
+            max-width: 170px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1c3b2b;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 25px;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .login-form label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333333;
+            margin-bottom: 6px;
+        }
+
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #cccccc;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .login-form input:focus {
+            border-color: #2e7d32;
+        }
+
+        .forgot-link-wrap {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .forgot-link-wrap a {
+            font-size: 13px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .forgot-link-wrap a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-submit-login {
+            width: 100%;
+            background-color: #2e7d32;
+            color: white;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .btn-submit-login:hover {
+            background-color: #236127;
+        }
+
+        .register-redirect {
+            margin-top: 22px;
+            font-size: 14px;
+            color: #555555;
+        }
+
+        .register-redirect a {
+            color: #2e7d32;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .register-redirect a:hover {
+            text-decoration: underline;
+        }
+
+        /* Modal para recuperación de contraseña */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            width: 90%;
+            max-width: 420px;
+            padding: 30px 25px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888888;
+        }
+
+        .notification-msg {
+            display: none;
+            margin-top: 15px;
+            padding: 10px 12px;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navegación Superior -->
+    <header class="header-top">
+        <div class="logo-section">
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Empresas Aliadas</a></li>
+                <li><a href="rutas.html">Rutas y reservas</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <span class="currency">COP</span>
+            <a href="login.html" class="profile-icon">👤</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal: Login -->
+    <main class="login-wrapper">
+        
+        <img src="logo_jepira.png" alt="Logo Jepira Turismo Sostenible" class="login-logo-img">
+        
+        <h1 class="login-title">¡Bienvenido de nuevo!</h1>
+        <p class="login-subtitle">Ingresa a tu cuenta para gestionar tus reservas o rutas</p>
+
+        <form id="form-login" class="login-form">
+            <div class="form-group">
+                <label for="login-email">Correo Electrónico</label>
+                <input type="email" id="login-email" placeholder="ejemplo@correo.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Contraseña</label>
+                <input type="password" id="login-password" placeholder="••••••••" required>
+            </div>
+
+            <div class="forgot-link-wrap">
+                <a href="#" id="open-forgot-modal">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="btn-submit-login">Iniciar Sesión</button>
+        </form>
+
+        <div class="register-redirect">
+            ¿Aún no tienes cuenta? <a href="perfil.html">Crea tu perfil aquí</a>
+        </div>
+
+    </main>
+
+    <!-- Modal: Recuperar Contraseña -->
+    <div class="modal-overlay" id="forgot-modal">
+        <div class="modal-card">
+            <button class="close-modal-btn" id="close-forgot-modal">&times;</button>
+            <img src="logo_jepira.png" alt="Logo Jepira" style="max-width: 120px; margin-bottom: 15px;">
+            <h2 style="font-size: 18px; color: #1c3b2b; margin-bottom: 8px;">Recuperar Contraseña</h2>
+            <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+                Ingresa tu correo registrado. Te enviaremos un enlace seguro para restablecer tu contraseña.
+            </p>
+
+            <form id="form-forgot-pass">
+                <div class="login-form">
+                    <div class="form-group">
+                        <label for="forgot-email">Correo Electrónico</label>
+                        <input type="email" id="forgot-email" placeholder="tu-correo@ejemplo.com" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit-login" style="margin-top: 10px;">Enviar Enlace de Recuperación</button>
+            </form>
+
+            <div id="forgot-notification" class="notification-msg">
+                ✓ Se ha enviado un correo con las instrucciones para restablecer tu contraseña.
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Institucional -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>Soporte</h4>
+            <p>3217293985</p>
+            <p>contacto@jepira.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Jepira Turismo Sostenible</h4>
+            <a href="index.html">Inicio</a>
+            <a href="#">Empresas Aliadas</a>
+            <a href="rutas.html">Reservas</a>
+        </div>
+        <div class="footer-col logo-col">
+            <img src="logo_jepira.png" alt="Jepira Logo">
+        </div>
+    </footer>
+
+    <!-- Script de Interacción para el Modal -->
+    <script>
+        const modal = document.getElementById('forgot-modal');
+        const openBtn = document.getElementById('open-forgot-modal');
+        const closeBtn = document.getElementById('close-forgot-modal');
+        const forgotForm = document.getElementById('form-forgot-pass');
+        const notification = document.getElementById('forgot-notification');
+
+        openBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            notification.style.display = 'none';
+            forgotForm.reset();
+        });
+
+        forgotForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            notification.style.display = 'block';
+            setTimeout(() => {
+                modal.classList.remove('active');
+                notification.style.display = 'none';
+                forgotForm.reset();
+            }, 3000);
+        });
+    </script>
+
+</body>
+</html>

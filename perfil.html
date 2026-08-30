@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jepira | Configuración de la Cuenta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo_jepira.png" type="image/png">
+</head>
+<body>
+
+    <!-- Header / Navegación Superior -->
+    <header class="header-top">
+        <div class="logo-section">
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Empresas Aliadas</a></li>
+                <li><a href="rutas.html">Rutas y reservas</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <span class="currency">COP</span>
+            <a href="perfil.html" class="profile-icon">👤</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal de Configuración de Perfil -->
+    <main class="profile-container">
+        <h1>Configuración de la Cuenta</h1>
+
+        <div class="profile-layout">
+            
+            <!-- Menú Lateral de Configuración -->
+            <aside class="profile-sidebar">
+                <ul>
+                    <li class="active">👤 Información Personal</li>
+                    <li>💳 Portafolio</li>
+                    <li>🔒 Seguridad</li>
+                    <li>🔄 Favoritos</li>
+                    <li>🔔 Mis reservas</li>
+                </ul>
+            </aside>
+
+            <!-- Formulario Principal de Datos -->
+            <section class="profile-content">
+                <form id="form-profile-setup">
+                    
+                    <!-- Avatar con botón de edición -->
+                    <div class="avatar-upload-container">
+                        <div class="avatar-preview">
+                            <span class="avatar-icon">👤</span>
+                            <label for="avatar-input" class="edit-avatar-btn">✏️</label>
+                            <input type="file" id="avatar-input" accept="image/*" hidden>
+                        </div>
+                    </div>
+
+                    <!-- Campos del Formulario -->
+                    <div class="form-group-edit">
+                        <label>Nombre Completo</label>
+                        <div class="input-with-edit">
+                            <input type="text" id="user-fullname" value="Jimmy Scott" required>
+                            <span class="edit-label">Edit</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-edit">
+                        <label>E-mail</label>
+                        <div class="input-with-edit">
+                            <input type="email" id="user-email" value="jimmysco283@gmail.com" required>
+                            <span class="edit-label">Edit</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-edit">
+                        <label>Teléfono</label>
+                        <div class="input-with-edit">
+                            <input type="tel" id="user-phone" value="3205467890">
+                            <span class="edit-label">Edit</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-edit">
+                        <label>Documento de Identidad o NIT</label>
+                        <div class="input-with-edit">
+                            <input type="text" id="user-doc" value="10456789">
+                            <span class="edit-label">Edit</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group-edit">
+                        <label>Contacto Adicional</label>
+                        <div class="input-with-edit">
+                            <input type="text" id="user-alt-phone" value="(+1) 012 345 6789">
+                            <span class="edit-label">Edit</span>
+                        </div>
+                    </div>
+
+                    <!-- Selección del Tipo de Perfil (Persona o Empresa) -->
+                    <div class="form-group-edit">
+                        <label for="user-type-select">Tipo de Perfil</label>
+                        <select id="user-type-select" class="profile-type-select">
+                            <option value="usuario">👤 Usuario</option>
+                            <option value="empresa">🏢 Empresa</option>
+                        </select>
+                    </div>
+
+                    <!-- Botón Guardar / Crear Perfil -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-create-profile">Crear Perfil</button>
+                    </div>
+
+                </form>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer Institucional -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>Soporte</h4>
+            <p>3217293985</p>
+            <p>contacto@jepira.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Jepira Turismo Sostenible</h4>
+            <a href="index.html">Inicio</a>
+            <a href="#">Empresas Aliadas</a>
+            <a href="rutas.html">Reservas</a>
+        </div>
+        <div class="footer-col logo-col">
+            <img src="logo_jepira.png" alt="Jepira Logo">
+        </div>
+    </footer>
+
+</body>
+</html>

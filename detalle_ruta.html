@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jepira | Ruta Natural Guatapé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo_jepira.png" type="image/png">
+</head>
+<body>
+
+    <!-- Header / Navegación Superior -->
+    <header class="header-top">
+        <div class="logo-section">
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+            </a>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="#">Empresas Aliadas</a></li>
+                <li><a href="rutas.html">Rutas y reservas</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <span class="currency">COP</span>
+            <a href="perfil-usuario.html" class="profile-icon">👤</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal de la Ruta -->
+    <main class="ruta-detail-container">
+        
+        <!-- Encabezado de la Ruta -->
+        <section class="ruta-header">
+            <h1>Ruta Natural Guatapé</h1>
+            <div class="ruta-meta">
+                <span class="rating">★ 4.84 (224 reviews)</span>
+                <span class="location">• El Peñol, Antioquia, Colombia</span>
+            </div>
+        </section>
+
+        <!-- Galería de Imágenes (Grid Mosaico) -->
+        <section class="gallery-grid">
+            <div class="main-image">
+                <img src="Guatape.jpg" alt="Piedra del Peñol Guatapé">
+            </div>
+            <div class="side-images">
+                <img src="Guatape.jpg" alt="Represa de Guatapé 1">
+                <img src="Guatape.jpg" alt="Piedra del Peñol vista aérea">
+                <img src="Guatape.jpg" alt="Represa de Guatapé 2">
+            </div>
+        </section>
+
+        <!-- Información Detallada y Panel de Reserva -->
+        <section class="ruta-content">
+            
+            <!-- Columna Izquierda: Detalles e Inclusiones -->
+            <div class="details-column">
+                <div class="description-block">
+                    <h2>Descripción General</h2>
+                    <p>👥 2 Personas • 1 cama doble • 1 Baño privado</p>
+                    <p>🗓️ Cancelación gratuita durante 48 horas</p>
+                    <hr>
+                    <p class="text-info">
+                        Descubre la majestuosidad de la Piedra del Peñol a través de una ruta sostenible, 
+                        disfrutando de vistas panorámicas del embalse de Guatapé mientras apoyas iniciativas locales.
+                    </p>
+                </div>
+
+                <div class="services-block">
+                    <h3>Esta ruta ofrece</h3>
+                    <div class="services-grid">
+                        <div class="service-item">🧗 Guía Turístico</div>
+                        <div class="service-item">❄️ Aire Acondicionado</div>
+                        <div class="service-item">🏥 Asistencia Médica</div>
+                        <div class="service-item">📺 TV</div>
+                        <div class="service-item">👥 Tour para dos personas</div>
+                        <div class="service-item">📶 WiFi</div>
+                        <div class="service-item">🚌 Transporte al Destino</div>
+                        <div class="service-item">🛏️ Acomodación doble</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Tarjeta / Widget de Reserva -->
+            <div class="booking-column">
+                <div class="booking-card">
+                    <div class="price-header">
+                        <h3>$250.000 <small>/ Por día</small></h3>
+                        <span class="rating">★ 4.84</span>
+                    </div>
+
+                    <form id="form-booking-ruta">
+                        <div class="date-inputs">
+                            <div class="input-group">
+                                <label>Fecha de Inicio</label>
+                                <input type="date" id="book-start-date" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Fecha de Finalización</label>
+                                <input type="date" id="book-end-date" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Huéspedes</label>
+                            <select id="book-guests">
+                                <option value="1">1 Persona</option>
+                                <option value="2" selected>2 Personas</option>
+                                <option value="3">3 Personas</option>
+                                <option value="4">4 Personas</option>
+                            </select>
+                        </div>
+
+                        <!-- Desglose de Precios -->
+                        <div class="price-breakdown">
+                            <div class="row">
+                                <span>$250.000 x <span id="days-count">3</span> días</span>
+                                <span id="subtotal-val">$750.000</span>
+                            </div>
+                            <div class="row">
+                                <span>Tarifa de servicio</span>
+                                <span>$0</span>
+                            </div>
+                            <hr>
+                            <div class="row total-row">
+                                <strong>Total (COP)</strong>
+                                <strong id="total-val">$750.000</strong>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-reserve">Reservar</button>
+                        <small class="no-charge-text">No se realizará el cobro todavía</small>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer Institucional -->
+    <footer class="main-footer">
+        <div class="footer-col">
+            <h4>Soporte</h4>
+            <p>3217293985</p>
+            <p>contacto@jepira.com</p>
+        </div>
+        <div class="footer-col">
+            <h4>Jepira Turismo Sostenible</h4>
+            <a href="index.html">Inicio</a>
+            <a href="#">Empresas Aliadas</a>
+            <a href="rutas.html">Reservas</a>
+        </div>
+        <div class="footer-col logo-col">
+            <img src="logo_jepira.png" alt="Jepira Logo">
+        </div>
+    </footer>
+
+</body>
+</html>
