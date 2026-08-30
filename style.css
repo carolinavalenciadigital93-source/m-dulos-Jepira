@@ -52,6 +52,7 @@ body{
     color: #888;
     font-size: 15px;
     margin-right: 10px;
+    line-height: 1;
 }
 
 .icon{
@@ -60,6 +61,8 @@ body{
     display: inline-block;
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
     margin-left: 4px;
 }
 
@@ -174,7 +177,7 @@ body{
     border-radius: 4px;
     font-size: 18px; 
     cursor: pointer;
-    transition:background.2s;
+    transition:background .2s;
 }
 
 .search-btn:hover {
@@ -221,16 +224,14 @@ body{
 
 .route-cards{
     display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 30px;
-   justify-content: center;
-   margin: 0 auto;
-   max-width: 1000px;
-
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 1000px;
 }
 
 .route-card {
-    
     text-align: center;
     background: #fff; 
     border-radius: 8px; 
@@ -243,7 +244,7 @@ body{
 .route-card img{
     width: 100%;
     height: 200px;
-     object-fit:cover;
+    object-fit:cover;
 }
 
 .route-card h3{
@@ -258,7 +259,7 @@ body{
     background: #f8f8f8;
     padding: 40px 0;
     border-top: 1px solid #e0e0e0;
-    text-align: left; /
+    text-align: left;
 }
 
 .footer-content{
