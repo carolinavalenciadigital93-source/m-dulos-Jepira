@@ -181,17 +181,29 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // 2. Actualizar imágenes superiores (principal y galería)
-      const galleryImgs = document.querySelectorAll('.hero-image img, .gallery img, .gallery-grid img, main img');
-      if (currentRoute.images && currentRoute.images.length > 0) {
-        galleryImgs.forEach((img, index) => {
-          if (currentRoute.images[index]) {
-            img.src = currentRoute.images[index];
+      // 2. Actualizar imágenes superiores (Galería específica del destino)
+      const galleryGrid = document.querySelector('.gallery-grid');
+      if (galleryGrid) {
+        const galleryImgs = galleryGrid.querySelectorAll('img');
+        
+        // Si el objeto tiene un array de varias imágenes para este destino
+        if (currentRoute.images && currentRoute.images.length > 0) {
+          galleryImgs.forEach((img, index) => {
+            // Usa la imagen en la posición correspondiente o repite la principal si faltan
+            const imgSrc = currentRoute.images[index] || currentRoute.images[0] || currentRoute.image;
+            if (imgSrc) {
+              img.src = imgSrc;
+              img.alt = currentRoute.title;
+            }
+          });
+        } 
+        // Si solo tiene una única imagen (currentRoute.image)
+        else if (currentRoute.image) {
+          galleryImgs.forEach(img => {
+            img.src = currentRoute.image;
             img.alt = currentRoute.title;
-          }
-        });
-      } else if (currentRoute.image && galleryImgs.length > 0) {
-        galleryImgs[0].src = currentRoute.image;
-        galleryImgs[0].alt = currentRoute.title;
+          });
+        }
       }
 
       // 3. Actualizar precio
