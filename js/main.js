@@ -180,25 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // 2. Actualizar imágenes superiores (principal y galería)
       // 2. Actualizar imágenes superiores (Galería específica del destino)
       const galleryGrid = document.querySelector('.gallery-grid');
       if (galleryGrid) {
         const galleryImgs = galleryGrid.querySelectorAll('img');
         
-        // Si el objeto tiene un array de varias imágenes para este destino
         if (currentRoute.images && currentRoute.images.length > 0) {
           galleryImgs.forEach((img, index) => {
-            // Usa la imagen en la posición correspondiente o repite la principal si faltan
             const imgSrc = currentRoute.images[index] || currentRoute.images[0] || currentRoute.image;
             if (imgSrc) {
               img.src = imgSrc;
               img.alt = currentRoute.title;
             }
           });
-        } 
-        // Si solo tiene una única imagen (currentRoute.image)
-        else if (currentRoute.image) {
+        } else if (currentRoute.image) {
           galleryImgs.forEach(img => {
             img.src = currentRoute.image;
             img.alt = currentRoute.title;
@@ -212,11 +207,13 @@ document.addEventListener('DOMContentLoaded', () => {
         priceElement.textContent = `$${currentRoute.price.toLocaleString('es-CO')}`;
       }
 
-      // 4. Renderizar Otros Destinos
+      // 4. Renderizar Otros Destinos (Ruta dinámica)
       const otherContainer = document.getElementById('otherDestinationsContainer');
       if (otherContainer) {
         const otherRoutes = routes.filter(r => r.id !== currentRoute.id);
         otherContainer.innerHTML = '';
+
+        const currentPath = window.location.pathname.split('/').pop();
 
         otherRoutes.forEach(route => {
           const imageSrc = route.image || (route.images ? route.images[0] : 'img/default.jpg');
@@ -228,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="destination-info">
                 <h4>${route.title}</h4>
                 <p>${descriptionSnippet}</p>
-                <a href="detalle-ruta.html?id=${route.id}" class="btn-secondary">Ver detalles</a>
+                <a href="${currentPath}?id=${route.id}" class="btn-secondary">Ver detalles</a>
               </div>
             </div>
           `;
