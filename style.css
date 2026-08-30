@@ -73,11 +73,11 @@ body {
 }
 
 .icon.user {
-    background-image: url(Icono\ cuenta.png);
+    background-image: url(img/Icono\ cuenta.png);
 }
 
 .icon.bell {
-    background-image: url(titi.jpg);
+    background-image: url(img/titi.jpg);
 }
 
 .header-top ul,
