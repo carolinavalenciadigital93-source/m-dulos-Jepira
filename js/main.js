@@ -77,3 +77,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Base de datos local de rutas
+const routesData = {
+    amazonas: {
+        title: "Río Amazonas",
+        img: "Amazonas.png",
+        rating: "4.95",
+        price: "$500.000",
+        total: "$1.500.000",
+        desc: "Explora la selva tropical más extensa del mundo. Vive una aventura rodeado de naturaleza salvaje, navega por el río Amazonas y conecta con las comunidades locales en una experiencia ecológica inolvidable."
+    },
+    guatape: {
+        title: "Ruta Natural Guatapé",
+        img: "Guatape.jpg",
+        rating: "4.84",
+        price: "$250.000",
+        total: "$750.000",
+        desc: "Descubre la majestuosidad de la Piedra del Peñol a través de una ruta sostenible, disfrutando de vistas panorámicas del embalse mientras apoyas iniciativas locales que protegen el entorno natural."
+    },
+    nuqui: {
+        title: "Isla Nuquí",
+        img: "Nuqui.jpg",
+        rating: "4.90",
+        price: "$400.000",
+        total: "$1.200.000",
+        desc: "Disfruta del espectáculo natural del avistamiento de ballenas jorobadas en las aguas del Pacífico colombiano, rodeado de selva virgen, termales marinas y playas solitarias."
+    },
+    cocora: {
+        title: "Valle del Cocora",
+        img: "Cocora.jpg",
+        rating: "4.88",
+        price: "$180.000",
+        total: "$540.000",
+        desc: "Recorre el majestuoso paisaje del Eje Cafetero admirando las palmas de cera más altas del mundo. Una caminata ecológica entre montañas y bosques de niebla."
+    }
+};
+
+// Cargar la información según la URL en detalle-ruta.html
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const routeId = params.get('id') || 'guatape';
+    const currentRoute = routesData[routeId] || routesData['guatape'];
+
+    const titleEl = document.getElementById('detailTitle');
+    if (titleEl) {
+        titleEl.textContent = currentRoute.title;
+        document.getElementById('detailRating').textContent = `★ ${currentRoute.rating}`;
+        document.getElementById('cardRating').textContent = currentRoute.rating;
+        document.getElementById('detailPrice').textContent = currentRoute.price;
+        document.getElementById('detailTotal').textContent = currentRoute.total;
+        document.getElementById('detailDescText').textContent = currentRoute.desc;
+
+        // Imágenes
+        document.getElementById('imgMain').src = currentRoute.img;
+        document.getElementById('imgSide1').src = currentRoute.img;
+        document.getElementById('imgSide2').src = currentRoute.img;
+        document.getElementById('imgSide3').src = currentRoute.img;
+
+        // Cargar "Otros Destinos"
+        const othersContainer = document.getElementById('otherDestinationsContainer');
+        if (othersContainer) {
+            Object.keys(routesData).forEach(key => {
+                if (key !== routeId) {
+                    const item = routesData[key];
+                    const cardHTML = `
+                        <article class="route-horizontal-card" style="width: 100%;">
+                            <div class="card-image-container">
+                                <img src="${item.img}" alt="${item.title}">
+                            </div>
+                            <div class="card-info-container">
+                                <h3 class="route-title">${item.title}</h3>
+                                <p class="route-desc">${item.desc.substring(0, 90)}...</p>
+                                <div class="card-footer-info">
+                                    <span class="route-rating">★ ${item.rating}</span>
+                                    <div class="price-container">
+                                        <span class="day-price"><strong>${item.price}</strong> /Por día</span>
+                                    </div>
+                                    <a href="detalle-ruta.html?id=${key}" class="btn-details">Ver detalle</a>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                    othersContainer.innerHTML += cardHTML;
+                }
+            });
+        }
+    }
+});
+
