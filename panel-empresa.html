@@ -32,17 +32,42 @@
             gap: 15px;
         }
 
+        .company-avatar-container {
+            position: relative;
+            width: 65px;
+            height: 65px;
+        }
+
         .company-badge {
-            width: 55px;
-            height: 55px;
-            border-radius: 12px;
+            width: 100%;
+            height: 100%;
+            border-radius: 14px;
             background: #e8f5e9;
             color: #1b4332;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
+            object-fit: cover;
+            border: 2px solid #2e7d32;
+        }
+
+        .avatar-edit-badge {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
 
         .dashboard-header h2 {
@@ -74,7 +99,7 @@
             background-color: #1b5e20;
         }
 
-        /* Tarjetas de Métricas de la Empresa */
+        /* Tarjetas de Métricas */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -90,13 +115,8 @@
             border-left: 4px solid #2e7d32;
         }
 
-        .stat-card.alt {
-            border-left-color: #f57f17;
-        }
-
-        .stat-card.blue {
-            border-left-color: #0288d1;
-        }
+        .stat-card.alt { border-left-color: #f57f17; }
+        .stat-card.blue { border-left-color: #0288d1; }
 
         .stat-title {
             font-size: 0.82rem;
@@ -112,7 +132,7 @@
             color: #1b4332;
         }
 
-        /* Navegación por Pestañas */
+        /* Tabs */
         .panel-tabs {
             display: flex;
             gap: 15px;
@@ -138,15 +158,10 @@
             border-bottom-color: #2e7d32;
         }
 
-        .tab-content {
-            display: none;
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Estilos Tabla de Reservas Recibidas */
+        /* Tabla de Reservas Recibidas */
         .table-card {
             background: #ffffff;
             border-radius: 16px;
@@ -182,26 +197,19 @@
             font-weight: 600;
         }
 
-        .status-confirmed {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
+        .status-confirmed { background: #e8f5e9; color: #2e7d32; }
+        .status-pending { background: #fff8e1; color: #f57f17; }
 
-        .status-pending {
-            background: #fff8e1;
-            color: #f57f17;
-        }
-
-        /* Estilos de Lista de Servicios / Experiencias */
+        /* Grid de Servicios y Rutas */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
         }
 
         .service-card {
             background: #ffffff;
-            border-radius: 12px;
+            border-radius: 14px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
@@ -209,33 +217,162 @@
             justify-content: space-between;
         }
 
+        .service-images-preview {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+        }
+
+        .service-images-preview img {
+            width: 70px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
         .service-title {
             font-weight: 700;
             color: #1b4332;
-            font-size: 1.05rem;
-            margin-bottom: 6px;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .service-meta {
+            font-size: 0.82rem;
+            color: #888;
+            margin-bottom: 8px;
         }
 
         .service-price {
             color: #2e7d32;
             font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .service-desc {
+            font-size: 0.88rem;
+            color: #555;
+            line-height: 1.4;
+            margin-bottom: 15px;
         }
 
         .btn-action {
-            padding: 6px 12px;
+            padding: 7px 14px;
             border: 1px solid #ccc;
             background: white;
             border-radius: 6px;
-            font-size: 0.82rem;
+            font-size: 0.85rem;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
 
         .btn-action:hover {
             border-color: #2e7d32;
             color: #2e7d32;
+        }
+
+        /* Campos de Perfil Editable */
+        .profile-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+
+        .profile-field {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .field-info label {
+            display: block;
+            font-size: 0.82rem;
+            color: #777;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .field-info span {
+            font-size: 0.95rem;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .btn-edit-field {
+            background: none;
+            border: none;
+            color: #2e7d32;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Modal para Publicar / Editar Rutas */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-card h3 {
+            color: #1b4332;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -268,35 +405,39 @@
         <!-- Header Panel Empresa -->
         <div class="dashboard-header">
             <div class="company-info">
-                <div class="company-badge">E</div>
+                <div class="company-avatar-container">
+                    <div class="company-badge" id="company-logo-preview">E</div>
+                    <label for="company-logo-input" class="avatar-edit-badge" title="Cambiar logo">✏️</label>
+                    <input type="file" id="company-logo-input" accept="image/*" style="display: none;" onchange="cargarLogoEmpresa(event)">
+                </div>
                 <div>
-                    <h2 id="empresa-nombre">Ecotours Wayúu & Co.</h2>
-                    <p id="empresa-nit">NIT: 900.876.543-1 • Operador Turístico Certificado</p>
+                    <h2 id="header-empresa-nombre">Ecotours Wayúu & Co.</h2>
+                    <p id="header-empresa-nit">NIT: 900.876.543-1 • Operador Turístico Certificado</p>
                 </div>
             </div>
-            <button class="btn-primary" onclick="crearServicio()">+ Publicar Oferta</button>
+            <button class="btn-primary" onclick="abrirModalRuta()">+ Publicar Oferta</button>
         </div>
 
         <!-- Indicadores Rápidos -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-title">Reservas Activas</div>
-                <div class="stat-value">24</div>
+                <div class="stat-value" id="stat-reservas">24</div>
             </div>
             <div class="stat-card alt">
                 <div class="stat-title">Pendientes de Confirmar</div>
-                <div class="stat-value">5</div>
+                <div class="stat-value" id="stat-pendientes">5</div>
             </div>
             <div class="stat-card blue">
                 <div class="stat-title">Servicios Publicados</div>
-                <div class="stat-value">3</div>
+                <div class="stat-value" id="stat-servicios">2</div>
             </div>
         </div>
 
         <!-- Pestañas de Navegación -->
         <div class="panel-tabs">
             <button class="tab-btn active" onclick="cambiarTab('reservas')">Reservas Recibidas</button>
-            <button class="tab-btn" onclick="cambiarTab('servicios')">Mis Servicios y Experiencias</button>
+            <button class="tab-btn" onclick="cambiarTab('servicios')">Mis Rutas y Experiencias</button>
             <button class="tab-btn" onclick="cambiarTab('perfil-empresa')">Perfil Empresarial</button>
         </div>
 
@@ -315,71 +456,167 @@
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabla-reservas-body">
                         <tr>
                             <td><strong>#JEP-9823</strong></td>
                             <td>Jimmy Scott</td>
-                            <td>Río Amazonas</td>
+                            <td>Tour Cultural Cabo de la Vela</td>
                             <td>15 Oct 2026</td>
                             <td>2</td>
                             <td><span class="status-badge status-confirmed">Confirmada</span></td>
-                            <td><button class="btn-action" onclick="alert('Detalles de reserva #JEP-9823')">Ver</button></td>
+                            <td>
+                                <button class="btn-action" onclick="alert('Detalles del cliente:\nNombre: Jimmy Scott\nTel: 3205467890\nEmail: jimmysco283@gmail.com')">Ver Cliente</button>
+                            </td>
                         </tr>
                         <tr>
                             <td><strong>#JEP-4412</strong></td>
                             <td>María Gómez</td>
-                            <td>Senderismo Guajira</td>
+                            <td>Trekking en Valle del Cocora</td>
                             <td>02 Nov 2026</td>
                             <td>1</td>
-                            <td><span class="status-badge status-pending">Pendiente</span></td>
-                            <td><button class="btn-action" onclick="alert('Confirmar reserva #JEP-4412')">Aceptar</button></td>
+                            <td><span class="status-badge status-pending" id="status-4412">Pendiente</span></td>
+                            <td>
+                                <button class="btn-action" style="color: #2e7d32;" onclick="confirmarReserva('4412')">Aceptar</button>
+                                <button class="btn-action" style="color: #c62828;" onclick="alert('Reserva rechazada')">Rechazar</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- TAB 2: SERVICIOS PUBLICADOS -->
+        <!-- TAB 2: SERVICIOS Y RUTAS PUBLICADAS -->
         <div id="tab-servicios" class="tab-content">
-            <div class="services-grid">
-                <div class="service-card">
+            <div class="services-grid" id="lista-rutas-container">
+                
+                <!-- Ruta 1 -->
+                <div class="service-card" id="card-ruta-1">
                     <div>
-                        <div class="service-title">Tour Cultural Cabo de la Vela</div>
-                        <div class="service-price">$ 450.000 COP / persona</div>
-                        <p style="font-size: 0.85rem; color: #666;">Incluye transporte ecológico, guía local y muestra gastronómica tradicional.</p>
+                        <div class="service-images-preview">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" alt="Playa">
+                            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=300&q=80" alt="Cabo">
+                        </div>
+                        <div class="service-title" id="title-ruta-1">Tour Cultural Cabo de la Vela</div>
+                        <div class="service-meta" id="meta-ruta-1">🗓️ Fechas: Oct 15 - Nov 20 | 👥 Cupos: 15 pax</div>
+                        <div class="service-price" id="price-ruta-1">$ 450.000 COP / pax</div>
+                        <p class="service-desc" id="desc-ruta-1">Incluye transporte ecológico, guía local y muestra gastronómica tradicional Wayúu.</p>
                     </div>
                     <div style="margin-top: 15px; display: flex; gap: 8px;">
-                        <button class="btn-action">Editar</button>
-                        <button class="btn-action" style="color: #c62828;">Pausar</button>
+                        <button class="btn-action" onclick="editarRuta('1')">✏️ Editar Ruta</button>
+                        <button class="btn-action" style="color: #c62828;" onclick="eliminarRuta('card-ruta-1')">🗑️ Eliminar</button>
                     </div>
                 </div>
 
-                <div class="service-card">
+                <!-- Ruta 2 -->
+                <div class="service-card" id="card-ruta-2">
                     <div>
-                        <div class="service-title">Trekking en Valle del Cocora</div>
-                        <div class="service-price">$ 280.000 COP / persona</div>
-                        <p style="font-size: 0.85rem; color: #666;">Caminata guiada de concientización ambiental y avistamiento de aves.</p>
+                        <div class="service-images-preview">
+                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=300&q=80" alt="Montaña">
+                        </div>
+                        <div class="service-title" id="title-ruta-2">Trekking en Valle del Cocora</div>
+                        <div class="service-meta" id="meta-ruta-2">🗓️ Fechas: Todo el año | 👥 Cupos: 10 pax</div>
+                        <div class="service-price" id="price-ruta-2">$ 280.000 COP / pax</div>
+                        <p class="service-desc" id="desc-ruta-2">Caminata guiada de concientización ambiental y avistamiento de aves en los bosques de palma.</p>
                     </div>
                     <div style="margin-top: 15px; display: flex; gap: 8px;">
-                        <button class="btn-action">Editar</button>
-                        <button class="btn-action" style="color: #c62828;">Pausar</button>
+                        <button class="btn-action" onclick="editarRuta('2')">✏️ Editar Ruta</button>
+                        <button class="btn-action" style="color: #c62828;" onclick="eliminarRuta('card-ruta-2')">🗑️ Eliminar</button>
                     </div>
                 </div>
+
             </div>
         </div>
 
-        <!-- TAB 3: PERFIL DE EMPRESA -->
+        <!-- TAB 3: PERFIL EDITABLE DE LA EMPRESA -->
         <div id="tab-perfil-empresa" class="tab-content">
-            <div class="table-card" style="padding: 30px;">
+            <div class="profile-card">
                 <h3 style="color: #1b4332; margin-bottom: 20px;">Información de la Organización</h3>
-                <p><strong>Razón Social:</strong> Ecotours Wayúu & Co. S.A.S.</p>
-                <p><strong>NIT:</strong> 900.876.543-1</p>
-                <p><strong>Representante Legal:</strong> Carlos Wayúu</p>
-                <p><strong>Contacto Soporte:</strong> contacto@ecotours.com</p>
+                
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Razón Social</label>
+                        <span id="text-empresa-nombre">Ecotours Wayúu & Co. S.A.S.</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampoEmpresa('Razón Social', 'text-empresa-nombre', 'header-empresa-nombre')">Editar</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>NIT / Identificación Fiscal</label>
+                        <span id="text-empresa-nit">900.876.543-1</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampoEmpresa('NIT', 'text-empresa-nit', 'header-empresa-nit')">Editar</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Representante Legal</label>
+                        <span id="text-empresa-rep">Carlos Wayúu</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampoEmpresa('Representante Legal', 'text-empresa-rep')">Editar</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Correo Electrónico de Soporte</label>
+                        <span id="text-empresa-email">contacto@ecotours.com</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampoEmpresa('Correo de Soporte', 'text-empresa-email')">Editar</button>
+                </div>
+
+                <div class="profile-field">
+                    <div class="field-info">
+                        <label>Teléfono / WhatsApp Corporativo</label>
+                        <span id="text-empresa-tel">+57 312 456 7890</span>
+                    </div>
+                    <button class="btn-edit-field" onclick="editarCampoEmpresa('Teléfono Corporativo', 'text-empresa-tel')">Editar</button>
+                </div>
+
             </div>
         </div>
 
     </main>
+
+    <!-- MODAL PARA CREAR / EDITAR RUTA -->
+    <div class="modal-overlay" id="modal-ruta">
+        <div class="modal-card">
+            <h3 id="modal-titulo">Publicar Nueva Ruta Turística</h3>
+            <form id="form-ruta" onsubmit="guardarRuta(event)">
+                <input type="hidden" id="edit-ruta-id" value="">
+                
+                <div class="form-group">
+                    <label>Nombre de la Ruta / Experiencia</label>
+                    <input type="text" id="form-ruta-nombre" placeholder="Ej: Tour Gastronómico en Guajira" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Precio por Persona (COP)</label>
+                    <input type="text" id="form-ruta-precio" placeholder="Ej: $ 350.000" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Fechas Disponibles / Periodicidad</label>
+                    <input type="text" id="form-ruta-fechas" placeholder="Ej: Fines de semana / Salidas el 15 de cada mes" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción de la Experiencia</label>
+                    <textarea id="form-ruta-desc" rows="3" placeholder="Describe los atractivos, actividades e itinerario..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Imágenes de la Ruta (Selección Múltiple)</label>
+                    <input type="file" id="form-ruta-fotos" accept="image/*" multiple onchange="previewFotosForm(event)">
+                    <div id="fotos-preview-container" style="display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap;"></div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-action" onclick="cerrarModalRuta()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Ruta</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer Institucional -->
     <footer class="main-footer">
@@ -405,7 +642,11 @@
         </div>
     </footer>
 
+    <!-- Scripts Interactivos -->
     <script>
+        let fotosTemporales = [];
+
+        // Cambio de Pestañas
         function cambiarTab(tabName) {
             const tabs = document.querySelectorAll('.tab-btn');
             const contents = document.querySelectorAll('.tab-content');
@@ -425,11 +666,164 @@
             }
         }
 
-        function crearServicio() {
-            prompt("Ingresa el título del nuevo paquete o servicio turístico:");
+        // Cargar foto de logo de la empresa
+        function cargarLogoEmpresa(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('company-logo-preview');
+                output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; border-radius:14px; object-fit:cover;">`;
+            };
+            if(event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        // Editar datos del perfil de la empresa
+        function editarCampoEmpresa(nombreCampo, elementId, headerId = null) {
+            const elemento = document.getElementById(elementId);
+            const nuevoValor = prompt(`Ingresa el nuevo valor para ${nombreCampo}:`, elemento.textContent);
+            if (nuevoValor !== null && nuevoValor.trim() !== "") {
+                elemento.textContent = nuevoValor.trim();
+                if(headerId) {
+                    if(headerId === 'header-empresa-nit') {
+                        document.getElementById(headerId).textContent = `NIT: ${nuevoValor.trim()} • Operador Turístico Certificado`;
+                    } else {
+                        document.getElementById(headerId).textContent = nuevoValor.trim();
+                    }
+                }
+            }
+        }
+
+        // Modal de Rutas
+        function abrirModalRuta() {
+            document.getElementById('modal-titulo').textContent = 'Publicar Nueva Ruta Turística';
+            document.getElementById('edit-ruta-id').value = '';
+            document.getElementById('form-ruta').reset();
+            document.getElementById('fotos-preview-container').innerHTML = '';
+            fotosTemporales = [];
+            document.getElementById('modal-ruta').classList.add('active');
+        }
+
+        function cerrarModalRuta() {
+            document.getElementById('modal-ruta').classList.remove('active');
+        }
+
+        // Vista previa de fotos subidas en el modal
+        function previewFotosForm(event) {
+            const container = document.getElementById('fotos-preview-container');
+            container.innerHTML = '';
+            fotosTemporales = [];
+            
+            const files = event.target.files;
+            if (files) {
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        fotosTemporales.push(e.target.result);
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.style.width = '60px';
+                        img.style.height = '50px';
+                        img.style.borderRadius = '6px';
+                        img.style.objectFit = 'cover';
+                        container.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            }
+        }
+
+        // Editar Ruta Existente
+        function editarRuta(id) {
+            document.getElementById('modal-titulo').textContent = 'Editar Ruta Turística';
+            document.getElementById('edit-ruta-id').value = id;
+            
+            const tituloActual = document.getElementById(`title-ruta-${id}`).textContent;
+            const precioActual = document.getElementById(`price-ruta-${id}`).textContent;
+            const descActual = document.getElementById(`desc-ruta-${id}`).textContent;
+
+            document.getElementById('form-ruta-nombre').value = tituloActual;
+            document.getElementById('form-ruta-precio').value = precioActual;
+            document.getElementById('form-ruta-fechas').value = 'Oct 15 - Nov 20';
+            document.getElementById('form-ruta-desc').value = descActual;
+
+            document.getElementById('modal-ruta').classList.add('active');
+        }
+
+        // Guardar/Actualizar Ruta
+        function guardarRuta(event) {
+            event.preventDefault();
+            const id = document.getElementById('edit-ruta-id').value;
+            const nombre = document.getElementById('form-ruta-nombre').value;
+            const precio = document.getElementById('form-ruta-precio').value;
+            const fechas = document.getElementById('form-ruta-fechas').value;
+            const desc = document.getElementById('form-ruta-desc').value;
+
+            if (id) {
+                // Actualizar existente
+                document.getElementById(`title-ruta-${id}`).textContent = nombre;
+                document.getElementById(`price-ruta-${id}`).textContent = precio;
+                document.getElementById(`desc-ruta-${id}`).textContent = desc;
+                document.getElementById(`meta-ruta-${id}`).textContent = `🗓️ Fechas: ${fechas} | 👥 Cupos: 15 pax`;
+            } else {
+                // Crear nueva tarjeta
+                const container = document.getElementById('lista-rutas-container');
+                const newId = Date.now();
+                
+                let imgsHtml = fotosTemporales.length > 0 
+                    ? fotosTemporales.map(src => `<img src="${src}" alt="Foto Ruta">`).join('')
+                    : `<img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=300&q=80" alt="Playa">`;
+
+                const newCard = document.createElement('div');
+                newCard.className = 'service-card';
+                newCard.id = `card-ruta-${newId}`;
+                newCard.innerHTML = `
+                    <div>
+                        <div class="service-images-preview">${imgsHtml}</div>
+                        <div class="service-title" id="title-ruta-${newId}">${nombre}</div>
+                        <div class="service-meta" id="meta-ruta-${newId}">🗓️ Fechas: ${fechas} | 👥 Cupos: 15 pax</div>
+                        <div class="service-price" id="price-ruta-${newId}">${precio}</div>
+                        <p class="service-desc" id="desc-ruta-${newId}">${desc}</p>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 8px;">
+                        <button class="btn-action" onclick="editarRuta('${newId}')">✏️ Editar Ruta</button>
+                        <button class="btn-action" style="color: #c62828;" onclick="eliminarRuta('card-ruta-${newId}')">🗑️ Eliminar</button>
+                    </div>
+                `;
+                container.appendChild(newCard);
+
+                // Incrementar contador de servicios
+                const statServicios = document.getElementById('stat-servicios');
+                statServicios.textContent = parseInt(statServicios.textContent) + 1;
+            }
+
+            cerrarModalRuta();
+        }
+
+        function eliminarRuta(cardId) {
+            if (confirm("¿Estás seguro de eliminar esta ruta turística?")) {
+                const card = document.getElementById(cardId);
+                if (card) {
+                    card.remove();
+                    const statServicios = document.getElementById('stat-servicios');
+                    statServicios.textContent = Math.max(0, parseInt(statServicios.textContent) - 1);
+                }
+            }
+        }
+
+        function confirmarReserva(id) {
+            const badge = document.getElementById(`status-${id}`);
+            if (badge) {
+                badge.className = "status-badge status-confirmed";
+                badge.textContent = "Confirmada";
+                
+                const statPendientes = document.getElementById('stat-pendientes');
+                statPendientes.textContent = Math.max(0, parseInt(statPendientes.textContent) - 1);
+            }
         }
     </script>
 </body>
 </html>
+
 
 
