@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jepira | Iniciar Sesión</title>
+    <title>Jepira | Crear Cuenta</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css"> 
     <link rel="icon" href="logo_jepira.png" type="image/png">
     <style>
-        .login-wrapper {
-            min-height: 75vh;
+        .register-wrapper {
+            min-height: 80vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 40px 20px;
         }
 
-        .login-container {
+        .register-container {
             width: 100%;
-            max-width: 520px;
+            max-width: 540px;
             padding: 40px;
             background: #ffffff;
             border-radius: 16px;
@@ -26,18 +26,23 @@
             text-align: center;
         }
 
-        .login-card-logo {
-            width: 140px;
-            max-width: 140px;
+        .register-card-logo {
+            width: 130px;
             height: auto;
             margin: 0 auto 15px auto;
             display: block;
         }
 
-        .login-container h2 {
+        .register-container h2 {
             font-size: 1.6rem;
             font-weight: 700;
             color: #1b4332;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 0.9rem;
             margin-bottom: 25px;
         }
 
@@ -67,32 +72,37 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             text-align: left;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
             font-weight: 600;
             color: #333;
         }
 
         .form-group input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 14px;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             outline: none;
             transition: border-color 0.3s ease;
         }
 
         .form-group input:focus {
             border-color: #2e7d32;
+        }
+
+        /* Ocultar dinámicamente los campos exclusivos de empresa */
+        .empresa-only {
+            display: none;
         }
 
         .btn-submit {
@@ -103,7 +113,7 @@
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 1.05rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s ease;
             margin-top: 10px;
@@ -113,21 +123,7 @@
             background-color: #1b5e20;
         }
 
-        .forgot-password {
-            display: inline-block;
-            margin-top: 15px;
-            color: #2e7d32;
-            font-size: 0.88rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .register-link {
+        .login-link {
             margin-top: 25px;
             padding-top: 20px;
             border-top: 1px solid #eee;
@@ -135,27 +131,26 @@
             color: #555;
         }
 
-        .register-link a {
+        .login-link a {
             color: #2e7d32;
             font-weight: 700;
             text-decoration: none;
         }
 
-        .register-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header / Navegación Superior -->
+    <!-- Header -->
     <header class="header-top">
         <div class="logo-section">
             <a href="index.html">
                 <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img"> 
             </a>
         </div>
-
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
@@ -163,29 +158,39 @@
                 <li><a href="rutas.html">Rutas</a></li>
             </ul>
         </nav>
-
         <div class="header-icons">
             <span class="currency">COP</span>
-            <a href="login.html" class="icon user" title="Mi Cuenta / Iniciar Sesión"></a>
+            <a href="login.html" class="icon user" title="Iniciar Sesión"></a>
         </div>
     </header>
 
-    <!-- Formulario de Iniciar Sesión -->
-    <main class="login-wrapper">
-        <div class="login-container">
-            <!-- Logo Centrado Superior -->
-            <img src="logo_jepira.png" alt="Logo Jepira" class="login-card-logo">
-            
-            <h2>Iniciar Sesión</h2>
-            
-            <!-- Selector de Rol -->
+    <!-- Formulario Unificado de Registro -->
+    <main class="register-wrapper">
+        <div class="register-container">
+            <img src="logo_jepira.png" alt="Logo Jepira" class="register-card-logo">
+            <h2>Crear Cuenta en Jepira</h2>
+            <p class="subtitle" id="form-subtitle">Selecciona tu perfil para comenzar</p>
+
+            <!-- Selector de Rol dentro del mismo registro -->
             <div class="role-tabs">
-                <button type="button" class="tab-btn active" id="btn-viajero" onclick="seleccionarRol('viajero')">Viajero</button>
-                <button type="button" class="tab-btn" id="btn-empresa" onclick="seleccionarRol('empresa')">Empresa Aliada</button>
+                <button type="button" class="tab-btn active" id="btn-viajero" onclick="cambiarRolRegistro('viajero')">Soy Viajero</button>
+                <button type="button" class="tab-btn" id="btn-empresa" onclick="cambiarRolRegistro('empresa')">Soy Empresa Aliada</button>
             </div>
 
-            <form id="login-form">
-                <input type="hidden" id="user-role" value="viajero">
+            <form id="registro-unificado-form">
+                <input type="hidden" id="selected-role" value="viajero">
+
+                <!-- Campo Nombre / Razón Social -->
+                <div class="form-group">
+                    <label for="nombre-label" id="lbl-nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" required placeholder="Tu nombre y apellido">
+                </div>
+
+                <!-- Campos Exclusivos de Empresa -->
+                <div class="form-group empresa-only">
+                    <label for="nit">NIT o Identificación Tributaria</label>
+                    <input type="text" id="nit" placeholder="900123456-7">
+                </div>
 
                 <div class="form-group">
                     <label for="email">Correo Electrónico</label>
@@ -193,22 +198,31 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="telefono">Teléfono / WhatsApp</label>
+                    <input type="tel" id="telefono" required placeholder="300 123 4567">
+                </div>
+
+                <!-- Campos Exclusivos de Empresa -->
+                <div class="form-group empresa-only">
+                    <label for="rnt">Registro Nacional de Turismo (RNT)</label>
+                    <input type="text" id="rnt" placeholder="Ej. 45892 (Opcional)">
+                </div>
+
+                <div class="form-group">
                     <label for="password">Contraseña</label>
                     <input type="password" id="password" required placeholder="••••••••">
                 </div>
 
-                <button type="submit" class="btn-submit">Ingresar</button>
+                <button type="submit" class="btn-submit" id="btn-submit-text">Registrarme como Viajero</button>
             </form>
 
-            <a href="recuperar-password.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
-
-            <div class="register-link">
-                ¿Aún no tienes cuenta? <a href="registro.html">Crea tu perfil aquí</a>
+            <div class="login-link">
+                ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
             </div>
         </div>
     </main>
 
-    <!-- Footer Institucional -->
+    <!-- Footer -->
     <footer class="main-footer">
         <div class="footer-content" style="display: flex !important; justify-content: space-between !important; align-items: center !important; max-width: 1000px !important; margin: 0 auto !important;">
             <div class="footer-col support" style="flex: 1 !important;">
@@ -216,7 +230,6 @@
                 <p style="color: #555; margin: 0 0 6px 0; font-size: 0.9rem;">3217293985</p>
                 <p style="color: #555; margin: 0; font-size: 0.9rem;">contacto@jepira.com</p>
             </div>
-
             <div class="footer-col navigation" style="flex: 1 !important;">
                 <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Turismo Sostenible</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
@@ -225,32 +238,51 @@
                     <li style="margin-bottom: 6px;"><a href="rutas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Reservas</a></li>
                 </ul>
             </div>
-
             <div class="footer-col logo-container" style="flex: 1 !important; display: flex !important; justify-content: flex-end !important; align-items: center !important;">
                 <img src="logo_jepira.png" alt="Jepira Turismo Sostenible" class="footer-logo" style="width: 160px !important; max-width: 160px !important; height: auto !important; display: block !important;">
             </div>
         </div>
     </footer>
 
-    <!-- Script de Redirección y Selección de Rol -->
+    <!-- Lógica JavaScript para cambio dinámico -->
     <script>
-        function seleccionarRol(rol) {
-            document.getElementById('user-role').value = rol;
+        function cambiarRolRegistro(rol) {
+            document.getElementById('selected-role').value = rol;
             const btnViajero = document.getElementById('btn-viajero');
             const btnEmpresa = document.getElementById('btn-empresa');
+            const lblNombre = document.getElementById('lbl-nombre');
+            const inputNombre = document.getElementById('nombre');
+            const btnSubmit = document.getElementById('btn-submit-text');
+            const formSubtitle = document.getElementById('form-subtitle');
+            const camposEmpresa = document.querySelectorAll('.empresa-only');
 
             if (rol === 'viajero') {
                 btnViajero.classList.add('active');
                 btnEmpresa.classList.remove('active');
+                lblNombre.innerText = 'Nombre Completo';
+                inputNombre.placeholder = 'Tu nombre y apellido';
+                btnSubmit.innerText = 'Registrarme como Viajero';
+                formSubtitle.innerText = 'Explora y reserva experiencias sostenibles';
+
+                // Ocultar campos de empresa
+                camposEmpresa.forEach(el => el.style.display = 'none');
             } else {
                 btnEmpresa.classList.add('active');
                 btnViajero.classList.remove('active');
+                lblNombre.innerText = 'Nombre de la Empresa / Operador';
+                inputNombre.placeholder = 'Ej. Ecotours del Sol';
+                btnSubmit.innerText = 'Registrar mi Empresa Aliada';
+                formSubtitle.innerText = 'Publica tus rutas y conecta con nuevos viajeros';
+
+                // Mostrar campos de empresa
+                camposEmpresa.forEach(el => el.style.display = 'block');
             }
         }
 
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        // Redirección según el rol al enviar
+        document.getElementById('registro-unificado-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const role = document.getElementById('user-role').value;
+            const role = document.getElementById('selected-role').value;
 
             if (role === 'empresa') {
                 window.location.href = 'panel-empresa.html';
@@ -261,3 +293,4 @@
     </script>
 </body>
 </html>
+
