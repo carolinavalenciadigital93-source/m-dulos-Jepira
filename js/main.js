@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Base de datos local de rutas
+// Base de datos local de rutas (Rutas de imágenes corregidas con los nombres de archivo reales)
 const routesData = {
     amazonas: {
         title: "Río Amazonas",
@@ -97,7 +97,7 @@ const routesData = {
     },
     nuqui: {
         title: "Isla Nuquí",
-        img: "Nuqui.jpg",
+        img: "Isla Nuqui.jpg",
         rating: "4.90",
         price: "$400.000",
         total: "$1.200.000",
@@ -105,7 +105,7 @@ const routesData = {
     },
     cocora: {
         title: "Valle del Cocora",
-        img: "Cocora.jpg",
+        img: "quindio-3977049_1280.jpg",
         rating: "4.88",
         price: "$180.000",
         total: "$540.000",
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('detailTotal').textContent = currentRoute.total;
         document.getElementById('detailDescText').textContent = currentRoute.desc;
 
-        // Imágenes
+        // Imágenes asignadas correctamente
         document.getElementById('imgMain').src = currentRoute.img;
         document.getElementById('imgSide1').src = currentRoute.img;
         document.getElementById('imgSide2').src = currentRoute.img;
@@ -137,6 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Cargar "Otros Destinos"
         const othersContainer = document.getElementById('otherDestinationsContainer');
         if (othersContainer) {
+            othersContainer.innerHTML = ''; // Limpia el contenedor antes de agregar elementos
             Object.keys(routesData).forEach(key => {
                 if (key !== routeId) {
                     const item = routesData[key];
@@ -164,4 +165,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
 
