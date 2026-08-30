@@ -200,10 +200,10 @@
                 <button type="submit" class="btn-submit">Ingresar</button>
             </form>
 
-            <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            <a href="recuperar-password.html" class="forgot-password">¿Olvidaste tu contraseña?</a>
 
             <div class="register-link">
-                ¿Aún no tienes cuenta? <a href="#">Crea tu perfil aquí</a>
+                ¿Aún no tienes cuenta? <a href="registro-viajero.html" id="link-registro">Crea tu perfil aquí</a>
             </div>
         </div>
     </main>
@@ -232,19 +232,22 @@
         </div>
     </footer>
 
-    <!-- Script de Redirección -->
+    <!-- Script de Redirección y Cambio Dinámico de Enlace -->
     <script>
         function seleccionarRol(rol) {
             document.getElementById('user-role').value = rol;
             const btnViajero = document.getElementById('btn-viajero');
             const btnEmpresa = document.getElementById('btn-empresa');
+            const linkRegistro = document.getElementById('link-registro');
 
             if (rol === 'viajero') {
                 btnViajero.classList.add('active');
                 btnEmpresa.classList.remove('active');
+                linkRegistro.href = 'registro-viajero.html';
             } else {
                 btnEmpresa.classList.add('active');
                 btnViajero.classList.remove('active');
+                linkRegistro.href = 'registro-empresa.html';
             }
         }
 
@@ -261,4 +264,3 @@
     </script>
 </body>
 </html>
-
