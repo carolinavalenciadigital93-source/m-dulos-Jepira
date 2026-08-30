@@ -1,175 +1,92 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jepira | Mis Reservas</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> 
     <link rel="icon" href="logo_jepira.png" type="image/png">
     <style>
-        .reservas-container {
+        .container {
             max-width: 1100px;
-            margin: 40px auto 70px auto;
+            margin: 40px auto;
             padding: 0 20px;
         }
-
-        .reservas-header {
-            margin-bottom: 30px;
-        }
-
-        .reservas-header h1 {
-            font-size: 28px;
-            color: #1c3b2b;
-            margin-bottom: 8px;
-        }
-
-        .reservas-header p {
-            color: #666;
-            font-size: 15px;
-        }
-
-        /* Tarjeta de Reserva */
-        .reserva-card {
-            background: #ffffff;
-            border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            display: grid;
-            grid-template-columns: 180px 1fr auto;
-            gap: 20px;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .reserva-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-        }
-
-        .reserva-img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .reserva-info h3 {
-            font-size: 18px;
-            color: #2b2b2b;
-            margin-bottom: 8px;
-        }
-
-        .reserva-details {
-            font-size: 14px;
-            color: #555;
+        .user-header {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .user-header h2 {
+            color: #1b4332;
+            margin: 0;
+        }
+        .btn-outline {
+            padding: 8px 16px;
+            border: 2px solid #2e7d32;
+            color: #2e7d32;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background: #2e7d32;
+            color: #fff;
+        }
+        .reservations-grid {
+            display: grid;
+            gap: 20px;
+        }
+        .card-reservation {
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             flex-wrap: wrap;
             gap: 15px;
-            margin-bottom: 10px;
         }
-
-        .reserva-details span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .res-info h3 {
+            margin: 0 0 8px 0;
+            color: #222;
         }
-
-        /* Badges de Estado */
-        .status-badge {
-            display: inline-block;
-            padding: 4px 12px;
+        .res-info p {
+            margin: 4px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .badge {
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 0.85rem;
             font-weight: 600;
         }
-
-        .status-confirmada {
-            background-color: #e8f5e9;
+        .badge-confirmada {
+            background: #e8f5e9;
             color: #2e7d32;
-            border: 1px solid #a5d6a7;
         }
-
-        .status-pendiente {
-            background-color: #fff8e1;
+        .badge-pendiente {
+            background: #fff8e1;
             color: #f57f17;
-            border: 1px solid #ffe082;
-        }
-
-        .status-completada {
-            background-color: #e3f2fd;
-            color: #1565c0;
-            border: 1px solid #90caf9;
-        }
-
-        /* Columna de Acciones y Precio */
-        .reserva-actions {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-        }
-
-        .reserva-price {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1c3b2b;
-        }
-
-        .btn-group-reserva {
-            display: flex;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .btn-reserva-secundary {
-            padding: 8px 14px;
-            border: 1px solid #cccccc;
-            background: #fff;
-            color: #333;
-            border-radius: 6px;
-            font-size: 13px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-        .btn-reserva-secundary:hover {
-            background: #f5f5f5;
-        }
-
-        .btn-cancelar {
-            color: #c62828;
-            border-color: #ef9a9a;
-        }
-
-        .btn-cancelar:hover {
-            background: #ffebee;
-        }
-
-        @media (max-width: 768px) {
-            .reserva-card {
-                grid-template-columns: 1fr;
-                text-align: left;
-            }
-            .reserva-actions {
-                text-align: left;
-                margin-top: 15px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header / Navegación Superior -->
+    <!-- Header -->
     <header class="header-top">
         <div class="logo-section">
             <a href="index.html">
-                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img"> 
             </a>
         </div>
         <nav class="main-nav">
@@ -179,108 +96,79 @@
                 <li><a href="rutas.html">Rutas</a></li>
             </ul>
         </nav>
-        <div class="user-actions">
+        <div class="header-icons">
             <span class="currency">COP</span>
-            <a href="perfil.html" class="profile-icon">👤</a>
+            <a href="perfil.html" class="icon user" title="Mi Perfil"></a>
         </div>
     </header>
 
-    <!-- Contenido Principal: Mis Reservas -->
-    <main class="reservas-container">
-        
-        <div class="reservas-header">
-            <h1>Mis Reservas</h1>
-            <p>Gestiona e inspecciona tus próximas aventuras ecológicas e historial de viajes.</p>
+    <!-- Contenido Principal -->
+    <main class="container">
+        <div class="user-header">
+            <div>
+                <h2>Panel del Viajero</h2>
+                <p style="color: #666; margin-top: 5px;">Gestiona tus viajes y reservas activas</p>
+            </div>
+            <a href="rutas.html" class="btn-outline">+ Explorar más rutas</a>
         </div>
 
-        <!-- Lista de Reservas -->
-        <div class="reservas-list">
-
-            <!-- Reserva 1: Confirmada -->
-            <div class="reserva-card">
-                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Ruta Guatapé" class="reserva-img">
-                <div class="reserva-info">
-                    <span class="status-badge status-confirmada">✓ Confirmada</span>
-                    <h3 style="margin-top: 8px;">Ruta Natural Guatapé</h3>
-                    <div class="reserva-details">
-                        <span>📅 15 Nov 2026 - 18 Nov 2026</span>
-                        <span>👥 2 Personas</span>
-                        <span>📍 Guatapé, Antioquia</span>
-                    </div>
-                    <p style="font-size: 13px; color: #777;">Código de reserva: <strong>#JEP-8921</strong></p>
+        <h3>Mis Reservas Activas</h3>
+        <br>
+        <div class="reservations-grid">
+            <!-- Reserva 1 -->
+            <div class="card-reservation">
+                <div class="res-info">
+                    <h3>Ruta: Río Amazonas</h3>
+                    <p><strong>Fecha:</strong> 15 de Octubre, 2026</p>
+                    <p><strong>Huéspedes:</strong> 2 Personas</p>
+                    <p><strong>Código de Reserva:</strong> #JEP-9823</p>
                 </div>
-                <div class="reserva-actions">
-                    <div class="reserva-price">$750.000 COP</div>
-                    <div class="btn-group-reserva">
-                        <a href="detalle_ruta.html" class="btn-reserva-secundary">Ver Ruta</a>
-                        <button class="btn-reserva-secundary btn-cancelar" onclick="alert('Solicitud de cancelación enviada.')">Cancelar</button>
-                    </div>
+                <div>
+                    <span class="badge badge-confirmada">Reserva Confirmada</span>
+                </div>
+                <div>
+                    <a href="detalle_ruta.html?id=amazonas" class="btn-outline" style="font-size: 0.85rem;">Ver Itinerario</a>
                 </div>
             </div>
 
-            <!-- Reserva 2: Pendiente -->
-            <div class="reserva-card">
-                <img src="https://images.unsplash.com/photo-1511497584788-876761c119ef" alt="Bosque de Niebla" class="reserva-img">
-                <div class="reserva-info">
-                    <span class="status-badge status-pendiente">⏳ Pago Pendiente</span>
-                    <h3 style="margin-top: 8px;">Senderismo Bosque de Niebla</h3>
-                    <div class="reserva-details">
-                        <span>📅 05 Dic 2026</span>
-                        <span>👥 1 Persona</span>
-                        <span>📍 Santa Rosa de Cabal</span>
-                    </div>
-                    <p style="font-size: 13px; color: #777;">Código de reserva: <strong>#JEP-4412</strong></p>
+            <!-- Reserva 2 -->
+            <div class="card-reservation">
+                <div class="res-info">
+                    <h3>Ruta: Valle del Cocora</h3>
+                    <p><strong>Fecha:</strong> 02 de Noviembre, 2026</p>
+                    <p><strong>Huéspedes:</strong> 1 Persona</p>
+                    <p><strong>Código de Reserva:</strong> #JEP-4412</p>
                 </div>
-                <div class="reserva-actions">
-                    <div class="reserva-price">$180.000 COP</div>
-                    <div class="btn-group-reserva">
-                        <a href="confirmacion-reserva.html" class="btn-reserva-secundary" style="background: #2e7d32; color: #fff; border: none;">Pagar Ahora</a>
-                    </div>
+                <div>
+                    <span class="badge badge-pendiente">Pago Pendiente</span>
+                </div>
+                <div>
+                    <a href="confirmacion-reserva.html" class="btn-outline" style="font-size: 0.85rem;">Completar Pago</a>
                 </div>
             </div>
-
-            <!-- Reserva 3: Completada -->
-            <div class="reserva-card">
-                <img src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62" alt="Cultura Wayúu" class="reserva-img">
-                <div class="reserva-info">
-                    <span class="status-badge status-completada">🏁 Completada</span>
-                    <h3 style="margin-top: 8px;">Experiencia Cultural Wayúu</h3>
-                    <div class="reserva-details">
-                        <span>📅 10 Ene 2026 - 14 Ene 2026</span>
-                        <span>👥 3 Personas</span>
-                        <span>📍 Cabo de la Vela, La Guajira</span>
-                    </div>
-                    <p style="font-size: 13px; color: #777;">Código de reserva: <strong>#JEP-1032</strong></p>
-                </div>
-                <div class="reserva-actions">
-                    <div class="reserva-price">$1.200.000 COP</div>
-                    <div class="btn-group-reserva">
-                        <button class="btn-reserva-secundary" onclick="alert('Descargando comprobante PDF...')">Comprobante</button>
-                    </div>
-                </div>
-            </div>
-
         </div>
-
     </main>
 
     <!-- Footer Institucional -->
     <footer class="main-footer">
-        <div class="footer-col">
-            <h4>Soporte</h4>
-            <p>3217293985</p>
-            <p>contacto@jepira.com</p>
-        </div>
-        <div class="footer-col">
-            <h4>Jepira Turismo Sostenible</h4>
-            <a href="index.html">Inicio</a>
-            <a href="empresas.html">Empresas Aliadas</a>
-            <a href="rutas.html">Reservas</a>
-        </div>
-        <div class="footer-col logo-col">
-            <img src="logo_jepira.png" alt="Jepira Logo">
+        <div class="footer-content" style="display: flex !important; justify-content: space-between !important; align-items: center !important; max-width: 1000px !important; margin: 0 auto !important;">
+            <div class="footer-col support" style="flex: 1 !important;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Soporte</h3>
+                <p style="color: #555; margin: 0 0 6px 0; font-size: 0.9rem;">3217293985</p>
+                <p style="color: #555; margin: 0; font-size: 0.9rem;">contacto@jepira.com</p>
+            </div>
+            <div class="footer-col navigation" style="flex: 1 !important;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Turismo Sostenible</h3>
+                <ul style="list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 6px;"><a href="index.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Inicio</a></li>
+                    <li style="margin-bottom: 6px;"><a href="empresas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Empresas Aliadas</a></li>
+                    <li style="margin-bottom: 6px;"><a href="rutas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Reservas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col logo-container" style="flex: 1 !important; display: flex !important; justify-content: flex-end !important; align-items: center !important;">
+                <img src="logo_jepira.png" alt="Jepira Turismo Sostenible" class="footer-logo" style="width: 160px !important; max-width: 160px !important; height: auto !important; display: block !important;">
+            </div>
         </div>
     </footer>
-
 </body>
 </html>
