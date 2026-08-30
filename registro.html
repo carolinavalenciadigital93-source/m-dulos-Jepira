@@ -119,6 +119,12 @@
             background-color: #1b5e20;
         }
 
+        #mensaje-registro {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
         .login-link {
             margin-top: 25px;
             padding-top: 20px;
@@ -189,41 +195,46 @@
             
             <!-- Selector de Rol -->
             <div class="role-tabs">
-                <button type="button" class="tab-btn active" id="btn-viajero" onclick="seleccionarRol('viajero')">Soy Viajero</button>
-                <button type="button" class="tab-btn" id="btn-empresa" onclick="seleccionarRol('empresa')">Soy Empresa Aliada</button>
+                <button type="button" class="tab-btn active" id="btn-viajero" onclick="seleccionarRol('explorer')">Soy Viajero</button>
+                <button type="button" class="tab-btn" id="btn-empresa" onclick="seleccionarRol('corporate')">Soy Empresa Aliada</button>
             </div>
 
-            <form id="register-form">
-                <input type="hidden" id="user-role" value="viajero">
+            <!-- Formulario Principal -->
+            <form id="form-registro">
+                <!-- Campo Oculto para almacenar el rol seleccionado -->
+                <input type="hidden" id="reg-tipo" value="explorer">
 
                 <div class="form-group">
-                    <label for="nombre" id="label-nombre">Nombre Completo</label>
-                    <input type="text" id="nombre" required placeholder="Tu nombre y apellido">
+                    <label id="label-nombre" for="reg-nombre">Nombre Completo</label>
+                    <input type="text" id="reg-nombre" placeholder="Tu nombre y apellido" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" id="email" required placeholder="correo@ejemplo.com">
+                    <label for="reg-email">Correo Electrónico</label>
+                    <input type="email" id="reg-email" placeholder="correo@ejemplo.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="telefono">Teléfono / WhatsApp</label>
-                    <input type="tel" id="telefono" required placeholder="300 123 4567">
+                    <label for="reg-telefono">Teléfono / Celular</label>
+                    <input type="tel" id="reg-telefono" placeholder="Ej: 3001234567">
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" required placeholder="••••••••">
+                    <label for="reg-password">Contraseña</label>
+                    <input type="password" id="reg-password" placeholder="Crea una contraseña segura" required>
                 </div>
 
                 <button type="submit" class="btn-submit" id="btn-text">Registrarme como Viajero</button>
             </form>
 
+            <!-- Contenedor para mensajes de respuesta (Éxito o Error) -->
+            <div id="mensaje-registro"></div>
+
             <div class="login-link">
                 ¿Ya tienes una cuenta? <a href="login.html">Inicia sesión aquí</a>
             </div>
 
-            <!-- Botón Volver al Inicio en la parte inferior -->
+            <!-- Botón Volver al Inicio -->
             <div>
                 <a href="index.html" class="btn-back-bottom">← Volver al inicio</a>
             </div>
@@ -254,17 +265,17 @@
         </div>
     </footer>
 
-    <!-- Script de Selección Dinámica -->
+    <!-- Script visual para cambiar entre Viajero y Empresa Aliada -->
     <script>
         function seleccionarRol(rol) {
-            document.getElementById('user-role').value = rol;
+            document.getElementById('reg-tipo').value = rol;
             const btnViajero = document.getElementById('btn-viajero');
             const btnEmpresa = document.getElementById('btn-empresa');
             const labelNombre = document.getElementById('label-nombre');
-            const inputNombre = document.getElementById('nombre');
+            const inputNombre = document.getElementById('reg-nombre');
             const btnText = document.getElementById('btn-text');
 
-            if (rol === 'viajero') {
+            if (rol === 'explorer') {
                 btnViajero.classList.add('active');
                 btnEmpresa.classList.remove('active');
                 labelNombre.textContent = 'Nombre Completo';
@@ -278,21 +289,12 @@
                 btnText.textContent = 'Registrarme como Empresa Aliada';
             }
         }
-
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const role = document.getElementById('user-role').value;
-
-            if (role === 'empresa') {
-                alert('¡Registro de empresa exitoso! Redirigiendo a tu panel...');
-                window.location.href = 'panel-empresa.html';
-            } else {
-                alert('¡Registro exitoso! Redirigiendo a tus reservas...');
-                window.location.href = 'mis-reservas.html';
-            }
-        });
     </script>
+
+    <!-- Módulo JS principal que conecta el formulario con UsersModule -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
+
 
 

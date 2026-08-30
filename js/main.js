@@ -3,165 +3,83 @@ import { PlanningModule } from './modules/planning.js';
 import { ReservationsModule } from './modules/reservations.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inicializar módulos base
-    const usersApp = new UsersModule();
-    const planningApp = new PlanningModule();
-    const reservationsApp = new ReservationsModule();
+  // 1. Inicializar módulos
+  const usersApp = new UsersModule();
+  const planningApp = new PlanningModule();
+  const reservationsApp = new ReservationsModule();
 
-    console.log('Sistema Jepira cargado correctamente con todos sus módulos.');
+  console.log('Sistema Jepira cargado correctamente con todos sus módulos.');
 
-    // 2. Manejo del formulario de búsqueda en la página de inicio (index.html)
-    const searchForm = document.getElementById('search-form');
-    if (searchForm) {
-        searchForm.addEventListener('submit', (e) => {
-            const searchData = {
-                location: document.getElementById('location').value,
-                date: document.getElementById('date').value,
-                package: document.getElementById('packages').value,
-                guests: document.getElementById('guests').value
-            };
+  // ==========================================
+  // CONEXIÓN: REGISTRO DE USUARIOS
+  // ==========================================
+  const formRegistro = document.getElementById('form-registro');
+  if (formRegistro) {
+    formRegistro.addEventListener('submit', (e) => {
+      e.preventDefault(); // Evita que la página se recargue
 
-            localStorage.setItem('jepira_search', JSON.stringify(searchData));
-        });
-    }
+      // Capturar los valores del formulario
+      const userData = {
+        role: document.getElementById('reg-tipo').value,
+        name: document.getElementById('reg-nombre').value,
+        email: document.getElementById('reg-email').value,
+        phone: document.getElementById('reg-telefono').value,
+        password: document.getElementById('reg-password').value
+      };
 
-    // 3. Aplicar los filtros guardados en la página de rutas (rutas.html)
-    const routeCardsContainer = document.querySelector('.route-cards');
-    const savedSearch = localStorage.getItem('jepira_search');
+      // Ejecutar la función del módulo Users
+      const response = usersApp.registerUser(userData);
+      const contenedorMensaje = document.getElementById('mensaje-registro');
 
-    if (savedSearch && routeCardsContainer) {
-        const filters = JSON.parse(savedSearch);
-        console.log("Filtros de búsqueda recibidos:", filters);
+      if (response.success) {
+        contenedorMensaje.style.color = 'green';
+        contenedorMensaje.textContent = response.message + ' Redirigiendo al login...';
+        formRegistro.reset();
 
-        // Limpiar la búsqueda de la memoria tras leerla
-        localStorage.removeItem('jepira_search');
-    }
-});
+        // Redirigir al Login después de 1.5 segundos
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
+      } else {
+        contenedorMensaje.style.color = 'red';
+        contenedorMensaje.textContent = response.message;
+      }
+    });
+  }
 
-// Funcionalidad interactiva de filtros en la página de rutas
-document.addEventListener('DOMContentLoaded', () => {
-    const filterCheckboxes = document.querySelectorAll('.filters-sidebar input[type="checkbox"]');
-    const routeCards = document.querySelectorAll('.route-horizontal-card');
+  // ==========================================
+  // CONEXIÓN: INICIO DE SESIÓN (LOGIN)
+  // ==========================================
+  const formLogin = document.getElementById('form-login');
+  if (formLogin) {
+    formLogin.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    if (filterCheckboxes.length > 0 && routeCards.length > 0) {
-        
-        function filterRoutes() {
-            // Obtener lista de textos seleccionados en minúscula
-            const selectedFilters = Array.from(filterCheckboxes)
-                .filter(cb => cb.checked)
-                .map(cb => cb.parentElement.textContent.trim().toLowerCase());
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
 
-            routeCards.forEach(card => {
-                const cardText = card.textContent.toLowerCase();
-                const cardCategory = (card.getAttribute('data-category') || '').toLowerCase();
+      // Intentar iniciar sesión con el módulo Users
+      const response = usersApp.login(email, password);
+      const contenedorMensaje = document.getElementById('mensaje-login');
 
-                // Si no hay ningún filtro marcado, mostramos todas las tarjetas
-                if (selectedFilters.length === 0) {
-                    card.style.display = 'flex';
-                    return;
-                }
+      if (response.success) {
+        contenedorMensaje.style.color = 'green';
+        contenedorMensaje.textContent = '¡Bienvenido! Redirigiendo...';
 
-                // Verificar si la tarjeta coincide con al menos uno de los filtros seleccionados
-                const matches = selectedFilters.some(filter => 
-                    cardText.includes(filter) || cardCategory.includes(filter)
-                );
-
-                card.style.display = matches ? 'flex' : 'none';
-            });
-        }
-
-        // Asignar el evento change a todas las casillas
-        filterCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', filterRoutes);
-        });
-    }
-});
-
-// Base de datos local de rutas (Rutas de imágenes corregidas con los nombres reales del proyecto)
-const routesData = {
-    amazonas: {
-        title: "Río Amazonas",
-        img: "Amazonas.png",
-        rating: "4.95",
-        price: "$500.000",
-        total: "$1.500.000",
-        desc: "Explora la selva tropical más extensa del mundo. Vive una aventura rodeado de naturaleza salvaje, navega por el río Amazonas y conecta con las comunidades locales en una experiencia ecológica inolvidable."
-    },
-    guatape: {
-        title: "Ruta Natural Guatapé",
-        img: "Guatape.jpg",
-        rating: "4.84",
-        price: "$250.000",
-        total: "$750.000",
-        desc: "Descubre la majestuosidad de la Piedra del Peñol a través de una ruta sostenible, disfrutando de vistas panorámicas del embalse mientras apoyas iniciativas locales que protegen el entorno natural."
-    },
-    nuqui: {
-        title: "Isla Nuquí",
-        img: "Isla Nuqui.jpg",
-        rating: "4.90",
-        price: "$400.000",
-        total: "$1.200.000",
-        desc: "Disfruta del espectáculo natural del avistamiento de ballenas jorobadas en las aguas del Pacífico colombiano, rodeado de selva virgen, termales marinas y playas solitarias."
-    },
-    cocora: {
-        title: "Valle del Cocora",
-        img: "quindio-3977049_1280.jpg",
-        rating: "4.88",
-        price: "$180.000",
-        total: "$540.000",
-        desc: "Recorre el majestuoso paisaje del Eje Cafetero admirando las palmas de cera más altas del mundo. Una caminata ecológica entre montañas y bosques de niebla."
-    }
-};
-
-// Cargar la información según la URL en detalle_ruta.html
-document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const routeId = params.get('id') || 'guatape';
-    const currentRoute = routesData[routeId] || routesData['guatape'];
-
-    const titleEl = document.getElementById('detailTitle');
-    if (titleEl) {
-        titleEl.textContent = currentRoute.title;
-        document.getElementById('detailRating').textContent = `★ ${currentRoute.rating}`;
-        document.getElementById('cardRating').textContent = currentRoute.rating;
-        document.getElementById('detailPrice').textContent = currentRoute.price;
-        document.getElementById('detailTotal').textContent = currentRoute.total;
-        document.getElementById('detailDescText').textContent = currentRoute.desc;
-
-        // Asignación de imágenes principales y miniaturas
-        document.getElementById('imgMain').src = currentRoute.img;
-        document.getElementById('imgSide1').src = currentRoute.img;
-        document.getElementById('imgSide2').src = currentRoute.img;
-        document.getElementById('imgSide3').src = currentRoute.img;
-
-        // Cargar "Otros Destinos" con formato de tarjetas verticales
-        const othersContainer = document.getElementById('otherDestinationsContainer');
-        if (othersContainer) {
-            othersContainer.innerHTML = ''; // Limpiar contenedor previo
-            Object.keys(routesData).forEach(key => {
-                if (key !== routeId) {
-                    const item = routesData[key];
-                    const cardHTML = `
-                        <article class="other-card-vertical">
-                            <div class="other-card-img">
-                                <img src="${item.img}" alt="${item.title}">
-                            </div>
-                            <div class="other-card-body">
-                                <h3>${item.title}</h3>
-                                <p class="other-desc">${item.desc.substring(0, 75)}...</p>
-                                <div class="other-card-footer">
-                                    <span class="other-rating">★ ${item.rating}</span>
-                                    <span class="other-price"><strong>${item.price}</strong>/día</span>
-                                </div>
-                                <a href="detalle-ruta.html?id=${key}" class="btn-details-other">Ver detalle</a>
-                            </div>
-                        </article>
-                    `;
-                    othersContainer.innerHTML += cardHTML;
-                }
-            });
-        }
-    }
+        // Redirigir según el tipo de usuario (Corporate o Explorer)
+        setTimeout(() => {
+          if (response.user.role === 'corporate') {
+            window.location.href = 'panel-empresa.html';
+          } else {
+            window.location.href = 'mis-reservas.html';
+          }
+        }, 1000);
+      } else {
+        contenedorMensaje.style.color = 'red';
+        contenedorMensaje.textContent = response.message;
+      }
+    });
+  }
 });
 
     
