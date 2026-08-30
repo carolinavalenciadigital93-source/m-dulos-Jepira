@@ -209,6 +209,12 @@
                     <input type="text" id="reg-nombre" placeholder="Tu nombre y apellido" required>
                 </div>
 
+                <!-- CAMPO DINÁMICO: DOCUMENTO / NIT -->
+                <div class="form-group">
+                    <label id="label-documento" for="reg-documento">Documento de Identificación (C.C. / Pasaporte)</label>
+                    <input type="text" id="reg-documento" placeholder="Ej: 1088123456" required>
+                </div>
+
                 <div class="form-group">
                     <label for="reg-email">Correo Electrónico</label>
                     <input type="email" id="reg-email" placeholder="correo@ejemplo.com" required>
@@ -273,6 +279,11 @@
             const btnEmpresa = document.getElementById('btn-empresa');
             const labelNombre = document.getElementById('label-nombre');
             const inputNombre = document.getElementById('reg-nombre');
+            
+            // Nuevas variables para el documento/NIT
+            const labelDocumento = document.getElementById('label-documento');
+            const inputDocumento = document.getElementById('reg-documento');
+            
             const btnText = document.getElementById('btn-text');
 
             if (rol === 'explorer') {
@@ -280,12 +291,22 @@
                 btnEmpresa.classList.remove('active');
                 labelNombre.textContent = 'Nombre Completo';
                 inputNombre.placeholder = 'Tu nombre y apellido';
+                
+                // Texto Viajero
+                labelDocumento.textContent = 'Documento de Identificación (C.C. / Pasaporte)';
+                inputDocumento.placeholder = 'Ej: 1088123456';
+                
                 btnText.textContent = 'Registrarme como Viajero';
             } else {
                 btnEmpresa.classList.add('active');
                 btnViajero.classList.remove('active');
                 labelNombre.textContent = 'Nombre de la Empresa / Marca';
                 inputNombre.placeholder = 'Nombre comercial o razón social';
+                
+                // Texto Empresa
+                labelDocumento.textContent = 'NIT / Registro Mercantil';
+                inputDocumento.placeholder = 'Ej: 900123456-1';
+                
                 btnText.textContent = 'Registrarme como Empresa Aliada';
             }
         }
@@ -295,6 +316,3 @@
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
-
-
-

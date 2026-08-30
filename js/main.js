@@ -19,8 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       const userData = {
-        role: document.getElementById('reg-tipo').value,
+        role: document.getElementById('reg-tipo') ? document.getElementById('reg-tipo').value : 'explorer',
         name: document.getElementById('reg-nombre').value,
+        document: document.getElementById('reg-documento') ? document.getElementById('reg-documento').value : '', // <-- Captura de Cédula/NIT
         email: document.getElementById('reg-email').value,
         phone: document.getElementById('reg-telefono').value,
         password: document.getElementById('reg-password').value
