@@ -3,169 +3,393 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jepira | Panel Empresa</title>
+    <title>Jepira | Panel de Empresa Aliada</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo_jepira.png" type="image/png">
     <style>
-        .container {
+        .dashboard-wrapper {
             max-width: 1100px;
             margin: 40px auto;
             padding: 0 20px;
+            min-height: 70vh;
         }
+
+        .dashboard-header {
+            background: #ffffff;
+            padding: 25px 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .company-badge {
+            width: 55px;
+            height: 55px;
+            border-radius: 12px;
+            background: #e8f5e9;
+            color: #1b4332;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .dashboard-header h2 {
+            color: #1b4332;
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+        }
+
+        .dashboard-header p {
+            color: #666;
+            font-size: 0.88rem;
+            margin: 0;
+        }
+
+        .btn-primary {
+            padding: 10px 18px;
+            background-color: #2e7d32;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+        }
+
+        /* Tarjetas de Métricas de la Empresa */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            margin-bottom: 35px;
+            margin-bottom: 25px;
         }
+
         .stat-card {
-            background: #fff;
+            background: #ffffff;
             padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-left: 5px solid #2e7d32;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-left: 4px solid #2e7d32;
         }
-        .stat-card h4 {
-            margin: 0 0 10px 0;
-            color: #666;
-            font-size: 0.9rem;
+
+        .stat-card.alt {
+            border-left-color: #f57f17;
         }
-        .stat-card .number {
-            font-size: 1.8rem;
+
+        .stat-card.blue {
+            border-left-color: #0288d1;
+        }
+
+        .stat-title {
+            font-size: 0.82rem;
+            color: #777;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.6rem;
             font-weight: 700;
             color: #1b4332;
-            margin: 0;
         }
-        .actions-header {
+
+        /* Navegación por Pestañas */
+        .panel-tabs {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
         }
-        .btn-green {
-            background: #2e7d32;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
             border: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
             cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
         }
-        .table-container {
-            background: #fff;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            overflow-x: auto;
+
+        .tab-btn.active {
+            color: #2e7d32;
+            border-bottom-color: #2e7d32;
         }
-        table {
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Estilos Tabla de Reservas Recibidas */
+        .table-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .data-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-        }
-        th, td {
-            padding: 14px;
-            border-bottom: 1px solid #eee;
             font-size: 0.9rem;
         }
-        th {
-            color: #333;
+
+        .data-table th {
+            background: #f8f9fa;
+            color: #1b4332;
+            padding: 14px 20px;
             font-weight: 600;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .data-table td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+        }
+
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        /* Estilos de Lista de Servicios / Experiencias */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-title {
+            font-weight: 700;
+            color: #1b4332;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .service-price {
+            color: #2e7d32;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .btn-action {
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-action:hover {
+            border-color: #2e7d32;
+            color: #2e7d32;
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header / Navegación Superior -->
     <header class="header-top">
         <div class="logo-section">
             <a href="index.html">
                 <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img"> 
             </a>
         </div>
+
         <nav class="main-nav">
             <ul>
                 <li><a href="index.html">Inicio</a></li>
-                <li><a href="empresas.html" class="active">Empresas Aliadas</a></li>
+                <li><a href="empresas.html">Empresas Aliadas</a></li>
                 <li><a href="rutas.html">Rutas</a></li>
             </ul>
         </nav>
+
         <div class="header-icons">
             <span class="currency">COP</span>
-            <a href="perfil.html" class="icon user" title="Perfil de Empresa"></a>
+            <a href="panel-empresa.html" class="icon user" title="Portal Aliados"></a>
         </div>
     </header>
 
-    <!-- Contenido Principal -->
-    <main class="container">
-        <div style="margin-bottom: 30px;">
-            <h2 style="color: #1b4332; margin-bottom: 5px;">Panel de Administración Aliados</h2>
-            <p style="color: #666;">Bienvenido, Operador Ecotorismo Sostenible</p>
+    <main class="dashboard-wrapper">
+
+        <!-- Header Panel Empresa -->
+        <div class="dashboard-header">
+            <div class="company-info">
+                <div class="company-badge">E</div>
+                <div>
+                    <h2 id="empresa-nombre">Ecotours Wayúu & Co.</h2>
+                    <p id="empresa-nit">NIT: 900.876.543-1 • Operador Turístico Certificado</p>
+                </div>
+            </div>
+            <button class="btn-primary" onclick="crearServicio()">+ Publicar Oferta</button>
         </div>
 
-        <!-- Tarjetas de Estadísticas -->
+        <!-- Indicadores Rápidos -->
         <div class="stats-grid">
             <div class="stat-card">
-                <h4>Rutas Publicadas</h4>
-                <p class="number">4</p>
+                <div class="stat-title">Reservas Activas</div>
+                <div class="stat-value">24</div>
             </div>
-            <div class="stat-card">
-                <h4>Reservas de este Mes</h4>
-                <p class="number">28</p>
+            <div class="stat-card alt">
+                <div class="stat-title">Pendientes de Confirmar</div>
+                <div class="stat-value">5</div>
             </div>
-            <div class="stat-card">
-                <h4>Ingresos Estimados</h4>
-                <p class="number">$ 4.800.000 COP</p>
+            <div class="stat-card blue">
+                <div class="stat-title">Servicios Publicados</div>
+                <div class="stat-value">3</div>
             </div>
         </div>
 
-        <!-- Tabla de Rutas de la Empresa -->
-        <div class="actions-header">
-            <h3>Mis Paquetes / Rutas Turísticas</h3>
-            <button class="btn-green">+ Crear Nueva Ruta</button>
+        <!-- Pestañas de Navegación -->
+        <div class="panel-tabs">
+            <button class="tab-btn active" onclick="cambiarTab('reservas')">Reservas Recibidas</button>
+            <button class="tab-btn" onclick="cambiarTab('servicios')">Mis Servicios y Experiencias</button>
+            <button class="tab-btn" onclick="cambiarTab('perfil-empresa')">Perfil Empresarial</button>
         </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre de la Ruta</th>
-                        <th>Ubicación</th>
-                        <th>Precio / Persona</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Caminata Ecológica Guatapé</strong></td>
-                        <td>Guatapé, Antioquia</td>
-                        <td>$ 120.000 COP</td>
-                        <td><span style="color: #2e7d32; font-weight: 600;">Activa</span></td>
-                        <td><a href="#" style="color: #2e7d32; font-weight: 600;">Editar</a></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Avistamiento de Ballenas</strong></td>
-                        <td>Isla Nuquí, Chocó</td>
-                        <td>$ 650.000 COP</td>
-                        <td><span style="color: #2e7d32; font-weight: 600;">Activa</span></td>
-                        <td><a href="#" style="color: #2e7d32; font-weight: 600;">Editar</a></td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- TAB 1: RESERVAS RECIBIDAS -->
+        <div id="tab-reservas" class="tab-content active">
+            <div class="table-card">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Cliente</th>
+                            <th>Servicio / Ruta</th>
+                            <th>Fecha</th>
+                            <th>Pax</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#JEP-9823</strong></td>
+                            <td>Jimmy Scott</td>
+                            <td>Río Amazonas</td>
+                            <td>15 Oct 2026</td>
+                            <td>2</td>
+                            <td><span class="status-badge status-confirmed">Confirmada</span></td>
+                            <td><button class="btn-action" onclick="alert('Detalles de reserva #JEP-9823')">Ver</button></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#JEP-4412</strong></td>
+                            <td>María Gómez</td>
+                            <td>Senderismo Guajira</td>
+                            <td>02 Nov 2026</td>
+                            <td>1</td>
+                            <td><span class="status-badge status-pending">Pendiente</span></td>
+                            <td><button class="btn-action" onclick="alert('Confirmar reserva #JEP-4412')">Aceptar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <!-- TAB 2: SERVICIOS PUBLICADOS -->
+        <div id="tab-servicios" class="tab-content">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div>
+                        <div class="service-title">Tour Cultural Cabo de la Vela</div>
+                        <div class="service-price">$ 450.000 COP / persona</div>
+                        <p style="font-size: 0.85rem; color: #666;">Incluye transporte ecológico, guía local y muestra gastronómica tradicional.</p>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 8px;">
+                        <button class="btn-action">Editar</button>
+                        <button class="btn-action" style="color: #c62828;">Pausar</button>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div>
+                        <div class="service-title">Trekking en Valle del Cocora</div>
+                        <div class="service-price">$ 280.000 COP / persona</div>
+                        <p style="font-size: 0.85rem; color: #666;">Caminata guiada de concientización ambiental y avistamiento de aves.</p>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 8px;">
+                        <button class="btn-action">Editar</button>
+                        <button class="btn-action" style="color: #c62828;">Pausar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: PERFIL DE EMPRESA -->
+        <div id="tab-perfil-empresa" class="tab-content">
+            <div class="table-card" style="padding: 30px;">
+                <h3 style="color: #1b4332; margin-bottom: 20px;">Información de la Organización</h3>
+                <p><strong>Razón Social:</strong> Ecotours Wayúu & Co. S.A.S.</p>
+                <p><strong>NIT:</strong> 900.876.543-1</p>
+                <p><strong>Representante Legal:</strong> Carlos Wayúu</p>
+                <p><strong>Contacto Soporte:</strong> contacto@ecotours.com</p>
+            </div>
+        </div>
+
     </main>
 
     <!-- Footer Institucional -->
     <footer class="main-footer">
         <div class="footer-content" style="display: flex !important; justify-content: space-between !important; align-items: center !important; max-width: 1000px !important; margin: 0 auto !important;">
             <div class="footer-col support" style="flex: 1 !important;">
-                <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Soporte</h3>
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Soporte Corporativo</h3>
                 <p style="color: #555; margin: 0 0 6px 0; font-size: 0.9rem;">3217293985</p>
-                <p style="color: #555; margin: 0; font-size: 0.9rem;">contacto@jepira.com</p>
+                <p style="color: #555; margin: 0; font-size: 0.9rem;">aliados@jepira.com</p>
             </div>
+
             <div class="footer-col navigation" style="flex: 1 !important;">
                 <h3 style="font-size: 1.05rem; font-weight: 700; color: #222; margin-bottom: 12px;">Turismo Sostenible</h3>
                 <ul style="list-style: none; padding: 0; margin: 0;">
@@ -174,11 +398,38 @@
                     <li style="margin-bottom: 6px;"><a href="rutas.html" style="text-decoration: none; color: #555; font-size: 0.9rem;">Reservas</a></li>
                 </ul>
             </div>
+
             <div class="footer-col logo-container" style="flex: 1 !important; display: flex !important; justify-content: flex-end !important; align-items: center !important;">
                 <img src="logo_jepira.png" alt="Jepira Turismo Sostenible" class="footer-logo" style="width: 160px !important; max-width: 160px !important; height: auto !important; display: block !important;">
             </div>
         </div>
     </footer>
+
+    <script>
+        function cambiarTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(btn => btn.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            if (tabName === 'reservas') {
+                tabs[0].classList.add('active');
+                document.getElementById('tab-reservas').classList.add('active');
+            } else if (tabName === 'servicios') {
+                tabs[1].classList.add('active');
+                document.getElementById('tab-servicios').classList.add('active');
+            } else {
+                tabs[2].classList.add('active');
+                document.getElementById('tab-perfil-empresa').classList.add('active');
+            }
+        }
+
+        function crearServicio() {
+            prompt("Ingresa el título del nuevo paquete o servicio turístico:");
+        }
+    </script>
 </body>
 </html>
+
 
