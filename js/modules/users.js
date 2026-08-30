@@ -7,26 +7,36 @@ export class UsersModule {
     }
 
     // Registro de Usuarios (Explorer) y Pymes (Corporate)
-    registerUser(userData) {
-        const users = Storage.get(this.usersKey) || [];
-        
-        // Verificar correo existente
-        const exists = users.some(u => u.email.toLowerCase() === userData.email.toLowerCase());
-        if (exists) {
-            return { success: false, message: 'El correo electrónico ya se encuentra registrado.' };
-        }
+    // Registro de Usuarios (Explorer) y Pymes (Corporate)
+  registerUser(userData) {
+    const users = Storage.get(this.usersKey) || [];
 
-        const newUser = {
-            id: Date.now(),
-            ...userData, // role ('explorer' o 'corporate'), name, email, phone, password
-            email: userData.email.toLowerCase(),
-            createdAt: new Date().toISOString()
-        };
-
-        users.push(newUser);
-        Storage.set(this.usersKey, users);
-        return { success: true, message: 'Registro exitoso.', user: newUser };
+    // 1. Verificar si el correo ya existe
+    const existsEmail = users.some(u => u.email.toLowerCase() === userData.email.toLowerCase());
+    if (existsEmail) {
+      return { success: false, message: 'El correo electrónico ya se encuentra registrado.' };
     }
+
+    // 2. Verificar si el documento/NIT ya existe (Opcional pero recomendado)
+    if (userData.document) {
+      const existsDoc = users.some(u => u.document === userData.document);
+      if (existsDoc) {
+        return { success: false, message: 'El número de documento/NIT ya se encuentra registrado.' };
+      }
+    }
+
+    // 3. Crear el nuevo usuario (conserva ...userData incluyendo document)
+    const newUser = {
+      id: Date.now(),
+      ...userData, 
+      email: userData.email.toLowerCase(),
+      createdAt: new Date().toISOString()
+    };
+
+    users.push(newUser);
+    Storage.set(this.usersKey, users);
+    return { success: true, message: 'Registro exitoso.', user: newUser };
+  }
 
     // Inicio de sesión
     login(email, password, expectedRole = null) {
