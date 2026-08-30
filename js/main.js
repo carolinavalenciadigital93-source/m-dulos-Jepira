@@ -1,6 +1,6 @@
-import { UsersModule } from './modules/users.js';
-import { PlanningModule } from './modules/planning.js';
-import { ReservationsModule } from './modules/reservations.js';
+import { UsersModule } from './Modules/users.js';
+import { PlanningModule } from './Modules/planning.js';
+import { ReservationsModule } from './Modules/reservations.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Inicializar módulos
@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.getElementById('login-password').value;
       const role = document.getElementById('login-tipo') ? document.getElementById('login-tipo').value : null;
 
-      // Intentar iniciar sesión con el módulo Users (pasando rol como parámetro opcional si tu backend/módulo lo requiere)
       const response = usersApp.login(email, password, role);
       const contenedorMensaje = document.getElementById('mensaje-login');
 
@@ -77,6 +76,27 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
 
-    
+  // ==========================================
+  // CONEXIÓN: CARGAR DETALLE DE LA RUTA (detalle_ruta.html)
+  // ==========================================
+  const tituloDestino = document.getElementById('ruta-titulo'); // Asegúrate de tener este ID en tu HTML
+  if (tituloDestino) {
+    const params = new URLSearchParams(window.location.search);
+    const routeId = params.get('id');
+    const routes = planningApp.getAllRoutes();
+
+    // Buscar la ruta seleccionada o tomar la primera por defecto
+    const currentRoute = routes.find(r => r.id === routeId) || routes[0];
+
+    if (currentRoute) {
+      tituloDestino.textContent = currentRoute.title;
+
+      const descDestino = document.getElementById('ruta-descripcion');
+      if (descDestino) descDestino.textContent = currentRoute.description;
+
+      const imgPrincipal = document.getElementById('imgPrincipal');
+      if (imgPrincipal) imgPrincipal.src = currentRoute.image;
+    }
+  }
+});
