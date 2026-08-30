@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Base de datos local de rutas (Rutas de imágenes corregidas con los nombres de archivo reales)
+// Base de datos local de rutas (Rutas de imágenes corregidas con los nombres reales del proyecto)
 const routesData = {
     amazonas: {
         title: "Río Amazonas",
@@ -113,7 +113,7 @@ const routesData = {
     }
 };
 
-// Cargar la información según la URL en detalle-ruta.html
+// Cargar la información según la URL en detalle_ruta.html
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const routeId = params.get('id') || 'guatape';
@@ -128,34 +128,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('detailTotal').textContent = currentRoute.total;
         document.getElementById('detailDescText').textContent = currentRoute.desc;
 
-        // Imágenes asignadas correctamente
+        // Asignación de imágenes principales y miniaturas
         document.getElementById('imgMain').src = currentRoute.img;
         document.getElementById('imgSide1').src = currentRoute.img;
         document.getElementById('imgSide2').src = currentRoute.img;
         document.getElementById('imgSide3').src = currentRoute.img;
 
-        // Cargar "Otros Destinos"
+        // Cargar "Otros Destinos" con formato de tarjetas verticales
         const othersContainer = document.getElementById('otherDestinationsContainer');
         if (othersContainer) {
-            othersContainer.innerHTML = ''; // Limpia el contenedor antes de agregar elementos
+            othersContainer.innerHTML = ''; // Limpiar contenedor previo
             Object.keys(routesData).forEach(key => {
                 if (key !== routeId) {
                     const item = routesData[key];
                     const cardHTML = `
-                        <article class="route-horizontal-card" style="width: 100%;">
-                            <div class="card-image-container">
+                        <article class="other-card-vertical">
+                            <div class="other-card-img">
                                 <img src="${item.img}" alt="${item.title}">
                             </div>
-                            <div class="card-info-container">
-                                <h3 class="route-title">${item.title}</h3>
-                                <p class="route-desc">${item.desc.substring(0, 90)}...</p>
-                                <div class="card-footer-info">
-                                    <span class="route-rating">★ ${item.rating}</span>
-                                    <div class="price-container">
-                                        <span class="day-price"><strong>${item.price}</strong> /Por día</span>
-                                    </div>
-                                    <a href="detalle-ruta.html?id=${key}" class="btn-details">Ver detalle</a>
+                            <div class="other-card-body">
+                                <h3>${item.title}</h3>
+                                <p class="other-desc">${item.desc.substring(0, 75)}...</p>
+                                <div class="other-card-footer">
+                                    <span class="other-rating">★ ${item.rating}</span>
+                                    <span class="other-price"><strong>${item.price}</strong>/día</span>
                                 </div>
+                                <a href="detalle-ruta.html?id=${key}" class="btn-details-other">Ver detalle</a>
                             </div>
                         </article>
                     `;
@@ -166,4 +164,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
+    
