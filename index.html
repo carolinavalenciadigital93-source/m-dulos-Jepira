@@ -10,29 +10,34 @@
 </head>
 <body>
 
+    <!-- Header / Navegación Superior -->
     <header class="header-top">
         <div class="logo-section">
-            <img src="logo jepira.png" alt="Logo Jepira" class="logo-img"> 
+            <a href="index.html">
+                <img src="logo_jepira.png" alt="Logo Jepira" class="logo-img"> 
+            </a>
         </div>
 
         <nav class="main-nav">
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Empresas Aliadas</a></li>
-                <li><a href="#">Rutas y reservas</a></li>
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="empresas.html">Empresas Aliadas</a></li>
+                <li><a href="rutas.html">Rutas y reservas</a></li>
             </ul>
         </nav>
 
         <div class="header-icons">
-            <span class="currency">USD</span>
-            <div class="icon user"></div> 
+            <span class="currency">COP</span>
+            <!-- Enlace directo al módulo de autenticación / perfil -->
+            <a href="login.html" class="icon user" title="Mi Cuenta / Iniciar Sesión">👤</a> 
         </div>
     </header>
 
+    <!-- Hero / Buscador Principal -->
     <section class="hero-section">
         <img src="mono aullador.jpg" alt="Mono en el árbol" class="hero-img">
 
-        <form class="search-form">
+        <form class="search-form" action="rutas.html">
             <div class="search-field">
                 <label for="location">Ubicación</label>
                 <input type="text" id="location" placeholder="¿Adónde vas?">
@@ -40,7 +45,7 @@
 
             <div class="search-field">
                 <label for="date">Consultar Fecha</label>
-                <input type="text" id="date" placeholder="dd/mm/aaaa">
+                <input type="date" id="date">
             </div>
             
             <div class="search-field">
@@ -50,7 +55,7 @@
 
             <div class="search-field">
                 <label for="guests">Huéspedes</label>
-                <input type="number" id="guests" placeholder="Número de Personas">
+                <input type="number" id="guests" placeholder="Número de Personas" min="1">
             </div>
 
             <button type="submit" class="search-btn">Buscar</button>
@@ -59,36 +64,50 @@
         <h1 class="hero-text">Explora el mundo cuidando de él.</h1>
     </section>
 
+    <!-- Catálogo Destacado de Rutas -->
     <section class="tour-routes">
         <h2>Rutas Turísticas</h2>
         
         <div class="route-cards">
             <div class="route-card">
-                <img src="Amazonas.png" alt="Río Amazonas"> 
+                <a href="detalle_ruta.html">
+                    <img src="Amazonas.png" alt="Río Amazonas"> 
+                </a>
                 <h3>Río Amazonas</h3>
                 <p>Explora la selva y la vida silvestre única.</p>
+                <a href="detalle_ruta.html" class="btn-detalles" style="display:inline-block; margin-top:8px; color:#2e7d32; font-weight:bold; text-decoration:none;">Ver detalles →</a>
             </div>
 
             <div class="route-card">
-                <img src="Guatape.jpg" alt="Guatapé">
+                <a href="detalle_ruta.html">
+                    <img src="Guatape.jpg" alt="Guatapé">
+                </a>
                 <h3>Guatapé</h3>
                 <p>Colores, represa y la icónica Piedra del Peñol.</p>
+                <a href="detalle_ruta.html" class="btn-detalles" style="display:inline-block; margin-top:8px; color:#2e7d32; font-weight:bold; text-decoration:none;">Ver detalles →</a>
             </div>
             
             <div class="route-card">
-                <img src="Isla Nuqui.jpg" alt="Isla Nuquí">
+                <a href="detalle_ruta.html">
+                    <img src="Isla Nuqui.jpg" alt="Isla Nuquí">
+                </a>
                 <h3>Isla Nuquí</h3>
                 <p>Avistamiento de ballenas y playas del Pacífico.</p>
+                <a href="detalle_ruta.html" class="btn-detalles" style="display:inline-block; margin-top:8px; color:#2e7d32; font-weight:bold; text-decoration:none;">Ver detalles →</a>
             </div>
 
             <div class="route-card">
-                <img src="quindio-3977049_1280.jpg" alt="Valle del Cocora">
+                <a href="detalle_ruta.html">
+                    <img src="quindio-3977049_1280.jpg" alt="Valle del Cocora">
+                </a>
                 <h3>Valle del Cocora</h3>
                 <p>Visita la palma de cera.</p>
+                <a href="detalle_ruta.html" class="btn-detalles" style="display:inline-block; margin-top:8px; color:#2e7d32; font-weight:bold; text-decoration:none;">Ver detalles →</a>
             </div>
         </div>
     </section>
 
+    <!-- Footer Institucional -->
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-col support">
@@ -100,14 +119,14 @@
             <div class="footer-col navigation">
                 <h3>Jepira Turismo Sostenible</h3>
                 <ul>
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Empresas Aliadas</a></li>
-                    <li><a href="#">Reservas</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="empresas.html">Empresas Aliadas</a></li>
+                    <li><a href="rutas.html">Reservas</a></li>
                 </ul>
             </div>
             
             <div class="footer-col logo-container">
-                <img src="logo jepira.png" alt="logo-jepira"> 
+                <img src="logo_jepira.png" alt="logo-jepira"> 
             </div>
         </div>
     </footer>
