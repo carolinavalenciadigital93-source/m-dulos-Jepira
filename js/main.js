@@ -1,6 +1,6 @@
-import { UsersModule } from './Modules/users.js';
-import { PlanningModule } from './Modules/planning.js';
-import { ReservationsModule } from './Modules/reservations.js';
+import { UsersModule } from './modules/users.js';
+import { PlanningModule } from './modules/planning.js';
+import { ReservationsModule } from './modules/reservations.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Inicializar módulos
@@ -90,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
       let visibleCount = 0;
 
-      // Obtener opciones seleccionadas por categoría
       const selectedFilters = {
         hospedaje: Array.from(document.querySelectorAll('input[data-filter-type="hospedaje"]:checked')).map(cb => cb.value),
         precio: Array.from(document.querySelectorAll('input[data-filter-type="precio"]:checked')).map(cb => cb.value),
@@ -106,19 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const cardHabitaciones = card.getAttribute('data-habitaciones') || '';
         const cardActividades = (card.getAttribute('data-actividad') || '').split(' ');
 
-        // 1. Coincidencia por texto
         const matchesSearch = cardTitle.includes(searchTerm) || cardDesc.includes(searchTerm);
-
-        // 2. Coincidencia por Hospedaje
         const matchesHospedaje = selectedFilters.hospedaje.length === 0 || selectedFilters.hospedaje.includes(cardHospedaje);
-
-        // 3. Coincidencia por Habitaciones
         const matchesHabitaciones = selectedFilters.habitaciones.length === 0 || selectedFilters.habitaciones.includes(cardHabitaciones);
-
-        // 4. Coincidencia por Actividad
         const matchesActividad = selectedFilters.actividad.length === 0 || selectedFilters.actividad.some(act => cardActividades.includes(act));
 
-        // 5. Coincidencia por Precio
         let matchesPrecio = selectedFilters.precio.length === 0;
         if (!matchesPrecio) {
           matchesPrecio = selectedFilters.precio.some(range => {
@@ -129,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
 
-        // Determinar si la tarjeta cumple todas las condiciones
         if (matchesSearch && matchesHospedaje && matchesHabitaciones && matchesActividad && matchesPrecio) {
           card.style.display = 'flex';
           visibleCount++;
@@ -138,13 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Actualizar contador visual
       if (resultsCountSpan) {
         resultsCountSpan.textContent = visibleCount;
       }
     };
 
-    // Listeners para filtros y buscador
     if (searchInput) {
       searchInput.addEventListener('input', applyFilters);
     }
@@ -164,11 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const routeId = params.get('id');
     const routes = planningApp.getAllRoutes() || [];
 
-    // Buscar ruta por ID exacto, parcial o tomar la primera por defecto
     let currentRoute = routes.find(r => r.id === routeId);
 
     if (!currentRoute && routeId) {
-      currentRoute = routes.find(r => r.id.includes(routeId) || routeId.includes(r.id.replace('route_', '')));
+      const cleanId = routeId.replace('route_', '');
+      currentRoute = routes.find(r => r.id.includes(cleanId));
     }
 
     if (!currentRoute && routes.length > 0) {
@@ -176,18 +164,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (currentRoute) {
-      // 1. Título
       detailTitle.textContent = currentRoute.title;
 
-      // 2. Descripción
-      const detailDesc = document.getElementById('detailDescText') || document.getElementById('ruta-descripcion');
-      if (detailDesc) detailDesc.textContent = currentRoute.description;
+      const allParagraphs = document.querySelectorAll('main p');
+      allParagraphs.forEach(p => {
+        if (p.textContent.includes('Selecciona un destino') || p.id === 'detailDescText' || p.id === 'ruta-descripcion') {
+          p.textContent = currentRoute.description;
+        }
+      });
 
-      // 3. Imagen Principal
-      const imgPrincipal = document.getElementById('imgPrincipal');
-      if (imgPrincipal) imgPrincipal.src = currentRoute.image;
+      const imgPrincipal = document.getElementById('imgPrincipal') || document.querySelector('.hero-image img, main img');
+      if (imgPrincipal) {
+        imgPrincipal.src = currentRoute.image;
+        imgPrincipal.alt = currentRoute.title;
+      }
 
-      // 4. Renderizar "Otros Destinos"
+      const priceElement = document.querySelector('.price-container strong, .price-tag, main .price');
+      if (priceElement && currentRoute.price) {
+        priceElement.textContent = `$${currentRoute.price.toLocaleString('es-CO')}`;
+      }
+
       const otherContainer = document.getElementById('otherDestinationsContainer');
       if (otherContainer) {
         const otherRoutes = routes.filter(r => r.id !== currentRoute.id);
@@ -205,6 +201,73 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           `;
           otherContainer.innerHTML += cardHTML;
+        });
+      }
+    }
+  }
+
+  // ==========================================
+  // CONEXIÓN: MIS RESERVAS (mis-reservas.html)
+  // ==========================================
+  const containerReservas = document.getElementById('contenedor-reservas');
+
+  if (containerReservas) {
+    const currentUser = JSON.parse(localStorage.getItem('jepira_current_user'));
+
+    if (!currentUser) {
+      containerReservas.innerHTML = `<p style="text-align:center; color:#666; padding: 40px 0;">Debes iniciar sesión para ver tus reservas.</p>`;
+    } else {
+      const userReservations = reservationsApp.getReservationsByUser(currentUser.id);
+
+      if (userReservations.length === 0) {
+        containerReservas.innerHTML = `
+          <div style="text-align: center; padding: 40px 20px; background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <p style="color: #666; font-size: 1rem; margin-bottom: 15px;">Aún no tienes reservas activas.</p>
+            <a href="rutas.html" class="btn-primary" style="display: inline-block;">Ver Rutas Disponibles</a>
+          </div>
+        `;
+      } else {
+        containerReservas.innerHTML = userReservations.map(res => {
+          const fechaFormat = new Date(res.bookingDate || res.createdAt).toLocaleDateString('es-CO', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+
+          const precioTotal = new Intl.NumberFormat('es-CO', { 
+            style: 'currency', 
+            currency: 'COP', 
+            maximumFractionDigits: 0 
+          }).format(res.totalPrice || 0);
+
+          return `
+            <div class="reservation-card" id="card-${res.id}">
+              <div>
+                <div class="res-title">${res.routeTitle || 'Reserva de Ruta'}</div>
+                <div class="res-details">
+                  <strong>Fecha de reserva:</strong> ${fechaFormat}<br>
+                  <strong>Cupos reservados:</strong> ${res.seatsBooked || 1}<br>
+                  <strong>Total:</strong> ${precioTotal}
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                <span class="badge-confirmed">Confirmada</span>
+                <button data-id="${res.id}" class="btn-cancelar-reserva" style="padding: 6px 12px; font-size: 0.8rem; cursor: pointer; background: #d32f2f; color: #fff; border: none; border-radius: 4px;">
+                  Cancelar Reserva
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        document.querySelectorAll('.btn-cancelar-reserva').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const resId = e.target.getAttribute('data-id');
+            if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
+              reservationsApp.cancelReservation(resId);
+              location.reload();
+            }
+          });
         });
       }
     }
