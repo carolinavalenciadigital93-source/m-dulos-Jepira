@@ -111,6 +111,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
+  // CONEXIÓN: EDICIÓN Y GUARDADO DE PERFIL
+  // ==========================================
+  const btnEditarPerfil = document.getElementById('btn-editar-perfil');
+  const formPerfil = document.getElementById('form-perfil');
+
+  if (btnEditarPerfil || formPerfil) {
+    // Si tienes un botón que habilita la edición
+    if (btnEditarPerfil) {
+      btnEditarPerfil.addEventListener('click', () => {
+        const inputTelefono = document.getElementById('perfil-telefono');
+        const btnGuardar = document.getElementById('btn-guardar-perfil');
+        if (inputTelefono) inputTelefono.removeAttribute('disabled');
+        if (btnGuardar) btnGuardar.style.display = 'inline-block';
+      });
+    }
+
+    // Si guardas mediante un formulario de perfil
+    if (formPerfil) {
+      formPerfil.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nuevoTelefono = document.getElementById('perfil-telefono') ? document.getElementById('perfil-telefono').value : '';
+        const nuevoNombre = document.getElementById('perfil-nombre') ? document.getElementById('perfil-nombre').value : currentUser?.name;
+
+        const result = usersApp.updateProfile({
+          name: nuevoNombre,
+          phone: nuevoTelefono
+        });
+
+        const mensajePerfil = document.getElementById('mensaje-perfil');
+        if (result.success) {
+          if (mensajePerfil) {
+            mensajePerfil.style.color = '#2e7d32';
+            mensajePerfil.textContent = result.message;
+          } else {
+            alert('¡Perfil actualizado con éxito!');
+          }
+        } else {
+          if (mensajePerfil) {
+            mensajePerfil.style.color = '#d32f2f';
+            mensajePerfil.textContent = result.message;
+          }
+        }
+      });
+    }
+  }
+
+  // ==========================================
   // CONEXIÓN: FILTRADO Y BÚSQUEDA DE RUTAS (rutas.html)
   // ==========================================
   const routeCards = document.querySelectorAll('.route-horizontal-card');
@@ -462,4 +509,3 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
-
