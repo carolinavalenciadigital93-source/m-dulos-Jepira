@@ -111,50 +111,81 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // CONEXIÓN: EDICIÓN Y GUARDADO DE PERFIL
+  // CONEXIÓN: EDICIÓN COMPLETA Y GUARDADO DE PERFIL
   // ==========================================
-  const btnEditarPerfil = document.getElementById('btn-editar-perfil');
-  const formPerfil = document.getElementById('form-perfil');
+  const formPerfilViajero = document.getElementById('form-perfil-viajero') || document.getElementById('form-perfil');
+  const btnHabilitarEdicion = document.getElementById('btn-habilitar-edicion-perfil') || document.getElementById('btn-editar-perfil');
+  const btnGuardarPerfil = document.getElementById('btn-guardar-perfil-viajero') || document.getElementById('btn-guardar-perfil');
+  const editButtonsList = document.querySelectorAll('.profile-card .Editar, .profile-card a.Editar');
 
-  if (btnEditarPerfil || formPerfil) {
-    // Si tienes un botón que habilita la edición
-    if (btnEditarPerfil) {
-      btnEditarPerfil.addEventListener('click', () => {
-        const inputTelefono = document.getElementById('perfil-telefono');
-        const btnGuardar = document.getElementById('btn-guardar-perfil');
-        if (inputTelefono) inputTelefono.removeAttribute('disabled');
-        if (btnGuardar) btnGuardar.style.display = 'inline-block';
-      });
+  // Cargar datos actuales del usuario en el formulario
+  if (currentUser && formPerfilViajero) {
+    if (document.getElementById('perfil-nombre')) document.getElementById('perfil-nombre').value = currentUser.name || '';
+    if (document.getElementById('perfil-email')) document.getElementById('perfil-email').value = currentUser.email || '';
+    if (document.getElementById('perfil-telefono')) document.getElementById('perfil-telefono').value = currentUser.phone || '';
+    if (document.getElementById('perfil-documento')) document.getElementById('perfil-documento').value = currentUser.document || '';
+    if (document.getElementById('perfil-telefono-secundario')) document.getElementById('perfil-telefono-secundario').value = currentUser.secondaryPhone || '';
+  }
+
+  // Función para habilitar la edición en todos los inputs
+  const habilitarCamposPerfil = () => {
+    if (formPerfilViajero) {
+      const inputs = formPerfilViajero.querySelectorAll('input');
+      inputs.forEach(input => input.removeAttribute('disabled'));
     }
+    if (btnGuardarPerfil) btnGuardarPerfil.style.display = 'inline-block';
+    if (btnHabilitarEdicion) btnHabilitarEdicion.style.display = 'none';
+  };
 
-    // Si guardas mediante un formulario de perfil
-    if (formPerfil) {
-      formPerfil.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nuevoTelefono = document.getElementById('perfil-telefono') ? document.getElementById('perfil-telefono').value : '';
-        const nuevoNombre = document.getElementById('perfil-nombre') ? document.getElementById('perfil-nombre').value : currentUser?.name;
+  if (btnHabilitarEdicion) {
+    btnHabilitarEdicion.addEventListener('click', habilitarCamposPerfil);
+  }
 
-        const result = usersApp.updateProfile({
-          name: nuevoNombre,
-          phone: nuevoTelefono
-        });
+  // Escuchar cualquier botón/enlace "Editar" individual dentro de la tarjeta
+  editButtonsList.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      habilitarCamposPerfil();
+    });
+  });
 
-        const mensajePerfil = document.getElementById('mensaje-perfil');
-        if (result.success) {
-          if (mensajePerfil) {
-            mensajePerfil.style.color = '#2e7d32';
-            mensajePerfil.textContent = result.message;
-          } else {
-            alert('¡Perfil actualizado con éxito!');
-          }
+  // Procesar guardado de todos los datos
+  if (formPerfilViajero) {
+    formPerfilViajero.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const updatedUserData = {
+        name: document.getElementById('perfil-nombre') ? document.getElementById('perfil-nombre').value.trim() : currentUser?.name,
+        email: document.getElementById('perfil-email') ? document.getElementById('perfil-email').value.trim() : currentUser?.email,
+        phone: document.getElementById('perfil-telefono') ? document.getElementById('perfil-telefono').value.trim() : currentUser?.phone,
+        document: document.getElementById('perfil-documento') ? document.getElementById('perfil-documento').value.trim() : currentUser?.document,
+        secondaryPhone: document.getElementById('perfil-telefono-secundario') ? document.getElementById('perfil-telefono-secundario').value.trim() : currentUser?.secondaryPhone
+      };
+
+      const result = usersApp.updateProfile(updatedUserData);
+      const mensajePerfil = document.getElementById('mensaje-perfil-viajero') || document.getElementById('mensaje-perfil');
+
+      if (result.success) {
+        if (mensajePerfil) {
+          mensajePerfil.style.color = '#2e7d32';
+          mensajePerfil.textContent = result.message || '¡Datos de perfil actualizados correctamente!';
         } else {
-          if (mensajePerfil) {
-            mensajePerfil.style.color = '#d32f2f';
-            mensajePerfil.textContent = result.message;
-          }
+          alert('¡Perfil actualizado con éxito!');
         }
-      });
-    }
+
+        // Bloquear los inputs nuevamente tras guardar
+        const inputs = formPerfilViajero.querySelectorAll('input');
+        inputs.forEach(input => input.setAttribute('disabled', 'true'));
+
+        if (btnGuardarPerfil) btnGuardarPerfil.style.display = 'none';
+        if (btnHabilitarEdicion) btnHabilitarEdicion.style.display = 'inline-block';
+      } else {
+        if (mensajePerfil) {
+          mensajePerfil.style.color = '#d32f2f';
+          mensajePerfil.textContent = result.message || 'Error al actualizar el perfil.';
+        }
+      }
+    });
   }
 
   // ==========================================

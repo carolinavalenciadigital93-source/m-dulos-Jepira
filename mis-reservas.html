@@ -292,60 +292,53 @@
             <button class="tab-btn" id="tab-btn-reservas">Mis Reservas</button>
         </div>
 
-        <!-- SECCIÓN 1: MI PERFIL -->
-        <div id="seccion-perfil" class="tab-content active">
-            <div class="profile-card">
-                
-                <!-- Foto de Perfil con Botón Editar -->
-                <div class="avatar-container">
-                    <div class="avatar-img" id="avatar-preview">👤</div>
-                    <label for="avatar-input" class="avatar-edit-btn" title="Cambiar foto">✏️</label>
-                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
-                </div>
-
-                <!-- Lista de Campos Estilo Imagen -->
-                <div class="profile-field">
-                    <div class="field-info">
-                        <label>Nombre Completo</label>
-                        <span id="text-nombre">Cargando...</span>
-                    </div>
-                    <button class="btn-edit-field" data-campo="Nombre Completo" data-target="text-nombre">Editar</button>
-                </div>
-
-                <div class="profile-field">
-                    <div class="field-info">
-                        <label>E-mail</label>
-                        <span id="text-email">Cargando...</span>
-                    </div>
-                    <button class="btn-edit-field" data-campo="E-mail" data-target="text-email">Editar</button>
-                </div>
-
-                <div class="profile-field">
-                    <div class="field-info">
-                        <label>Teléfono</label>
-                        <span id="text-telefono">Cargando...</span>
-                    </div>
-                    <button class="btn-edit-field" data-campo="Teléfono" data-target="text-telefono">Editar</button>
-                </div>
-
-                <div class="profile-field">
-                    <div class="field-info">
-                        <label>Documento de Identidad o NIT</label>
-                        <span id="text-doc">Sin registrar</span>
-                    </div>
-                    <button class="btn-edit-field" data-campo="Documento de Identidad" data-target="text-doc">Editar</button>
-                </div>
-
-                <div class="profile-field">
-                    <div class="field-info">
-                        <label>Teléfono Secundario / Emergencia</label>
-                        <span id="text-tel2">Sin registrar</span>
-                    </div>
-                    <button class="btn-edit-field" data-campo="Teléfono Secundario" data-target="text-tel2">Editar</button>
-                </div>
-
-            </div>
+       <!-- SECCIÓN MI PERFIL -->
+<div id="seccion-mi-perfil" class="profile-card">
+    <form id="form-perfil-viajero">
+        
+        <!-- Nombre Completo -->
+        <div class="profile-field-group">
+            <label for="perfil-nombre">Nombre Completo</label>
+            <input type="text" id="perfil-nombre" value="Daniela Valencia test" disabled />
         </div>
+
+        <!-- E-mail -->
+        <div class="profile-field-group">
+            <label for="perfil-email">E-mail</label>
+            <input type="email" id="perfil-email" value="dani19@gmail.com" disabled />
+        </div>
+
+        <!-- Teléfono -->
+        <div class="profile-field-group">
+            <label for="perfil-telefono">Teléfono</label>
+            <input type="text" id="perfil-telefono" value="3105678940" disabled />
+        </div>
+
+        <!-- Documento -->
+        <div class="profile-field-group">
+            <label for="perfil-documento">Documento de Identidad o NIT</label>
+            <input type="text" id="perfil-documento" value="25467898" disabled />
+        </div>
+
+        <!-- Teléfono Secundario -->
+        <div class="profile-field-group">
+            <label for="perfil-telefono-secundario">Teléfono Secundario / Emergencia</label>
+            <input type="text" id="perfil-telefono-secundario" value="" placeholder="Sin registrar" disabled />
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="profile-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+            <button type="button" id="btn-habilitar-edicion-perfil" class="btn-secondary">
+                Editar Perfil Completo
+            </button>
+            <button type="submit" id="btn-guardar-perfil-viajero" class="btn-primary" style="display: none;">
+                Guardar Cambios
+            </button>
+        </div>
+
+        <p id="mensaje-perfil-viajero" style="margin-top: 10px; font-weight: bold;"></p>
+    </form>
+</div>             
 
         <!-- SECCIÓN 2: MIS RESERVAS -->
         <div id="seccion-reservas" class="tab-content">
