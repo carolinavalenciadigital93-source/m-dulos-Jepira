@@ -828,50 +828,74 @@
     const routesModule = new RoutesModule();
 
     document.addEventListener('DOMContentLoaded', () => {
-        // Buscar elementos existentes en la maqueta
-        const btnPublicar = document.querySelector('.btn-primary') || document.getElementById('btn-publicar-oferta');
-        const modalOferta = document.getElementById('modal-publicar-oferta');
-        const formNuevaRuta = document.getElementById('form-publicar-oferta');
-        const btnCerrar = document.getElementById('btn-cerrar-modal') || document.querySelector('.btn-cancelar-modal');
-
-        // Evento para abrir el modal original
-        if (btnPublicar && modalOferta) {
-            btnPublicar.addEventListener('click', (e) => {
+        // 1. Detectar el modal existente
+        const modalOferta = document.querySelector('.modal') || document.getElementById('modal-publicar-oferta') || document.querySelector('[class*="modal"]');
+        
+        // 2. Abrir el modal al presionar "+ Publicar Oferta"
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('button, a');
+            if (btn && btn.textContent.includes('Publicar Oferta')) {
                 e.preventDefault();
-                modalOferta.style.display = 'flex';
-            });
-        }
-
-        // Evento para cerrar el modal original
-        if (btnCerrar && modalOferta) {
-            btnCerrar.addEventListener('click', () => {
-                modalOferta.style.display = 'none';
-            });
-        }
-
-        // Evento para capturar el envío y guardar la ruta
-        if (formNuevaRuta) {
-            formNuevaRuta.addEventListener('submit', (e) => {
+                if (modalOferta) modalOferta.style.display = 'flex';
+            }
+            
+            // Cerrar si presiona Cancelar
+            if (btn && btn.textContent.trim() === 'Cancelar') {
                 e.preventDefault();
-                
-                const title = document.getElementById('ruta-titulo')?.value.trim();
-                const description = document.getElementById('ruta-descripcion')?.value.trim();
-                const location = document.getElementById('ruta-ubicacion')?.value.trim();
-                const price = parseFloat(document.getElementById('ruta-precio')?.value) || 0;
-                const capacity = parseInt(document.getElementById('ruta-cupos')?.value, 10) || 0;
-                const category = document.getElementById('ruta-categoria')?.value || 'Eco-turismo';
-
-                const nuevaRuta = routesModule.saveRoute({ title, description, location, price, capacity, category });
-                console.log('Ruta guardada en LocalStorage:', nuevaRuta);
-                
-                alert('¡Ruta guardada exitosamente!');
-                
                 if (modalOferta) modalOferta.style.display = 'none';
-                formNuevaRuta.reset();
+            }
+        });
+
+        // 3. Capturar el envío del formulario del modal
+        document.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            
+            // Buscar inputs por placeholder o tipo para evitar fallos por ID
+            const inputs = form.querySelectorAll('input, textarea, select');
+            let title = '', price = 0, dates = '', description = '';
+
+            inputs.forEach(input => {
+                const placeholder = (input.placeholder || '').toLowerCase();
+                const label = (input.previousElementSibling?.textContent || '').toLowerCase();
+
+                if (placeholder.includes('tour') || label.includes('nombre')) {
+                    title = input.value.trim();
+                } else if (placeholder.includes('350') || label.includes('precio')) {
+                    price = parseFloat(input.value.replace(/[^0-9.]/g, '')) || 0;
+                } else if (placeholder.includes('fines') || label.includes('fechas')) {
+                    dates = input.value.trim();
+                } else if (placeholder.includes('actividades') || label.includes('descripción') || input.tagName === 'TEXTAREA') {
+                    description = input.value.trim();
+                }
             });
-        }
+
+            // Si los campos vinieron vacíos por descalce de selectores, tomar valores directos por posición
+            const allInputs = form.querySelectorAll('input[type="text"], input:not([type]), textarea');
+            if (!title && allInputs[0]) title = allInputs[0].value.trim();
+            if (!price && allInputs[1]) price = parseFloat(allInputs[1].value.replace(/[^0-9.]/g, '')) || 0;
+            if (!dates && allInputs[2]) dates = allInputs[2].value.trim();
+            if (!description && form.querySelector('textarea')) description = form.querySelector('textarea').value.trim();
+
+            // Guardar en LocalStorage usando el módulo de rutas
+            const nuevaRuta = routesModule.saveRoute({
+                title: title || 'Nueva Ruta Turística',
+                price: price || 0,
+                dates: dates || 'Por acordar',
+                description: description || ''
+            });
+
+            console.log('Ruta guardada en LocalStorage:', nuevaRuta);
+            alert('¡Ruta guardada exitosamente!');
+
+            // Cerrar modal y limpiar
+            if (modalOferta) modalOferta.style.display = 'none';
+            form.reset();
+        });
     });
 </script>
+
 
 </body>
 </html>
