@@ -81,43 +81,50 @@
 
             <!-- Columna Derecha: Tarjeta Flotante de Reserva -->
             <div class="booking-card-col">
-                <div class="booking-card">
+                <form id="form-reservar-ruta" class="booking-card">
+                    <!-- Campo oculto para vincular el ID de la ruta dinámicamente -->
+                    <input type="hidden" id="booking-route-id" value="">
+
                     <div class="booking-header">
-                        <span class="price-big" id="detailPrice">$250.000</span><span class="per-day">/Por día</span>
+                        <span class="price-big" id="detailPrice">$250.000</span><span class="per-day">/Por persona</span>
                         <span class="rating-badge">★ <span id="cardRating">4.90</span></span>
                     </div>
 
                     <div class="dates-selector">
-                        <div class="date-box">
-                            <label>Fechas de Inicio</label>
-                            <input type="date" value="2026-11-09">
-                        </div>
-                        <div class="date-box">
-                            <label>Fecha de Finalización</label>
-                            <input type="date" value="2026-11-11">
+                        <div class="date-box" style="width: 100%;">
+                            <label for="booking-date">Fecha de la Experiencia</label>
+                            <input type="date" id="booking-date" required>
                         </div>
                     </div>
 
                     <div class="guests-selector">
-                        <label>Personas</label>
-                        <select>
-                            <option>2 personas</option>
-                            <option>1 persona</option>
-                            <option>3 a 4 personas</option>
+                        <label for="booking-seats">Número de Personas</label>
+                        <select id="booking-seats" required>
+                            <option value="1">1 persona</option>
+                            <option value="2" selected>2 personas</option>
+                            <option value="3">3 personas</option>
+                            <option value="4">4 personas</option>
+                            <option value="5">5 personas</option>
                         </select>
                     </div>
 
                     <div class="breakdown">
-                        <div class="row"><span>$250.000 x 3 días</span><span>$750.000</span></div>
+                        <div class="row">
+                            <span id="breakdownLabel">Reserva</span>
+                            <span id="breakdownSubtotal">$500.000</span>
+                        </div>
                         <div class="row text-green"><span>Descuento usuario nuevo</span><span>-$0</span></div>
                         <div class="row"><span>Tarifa de servicio ⓘ</span><span>$0</span></div>
                         <hr>
-                        <div class="row total-row"><strong>Total (COP)</strong><strong id="detailTotal">$750.000</strong></div>
+                        <div class="row total-row"><strong>Total (COP)</strong><strong id="detailTotal">$500.000</strong></div>
                     </div>
 
-                    <button class="btn-reserve">Reservar</button>
-                    <small class="no-charge-note">No se le cobrará todavía</small>
-                </div>
+                    <button type="submit" class="btn-reserve" style="width: 100%; border: none; cursor: pointer;">Reservar</button>
+                    <small class="no-charge-note" style="display: block; text-align: center; margin-top: 8px;">No se le cobrará todavía</small>
+                    
+                    <!-- Contenedor para mostrar respuestas (Éxito / Debes iniciar sesión) -->
+                    <div id="mensaje-reserva" style="margin-top: 15px; font-size: 0.9rem; font-weight: 600; text-align: center;"></div>
+                </form>
             </div>
 
         </div>

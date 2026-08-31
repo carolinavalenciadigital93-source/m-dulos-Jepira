@@ -78,6 +78,7 @@
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
+            transition: all 0.2s ease;
         }
 
         .payment-option.active {
@@ -116,6 +117,7 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 20px;
+            transition: background 0.3s;
         }
 
         .btn-confirm-pay:hover {
@@ -151,139 +153,93 @@
         </div>
     </header>
 
-    <!-- Contenido Principal: Checkout -->
+    <!-- Contenido Principal -->
     <main class="checkout-container">
-        
-        <h1 style="font-size: 26px; color: #1c3b2b; margin-bottom: 25px;">Finalizar Reserva</h1>
-
         <div class="checkout-grid">
-
-            <!-- Columna Izquierda: Datos del Comprador y Pago -->
+            
+            <!-- Columna Izquierda: Datos del Usuario y Pago -->
             <div class="checkout-box">
-                <h2>1. Datos del Titular</h2>
+                <h2>Datos del Titular de la Reserva</h2>
                 <form id="form-checkout">
-                    <div class="form-row-2">
-                        <div class="checkout-field">
-                            <label>Nombre Completo</label>
-                            <input type="text" value="Jimmy Scott" required>
-                        </div>
-                        <div class="checkout-field">
-                            <label>Documento de Identidad</label>
-                            <input type="text" value="10456789" required>
-                        </div>
+                    <div class="checkout-field">
+                        <label for="checkout-name">Nombre Completo</label>
+                        <input type="text" id="checkout-name" placeholder="Tu nombre" required>
                     </div>
 
                     <div class="form-row-2">
                         <div class="checkout-field">
-                            <label>Correo Electrónico</label>
-                            <input type="email" value="jimmysco283@gmail.com" required>
+                            <label for="checkout-email">Correo Electrónico</label>
+                            <input type="email" id="checkout-email" placeholder="correo@ejemplo.com" required>
                         </div>
                         <div class="checkout-field">
-                            <label>Teléfono Movil</label>
-                            <input type="tel" value="3205467890" required>
+                            <label for="checkout-phone">Teléfono / WhatsApp</label>
+                            <input type="tel" id="checkout-phone" placeholder="300 000 0000" required>
                         </div>
-                    </div>
-
-                    <h2 style="margin-top: 20px;">2. Método de Pago</h2>
-                    
-                    <div class="payment-methods">
-                        <div class="payment-option active">💳 Tarjeta / PSE</div>
-                        <div class="payment-option">📲 Nequi / Daviplata</div>
                     </div>
 
                     <div class="checkout-field">
-                        <label>Número de Tarjeta / Cuenta</label>
-                        <input type="text" placeholder="•••• •••• •••• ••••" required>
+                        <label for="checkout-doc">Documento de Identidad (Cédula / Pasaporte)</label>
+                        <input type="text" id="checkout-doc" placeholder="Número de documento" required>
                     </div>
 
-                    <div class="form-row-2">
-                        <div class="checkout-field">
-                            <label>Fecha Exp.</label>
-                            <input type="text" placeholder="MM/AA" required>
-                        </div>
-                        <div class="checkout-field">
-                            <label>CVC / CVC2</label>
-                            <input type="password" placeholder="•••" required>
-                        </div>
+                    <h2 style="margin-top: 30px;">Método de Pago</h2>
+                    <div class="payment-methods">
+                        <div class="payment-option active" data-method="pse">PSE / Débito</div>
+                        <div class="payment-option" data-method="card">Tarjeta Crédito</div>
+                        <div class="payment-option" data-method="nequi">Nequi / Daviplata</div>
                     </div>
-
-                    <button type="submit" class="btn-confirm-pay">Confirmar y Pagar Reserva</button>
                 </form>
             </div>
 
             <!-- Columna Derecha: Resumen de Compra -->
-            <div class="checkout-box" style="height: fit-content;">
-                <h2>Resumen del Viaje</h2>
+            <div class="checkout-box">
+                <h2>Resumen de la Reserva</h2>
                 
-                <div style="display: flex; gap: 12px; margin-bottom: 15px;">
-                    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Guatapé" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;">
-                    <div>
-                        <h4 style="font-size: 15px; color: #1e293b;">Ruta Natural Guatapé</h4>
-                        <p style="font-size: 12px; color: #64748b;">3 Días / 2 Noches</p>
-                    </div>
-                </div>
+                <h3 id="pay-route-name" style="color: #2e7d32; font-size: 16px; margin-bottom: 6px;">Cargando ruta...</h3>
+                <p id="pay-seats-date" style="font-size: 13px; color: #64748b; margin-bottom: 20px;">-</p>
 
                 <div class="summary-item">
-                    <span>Fechas:</span>
-                    <strong>15 Nov 2026 - 18 Nov 2026</strong>
+                    <span>Subtotal Experiencia</span>
+                    <span id="pay-subtotal">$0</span>
                 </div>
                 <div class="summary-item">
-                    <span>Personas:</span>
-                    <strong>2 Pasajeros</strong>
+                    <span>Tarifa de Servicio (5%)</span>
+                    <span id="pay-fee">$0</span>
                 </div>
-                <div class="summary-item">
-                    <span>Tarifa ($250.000 x 3 días):</span>
-                    <span>$750.000 COP</span>
-                </div>
-                <div class="summary-item">
-                    <span>Tasa de Servicio / Sostenibilidad:</span>
-                    <span>$0 COP</span>
-                </div>
-
+                
                 <div class="summary-total">
-                    <span>Total a Pagar:</span>
-                    <span>$750.000 COP</span>
+                    <span>Total a Pagar</span>
+                    <span id="pay-total">$0</span>
                 </div>
+
+                <button type="button" id="btn-confirm-pay" class="btn-confirm-pay">Confirmar y Pagar</button>
             </div>
 
         </div>
-
     </main>
 
-    <!-- Footer Institucional -->
+    <!-- Footer -->
     <footer class="main-footer">
-    <div class="footer-container">
-        <!-- Columna 1: Soporte -->
-        <div class="footer-col">
-            <h3>Soporte</h3>
-            <p>3217293985</p>
-            <p><a href="mailto:contacto@jepira.com">contacto@jepira.com</a></p>
+        <div class="footer-content">
+            <div class="footer-col support">
+                <h3>Soporte</h3>
+                <p>3217293985</p>
+                <p>contacto@jepira.com</p>
+            </div>
+            <div class="footer-col navigation">
+                <h3>Jepira Turismo Sostenible</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="empresas.html">Empresas Aliadas</a></li>
+                    <li><a href="rutas.html">Reservas</a></li>
+                </ul>
+            </div>
+            <div class="footer-col logo-container">
+                <img src="img/logo_jepira.png" alt="logo-jepira">
+            </div>
         </div>
+    </footer>
 
-        <!-- Columna 2: Navegación -->
-        <div class="footer-col">
-            <h3>Jepira Turismo Sostenible</h3>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="empresas.html">Empresas Aliadas</a></li>
-                <li><a href="mis-reservas.html">Reservas</a></li>
-            </ul>
-        </div>
-
-        <!-- Columna 3: Logo -->
-        <div class="footer-col footer-logo">
-            <img src="img/logo_jepira.png" alt="Jepira Turismo Sostenible">
-        </div>
-    </div>
-</footer>
-
-    <script>
-        document.getElementById('form-checkout').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('¡Pago procesado con éxito! Tu reserva ha sido confirmada.');
-            window.location.href = 'mis-reservas.html';
-        });
-    </script>
-
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

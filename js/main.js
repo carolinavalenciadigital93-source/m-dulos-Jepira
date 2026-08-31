@@ -11,6 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('Sistema Jepira cargado correctamente con todos sus módulos.');
 
   // ==========================================
+  // ESTADO DE SESIÓN GLOBAL Y NAVEGACIÓN (LOGOUT)
+  // ==========================================
+  const currentUser = JSON.parse(localStorage.getItem('jepira_current_user'));
+  const userIconLink = document.querySelector('.header-icons .icon.user');
+
+  if (currentUser && userIconLink) {
+    userIconLink.title = `Hola, ${currentUser.name} (Cerrar Sesión)`;
+    userIconLink.style.display = 'inline-flex';
+    userIconLink.style.alignItems = 'center';
+
+    // Manejo de clic en el icono de usuario para cerrar sesión
+    userIconLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (confirm(`¿Deseas cerrar la sesión de ${currentUser.name}?`)) {
+        localStorage.removeItem('jepira_current_user');
+        window.location.href = 'index.html';
+      }
+    });
+  }
+
+  // ==========================================
   // CONEXIÓN: REGISTRO DE USUARIOS
   // ==========================================
   const formRegistro = document.getElementById('form-registro');
@@ -21,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const userData = {
         role: document.getElementById('reg-tipo') ? document.getElementById('reg-tipo').value : 'explorer',
         name: document.getElementById('reg-nombre').value,
-        document: document.getElementById('reg-documento') ? document.getElementById('reg-documento').value : '', // <-- Captura de Cédula/NIT
+        document: document.getElementById('reg-documento') ? document.getElementById('reg-documento').value : '',
         email: document.getElementById('reg-email').value,
         phone: document.getElementById('reg-telefono').value,
         password: document.getElementById('reg-password').value
@@ -31,16 +52,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const contenedorMensaje = document.getElementById('mensaje-registro');
 
       if (response.success) {
-        contenedorMensaje.style.color = '#2e7d32';
-        contenedorMensaje.textContent = response.message + ' Redirigiendo al login...';
+        if (contenedorMensaje) {
+          contenedorMensaje.style.color = '#2e7d32';
+          contenedorMensaje.textContent = response.message + ' Redirigiendo al login...';
+        }
         formRegistro.reset();
 
         setTimeout(() => {
           window.location.href = 'login.html';
         }, 1500);
       } else {
-        contenedorMensaje.style.color = '#d32f2f';
-        contenedorMensaje.textContent = response.message;
+        if (contenedorMensaje) {
+          contenedorMensaje.style.color = '#d32f2f';
+          contenedorMensaje.textContent = response.message;
+        }
       }
     });
   }
@@ -61,8 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
       const contenedorMensaje = document.getElementById('mensaje-login');
 
       if (response.success) {
-        contenedorMensaje.style.color = '#2e7d32';
-        contenedorMensaje.textContent = '¡Bienvenido! Redirigiendo...';
+        // Guardar sesión activa
+        localStorage.setItem('jepira_current_user', JSON.stringify(response.user));
+
+        if (contenedorMensaje) {
+          contenedorMensaje.style.color = '#2e7d32';
+          contenedorMensaje.textContent = '¡Bienvenido! Redirigiendo...';
+        }
 
         setTimeout(() => {
           if (response.user.role === 'corporate') {
@@ -72,8 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         }, 1000);
       } else {
-        contenedorMensaje.style.color = '#d32f2f';
-        contenedorMensaje.textContent = response.message;
+        if (contenedorMensaje) {
+          contenedorMensaje.style.color = '#d32f2f';
+          contenedorMensaje.textContent = response.message;
+        }
       }
     });
   }
@@ -144,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // CONEXIÓN: CARGAR DETALLE DE LA RUTA Y OTROS DESTINOS (detalle-ruta.html)
+  // CONEXIÓN: DETALLE DE RUTA Y FORMULARIO DE RESERVA (detalle_ruta.html)
   // ==========================================
   const detailTitle = document.getElementById('detailTitle') || document.getElementById('ruta-titulo');
 
@@ -157,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (routeId) {
       const cleanSearch = routeId.replace('route_', '').toLowerCase();
-      // Búsqueda inteligente por ID exacto, fragmento de ID o título
       currentRoute = routes.find(r => 
         r.id === routeId || 
         r.id.toLowerCase().includes(cleanSearch) ||
@@ -165,27 +196,30 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
 
-    // Si no coincide la búsqueda o no viene ID, toma la primera como respaldo
     if (!currentRoute && routes.length > 0) {
       currentRoute = routes[0];
     }
 
     if (currentRoute) {
-      // 1. Actualizar título y descripción
+      // Vinculación en hidden input
+      const hiddenRouteInput = document.getElementById('booking-route-id');
+      if (hiddenRouteInput) hiddenRouteInput.value = currentRoute.id;
+
+      // Actualizar Título y Descripción
       detailTitle.textContent = currentRoute.title;
+      const descElement = document.getElementById('detailDescText') || document.getElementById('ruta-descripcion');
+      if (descElement) descElement.textContent = currentRoute.description;
 
-      const allParagraphs = document.querySelectorAll('main p');
-      allParagraphs.forEach(p => {
-        if (p.textContent.includes('Selecciona un destino') || p.id === 'detailDescText' || p.id === 'ruta-descripcion') {
-          p.textContent = currentRoute.description;
-        }
-      });
+      // Actualizar Precio Unitario Visual
+      const detailPriceElement = document.getElementById('detailPrice');
+      if (detailPriceElement && currentRoute.price) {
+        detailPriceElement.textContent = `$${currentRoute.price.toLocaleString('es-CO')}`;
+      }
 
-      // 2. Actualizar imágenes superiores (Galería específica del destino)
+      // Actualizar Galería de Imágenes
       const galleryGrid = document.querySelector('.gallery-grid');
       if (galleryGrid) {
         const galleryImgs = galleryGrid.querySelectorAll('img');
-        
         if (currentRoute.images && currentRoute.images.length > 0) {
           galleryImgs.forEach((img, index) => {
             const imgSrc = currentRoute.images[index] || currentRoute.images[0] || currentRoute.image;
@@ -202,18 +236,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // 3. Actualizar precio
-      const priceElement = document.querySelector('.price-container strong, .price-tag, .price-big, main .price');
-      if (priceElement && currentRoute.price) {
-        priceElement.textContent = `$${currentRoute.price.toLocaleString('es-CO')}`;
+      // Dinámica de Cálculo en la tarjeta flotante
+      const seatsSelect = document.getElementById('booking-seats');
+      const breakdownLabel = document.getElementById('breakdownLabel');
+      const breakdownSubtotal = document.getElementById('breakdownSubtotal');
+      const detailTotal = document.getElementById('detailTotal');
+
+      const updateCalculatedPrice = () => {
+        const seats = seatsSelect ? parseInt(seatsSelect.value, 10) : 1;
+        const total = (currentRoute.price || 0) * seats;
+        const totalFormatted = `$${total.toLocaleString('es-CO')}`;
+
+        if (breakdownLabel) breakdownLabel.textContent = `$${(currentRoute.price || 0).toLocaleString('es-CO')} x ${seats} persona(s)`;
+        if (breakdownSubtotal) breakdownSubtotal.textContent = totalFormatted;
+        if (detailTotal) detailTotal.textContent = totalFormatted;
+      };
+
+      if (seatsSelect) {
+        seatsSelect.addEventListener('change', updateCalculatedPrice);
+        updateCalculatedPrice(); // Ejecutar al cargar
       }
 
-      // 4. Renderizar Otros Destinos (Ruta dinámica)
+      // Renderizar Otros Destinos
       const otherContainer = document.getElementById('otherDestinationsContainer');
       if (otherContainer) {
         const otherRoutes = routes.filter(r => r.id !== currentRoute.id);
         otherContainer.innerHTML = '';
-
         const currentPath = window.location.pathname.split('/').pop();
 
         otherRoutes.forEach(route => {
@@ -234,6 +282,105 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     }
+
+    // --- ESCUCHA DEL FORMULARIO DE RESERVA ---
+    const formReservar = document.getElementById('form-reservar-ruta');
+    if (formReservar) {
+      formReservar.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const activeUser = JSON.parse(localStorage.getItem('jepira_current_user'));
+        const contenedorMensaje = document.getElementById('mensaje-reserva');
+
+        if (!activeUser) {
+          if (contenedorMensaje) {
+            contenedorMensaje.style.color = '#d32f2f';
+            contenedorMensaje.textContent = 'Debes iniciar sesión para realizar una reserva.';
+          }
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 2000);
+          return;
+        }
+
+        const dateInput = document.getElementById('booking-date');
+        const seatsInput = document.getElementById('booking-seats');
+
+        const bookingData = {
+          userId: activeUser.id,
+          userName: activeUser.name,
+          userDocument: activeUser.document || 'N/A',
+          routeId: currentRoute ? currentRoute.id : document.getElementById('booking-route-id').value,
+          routeTitle: currentRoute ? currentRoute.title : 'Ruta Jepira',
+          unitPrice: currentRoute ? currentRoute.price : 0,
+          bookingDate: dateInput ? dateInput.value : new Date().toISOString().split('T')[0],
+          seatsBooked: seatsInput ? parseInt(seatsInput.value, 10) : 1
+        };
+
+        const response = reservationsApp.createReservation(bookingData);
+
+        if (response.success) {
+          localStorage.setItem('jepira_latest_booking', JSON.stringify(response.reservation));
+
+          if (contenedorMensaje) {
+            contenedorMensaje.style.color = '#2e7d32';
+            contenedorMensaje.textContent = '¡Reserva realizada con éxito! Redirigiendo...';
+          }
+
+          setTimeout(() => {
+            window.location.href = 'confirmacion-reserva.html';
+          }, 1500);
+        } else {
+          if (contenedorMensaje) {
+            contenedorMensaje.style.color = '#d32f2f';
+            contenedorMensaje.textContent = response.message || 'Error al procesar la reserva.';
+          }
+        }
+      });
+    }
+  }
+
+  // ==========================================
+  // CONEXIÓN: CONFIRMACIÓN DE RESERVA (confirmacion-reserva.html)
+  // ==========================================
+  const contenedorConfirmacion = document.getElementById('resumen-confirmacion');
+  if (contenedorConfirmacion) {
+    const latestBooking = JSON.parse(localStorage.getItem('jepira_latest_booking'));
+
+    if (!latestBooking) {
+      contenedorConfirmacion.innerHTML = `
+        <div style="text-align: center; padding: 40px; background: #fff; border-radius: 12px;">
+          <p style="color: #666;">No se encontró ninguna reserva reciente.</p>
+          <a href="rutas.html" class="btn-primary" style="display: inline-block; margin-top: 15px; padding: 10px 20px; background: #2e7d32; color: #fff; text-decoration: none; border-radius: 6px;">Ver Rutas</a>
+        </div>
+      `;
+    } else {
+      const totalFormateado = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+      }).format(latestBooking.totalPrice || (latestBooking.unitPrice * latestBooking.seatsBooked));
+
+      contenedorConfirmacion.innerHTML = `
+        <div class="confirm-card" style="background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 600px; margin: 0 auto; text-align: left;">
+          <h2 style="color: #2e7d32; margin-bottom: 20px; text-align: center;">¡Reserva Confirmada! 🎉</h2>
+          <p style="margin-bottom: 10px;"><strong>Código de Reserva:</strong> ${latestBooking.id}</p>
+          <p style="margin-bottom: 10px;"><strong>Titular:</strong> ${latestBooking.userName}</p>
+          <p style="margin-bottom: 10px;"><strong>Documento / Cédula:</strong> ${latestBooking.userDocument || 'No registrado'}</p>
+          <p style="margin-bottom: 10px;"><strong>Experiencia / Ruta:</strong> ${latestBooking.routeTitle}</p>
+          <p style="margin-bottom: 10px;"><strong>Fecha del viaje:</strong> ${latestBooking.bookingDate}</p>
+          <p style="margin-bottom: 10px;"><strong>Cupos reservados:</strong> ${latestBooking.seatsBooked}</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+          <h3 style="color: #1b4332; font-size: 1.3rem; justify-content: space-between; display: flex;">
+            <span>Total a pagar:</span>
+            <span>${totalFormateado}</span>
+          </h3>
+          <div style="margin-top: 25px; text-align: center;">
+            <a href="mis-reservas.html" style="display: inline-block; padding: 12px 24px; background: #2e7d32; color: #fff; text-decoration: none; font-weight: 600; border-radius: 8px;">Ir a Mis Reservas</a>
+          </div>
+        </div>
+      `;
+    }
   }
 
   // ==========================================
@@ -242,8 +389,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const containerReservas = document.getElementById('contenedor-reservas');
 
   if (containerReservas) {
-    const currentUser = JSON.parse(localStorage.getItem('jepira_current_user'));
-
     if (!currentUser) {
       containerReservas.innerHTML = `<p style="text-align:center; color:#666; padding: 40px 0;">Debes iniciar sesión para ver tus reservas.</p>`;
     } else {
@@ -253,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containerReservas.innerHTML = `
           <div style="text-align: center; padding: 40px 20px; background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
             <p style="color: #666; font-size: 1rem; margin-bottom: 15px;">Aún no tienes reservas activas.</p>
-            <a href="rutas.html" class="btn-primary" style="display: inline-block;">Ver Rutas Disponibles</a>
+            <a href="rutas.html" class="btn-primary" style="display: inline-block; padding: 10px 20px; background: #2e7d32; color: #fff; border-radius: 6px; text-decoration: none;">Ver Rutas Disponibles</a>
           </div>
         `;
       } else {
@@ -268,20 +413,20 @@ document.addEventListener('DOMContentLoaded', () => {
             style: 'currency', 
             currency: 'COP', 
             maximumFractionDigits: 0 
-          }).format(res.totalPrice || 0);
+          }).format(res.totalPrice || (res.unitPrice * res.seatsBooked) || 0);
 
           return `
-            <div class="reservation-card" id="card-${res.id}">
+            <div class="reservation-card" id="card-${res.id}" style="background: #fff; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
               <div>
-                <div class="res-title">${res.routeTitle || 'Reserva de Ruta'}</div>
-                <div class="res-details">
-                  <strong>Fecha de reserva:</strong> ${fechaFormat}<br>
+                <div class="res-title" style="font-weight: 700; font-size: 1.1rem; color: #1b4332;">${res.routeTitle || 'Reserva de Ruta'}</div>
+                <div class="res-details" style="font-size: 0.9rem; color: #555; margin-top: 5px;">
+                  <strong>Fecha de viaje:</strong> ${fechaFormat}<br>
                   <strong>Cupos reservados:</strong> ${res.seatsBooked || 1}<br>
                   <strong>Total:</strong> ${precioTotal}
                 </div>
               </div>
               <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
-                <span class="badge-confirmed">Confirmada</span>
+                <span class="badge-confirmed" style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 12px; font-weight: 600; font-size: 0.8rem;">Confirmada</span>
                 <button data-id="${res.id}" class="btn-cancelar-reserva" style="padding: 6px 12px; font-size: 0.8rem; cursor: pointer; background: #d32f2f; color: #fff; border: none; border-radius: 4px;">
                   Cancelar Reserva
                 </button>
@@ -302,4 +447,19 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
+
+  // ==========================================
+  // CONEXIÓN: PANEL DE EMPRESA (panel-empresa.html)
+  // ==========================================
+  const empresaNombreContainer = document.getElementById('empresa-nombre');
+  if (empresaNombreContainer) {
+    if (!currentUser || currentUser.role !== 'corporate') {
+      alert('Acceso no autorizado. Inicia sesión con una cuenta de empresa.');
+      window.location.href = 'login.html';
+    } else {
+      empresaNombreContainer.textContent = currentUser.name;
+    }
+  }
+
 });
+
