@@ -822,6 +822,31 @@
             }
         }
     </script>
+
+    <script type="module">
+    import { RoutesModule } from './js/modules/routes.js';
+    const routesModule = new RoutesModule();
+
+    const formNuevaRuta = document.getElementById('form-publicar-oferta');
+    if (formNuevaRuta) {
+        formNuevaRuta.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('ruta-titulo')?.value.trim();
+            const description = document.getElementById('ruta-descripcion')?.value.trim();
+            const location = document.getElementById('ruta-ubicacion')?.value.trim();
+            const price = parseFloat(document.getElementById('ruta-precio')?.value) || 0;
+            const capacity = parseInt(document.getElementById('ruta-cupos')?.value, 10) || 0;
+            const category = document.getElementById('ruta-categoria')?.value || 'Eco-turismo';
+
+            const nuevaRuta = routesModule.saveRoute({ title, description, location, price, capacity, category });
+            console.log('Ruta guardada:', nuevaRuta);
+            alert('¡Ruta guardada exitosamente en LocalStorage!');
+            formNuevaRuta.reset();
+        });
+    }
+</script>
+
 </body>
 </html>
 
