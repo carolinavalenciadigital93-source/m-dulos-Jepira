@@ -828,89 +828,47 @@
     const routesModule = new RoutesModule();
 
     document.addEventListener('DOMContentLoaded', () => {
+        // Buscar elementos existentes en la maqueta
         const btnPublicar = document.querySelector('.btn-primary') || document.getElementById('btn-publicar-oferta');
+        const modalOferta = document.getElementById('modal-publicar-oferta');
+        const formNuevaRuta = document.getElementById('form-publicar-oferta');
+        const btnCerrar = document.getElementById('btn-cerrar-modal') || document.querySelector('.btn-cancelar-modal');
 
-        // Escuchar el clic en "+ Publicar Oferta"
-        document.addEventListener('click', (e) => {
-            if (e.target && e.target.textContent.includes('Publicar Oferta')) {
+        // Evento para abrir el modal original
+        if (btnPublicar && modalOferta) {
+            btnPublicar.addEventListener('click', (e) => {
                 e.preventDefault();
-                abrirModalRuta();
-            }
-        });
+                modalOferta.style.display = 'flex';
+            });
+        }
 
-        // Función para abrir/crear el modal con el formulario
-        function abrirModalRuta() {
-            let modal = document.getElementById('modal-publicar-oferta');
-            if (!modal) {
-                modal = document.createElement('div');
-                modal.id = 'modal-publicar-oferta';
-                modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:9999;';
-                modal.innerHTML = `
-                    <div style="background:#fff;padding:25px;border-radius:12px;width:90%;max-width:500px;box-shadow:0 10px 25px rgba(0,0,0,0.2);">
-                        <h3 style="margin-top:0;color:#1b4332;">Publicar Nueva Ruta</h3>
-                        <form id="form-publicar-oferta" style="display:flex;flex-direction:column;gap:10px;">
-                            <div>
-                                <label style="font-size:0.85rem;font-weight:600;">Título de la Ruta</label>
-                                <input type="text" id="ruta-titulo" class="form-input" required style="width:100%;padding:8px;box-sizing:border-box;" placeholder="Ej: Ruta Ucumarí">
-                            </div>
-                            <div>
-                                <label style="font-size:0.85rem;font-weight:600;">Descripción</label>
-                                <textarea id="ruta-descripcion" class="form-input" required style="width:100%;padding:8px;box-sizing:border-box;" placeholder="Caminata guiada..."></textarea>
-                            </div>
-                            <div>
-                                <label style="font-size:0.85rem;font-weight:600;">Ubicación</label>
-                                <input type="text" id="ruta-ubicacion" class="form-input" required style="width:100%;padding:8px;box-sizing:border-box;" placeholder="Pereira, Risaralda">
-                            </div>
-                            <div style="display:flex;gap:10px;">
-                                <div style="flex:1;">
-                                    <label style="font-size:0.85rem;font-weight:600;">Precio (COP)</label>
-                                    <input type="number" id="ruta-precio" class="form-input" required style="width:100%;padding:8px;box-sizing:border-box;" placeholder="85000">
-                                </div>
-                                <div style="flex:1;">
-                                    <label style="font-size:0.85rem;font-weight:600;">Cupos</label>
-                                    <input type="number" id="ruta-cupos" class="form-input" required style="width:100%;padding:8px;box-sizing:border-box;" placeholder="12">
-                                </div>
-                            </div>
-                            <div>
-                                <label style="font-size:0.85rem;font-weight:600;">Categoría</label>
-                                <select id="ruta-categoria" class="form-input" style="width:100%;padding:8px;box-sizing:border-box;">
-                                    <option value="Senderismo">Senderismo</option>
-                                    <option value="Eco-turismo">Eco-turismo</option>
-                                    <option value="Cultural">Cultural</option>
-                                </select>
-                            </div>
-                            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:15px;">
-                                <button type="button" id="btn-cerrar-modal" style="padding:8px 16px;background:#ccc;border:none;border-radius:6px;cursor:pointer;">Cancelar</button>
-                                <button type="submit" style="padding:8px 16px;background:#2e7d32;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;">Guardar Ruta</button>
-                            </div>
-                        </form>
-                    </div>
-                `;
-                document.body.appendChild(modal);
+        // Evento para cerrar el modal original
+        if (btnCerrar && modalOferta) {
+            btnCerrar.addEventListener('click', () => {
+                modalOferta.style.display = 'none';
+            });
+        }
 
-                document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
-                    modal.style.display = 'none';
-                });
+        // Evento para capturar el envío y guardar la ruta
+        if (formNuevaRuta) {
+            formNuevaRuta.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const title = document.getElementById('ruta-titulo')?.value.trim();
+                const description = document.getElementById('ruta-descripcion')?.value.trim();
+                const location = document.getElementById('ruta-ubicacion')?.value.trim();
+                const price = parseFloat(document.getElementById('ruta-precio')?.value) || 0;
+                const capacity = parseInt(document.getElementById('ruta-cupos')?.value, 10) || 0;
+                const category = document.getElementById('ruta-categoria')?.value || 'Eco-turismo';
 
-                document.getElementById('form-publicar-oferta').addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    
-                    const title = document.getElementById('ruta-titulo').value.trim();
-                    const description = document.getElementById('ruta-descripcion').value.trim();
-                    const location = document.getElementById('ruta-ubicacion').value.trim();
-                    const price = parseFloat(document.getElementById('ruta-precio').value) || 0;
-                    const capacity = parseInt(document.getElementById('ruta-cupos').value, 10) || 0;
-                    const category = document.getElementById('ruta-categoria').value;
-
-                    const nuevaRuta = routesModule.saveRoute({ title, description, location, price, capacity, category });
-                    console.log('Ruta guardada en LocalStorage:', nuevaRuta);
-                    
-                    alert('¡Ruta guardada exitosamente!');
-                    modal.style.display = 'none';
-                    document.getElementById('form-publicar-oferta').reset();
-                });
-            }
-            modal.style.display = 'flex';
+                const nuevaRuta = routesModule.saveRoute({ title, description, location, price, capacity, category });
+                console.log('Ruta guardada en LocalStorage:', nuevaRuta);
+                
+                alert('¡Ruta guardada exitosamente!');
+                
+                if (modalOferta) modalOferta.style.display = 'none';
+                formNuevaRuta.reset();
+            });
         }
     });
 </script>
