@@ -53,6 +53,8 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: background 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -119,6 +121,37 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.06);
         }
 
+        .profile-field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .profile-field-group label {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-border-box;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:disabled {
+            background-color: #f8f9fa;
+            color: #555;
+            border-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
         .avatar-container {
             position: relative;
             width: 90px;
@@ -156,36 +189,22 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.15);
         }
 
-        .profile-field {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .field-info label {
-            display: block;
-            font-size: 0.82rem;
-            color: #777;
-            font-weight: 500;
-            margin-bottom: 3px;
-        }
-
-        .field-info span {
-            font-size: 0.95rem;
-            color: #222;
-            font-weight: 600;
-        }
-
-        .btn-edit-field {
-            background: none;
-            border: none;
+        .btn-secondary {
+            padding: 8px 16px;
+            border: 1px solid #2e7d32;
             color: #2e7d32;
+            background: transparent;
+            border-radius: 6px;
+            text-decoration: none;
             font-weight: 600;
             font-size: 0.88rem;
             cursor: pointer;
-            text-decoration: underline;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #2e7d32;
+            color: white;
         }
 
         /* Estilos Sección Reservas */
@@ -220,31 +239,6 @@
             border-radius: 20px;
             font-weight: 600;
             font-size: 0.82rem;
-        }
-
-        .badge-pending {
-            background: #fff8e1;
-            color: #f57f17;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.82rem;
-        }
-
-        .btn-secondary {
-            padding: 8px 16px;
-            border: 1px solid #2e7d32;
-            color: #2e7d32;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.88rem;
-            transition: all 0.2s ease;
-        }
-
-        .btn-secondary:hover {
-            background: #2e7d32;
-            color: white;
         }
     </style>
 </head>
@@ -292,53 +286,56 @@
             <button class="tab-btn" id="tab-btn-reservas">Mis Reservas</button>
         </div>
 
-       <!-- SECCIÓN MI PERFIL -->
-<div id="seccion-mi-perfil" class="profile-card">
-    <form id="form-perfil-viajero">
-        
-        <!-- Nombre Completo -->
-        <div class="profile-field-group">
-            <label for="perfil-nombre">Nombre Completo</label>
-            <input type="text" id="perfil-nombre" value="Daniela Valencia test" disabled />
-        </div>
+        <!-- SECCIÓN 1: MI PERFIL -->
+        <div id="seccion-perfil" class="tab-content profile-card active">
+            <form id="form-perfil-viajero">
+                
+                <!-- Input de Avatar Oculto -->
+                <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                
+                <!-- Nombre Completo -->
+                <div class="profile-field-group">
+                    <label for="perfil-nombre">Nombre Completo</label>
+                    <input type="text" id="perfil-nombre" class="form-input" disabled />
+                </div>
 
-        <!-- E-mail -->
-        <div class="profile-field-group">
-            <label for="perfil-email">E-mail</label>
-            <input type="email" id="perfil-email" value="dani19@gmail.com" disabled />
-        </div>
+                <!-- E-mail -->
+                <div class="profile-field-group">
+                    <label for="perfil-email">E-mail</label>
+                    <input type="email" id="perfil-email" class="form-input" disabled />
+                </div>
 
-        <!-- Teléfono -->
-        <div class="profile-field-group">
-            <label for="perfil-telefono">Teléfono</label>
-            <input type="text" id="perfil-telefono" value="3105678940" disabled />
-        </div>
+                <!-- Teléfono -->
+                <div class="profile-field-group">
+                    <label for="perfil-telefono">Teléfono</label>
+                    <input type="tel" id="perfil-telefono" class="form-input" disabled />
+                </div>
 
-        <!-- Documento -->
-        <div class="profile-field-group">
-            <label for="perfil-documento">Documento de Identidad o NIT</label>
-            <input type="text" id="perfil-documento" value="25467898" disabled />
-        </div>
+                <!-- Documento -->
+                <div class="profile-field-group">
+                    <label for="perfil-documento">Documento de Identidad o NIT</label>
+                    <input type="text" id="perfil-documento" class="form-input" disabled />
+                </div>
 
-        <!-- Teléfono Secundario -->
-        <div class="profile-field-group">
-            <label for="perfil-telefono-secundario">Teléfono Secundario / Emergencia</label>
-            <input type="text" id="perfil-telefono-secundario" value="" placeholder="Sin registrar" disabled />
-        </div>
+                <!-- Teléfono Secundario -->
+                <div class="profile-field-group">
+                    <label for="perfil-telefono-secundario">Teléfono Secundario / Emergencia</label>
+                    <input type="tel" id="perfil-telefono-secundario" class="form-input" placeholder="Sin registrar" disabled />
+                </div>
 
-        <!-- Botones de Acción -->
-        <div class="profile-actions" style="margin-top: 20px; display: flex; gap: 10px;">
-            <button type="button" id="btn-habilitar-edicion-perfil" class="btn-secondary">
-                Editar Perfil Completo
-            </button>
-            <button type="submit" id="btn-guardar-perfil-viajero" class="btn-primary" style="display: none;">
-                Guardar Cambios
-            </button>
-        </div>
+                <!-- Botones de Acción -->
+                <div class="profile-actions" style="margin-top: 20px; display: flex; gap: 10px;">
+                    <button type="button" id="btn-habilitar-edicion-perfil" class="btn-secondary">
+                        Editar Perfil Completo
+                    </button>
+                    <button type="submit" id="btn-guardar-perfil-viajero" class="btn-primary" style="display: none;">
+                        Guardar Cambios
+                    </button>
+                </div>
 
-        <p id="mensaje-perfil-viajero" style="margin-top: 10px; font-weight: bold;"></p>
-    </form>
-</div>             
+                <p id="mensaje-perfil-viajero" style="margin-top: 10px; font-weight: bold; font-size: 0.9rem;"></p>
+            </form>
+        </div>             
 
         <!-- SECCIÓN 2: MIS RESERVAS -->
         <div id="seccion-reservas" class="tab-content">
@@ -375,16 +372,18 @@
 
     <!-- Módulo JS Principal e Integración de Reservas -->
     <script type="module">
-        import { ReservationsModule } from './js/modules/reservations.js'; // Ajusta la ruta a tu estructura de carpetas si es necesario
+        import { ReservationsModule } from './js/modules/reservations.js';
 
         const reservationsModule = new ReservationsModule();
 
         // Obtener usuario autenticado actual desde localStorage
-        const currentUser = JSON.parse(localStorage.getItem('jepira_current_user')) || {
+        let currentUser = JSON.parse(localStorage.getItem('jepira_current_user')) || {
             id: 'usr_demo',
-            name: 'Viajero Jepira',
-            email: 'viajero@jepira.com',
-            phone: '3000000000'
+            name: 'Daniela Valencia test',
+            email: 'dani19@gmail.com',
+            phone: '3105678940',
+            document: '25467898',
+            secondaryPhone: ''
         };
 
         // 1. Manejo de Pestañas
@@ -407,18 +406,55 @@
             seccionPerfil.classList.remove('active');
         });
 
-        // 2. Cargar datos del perfil
+        // 2. Cargar datos del perfil en los Inputs
         function loadUserProfile() {
             if (currentUser) {
-                document.getElementById('text-nombre').textContent = currentUser.name || 'Sin registrar';
-                document.getElementById('text-email').textContent = currentUser.email || 'Sin registrar';
-                document.getElementById('text-telefono').textContent = currentUser.phone || 'Sin registrar';
-                if (currentUser.document) document.getElementById('text-doc').textContent = currentUser.document;
-                if (currentUser.secondaryPhone) document.getElementById('text-tel2').textContent = currentUser.secondaryPhone;
+                document.getElementById('perfil-nombre').value = currentUser.name || '';
+                document.getElementById('perfil-email').value = currentUser.email || '';
+                document.getElementById('perfil-telefono').value = currentUser.phone || '';
+                document.getElementById('perfil-documento').value = currentUser.document || '';
+                document.getElementById('perfil-telefono-secundario').value = currentUser.secondaryPhone || '';
             }
         }
 
-        // 3. Renderizar reservas del usuario
+        // 3. Habilitar / Guardar Perfil
+        const btnHabilitar = document.getElementById('btn-habilitar-edicion-perfil');
+        const btnGuardar = document.getElementById('btn-guardar-perfil-viajero');
+        const formPerfil = document.getElementById('form-perfil-viajero');
+        const mensajePerfil = document.getElementById('mensaje-perfil-viajero');
+        const inputsPerfil = formPerfil.querySelectorAll('.form-input');
+
+        btnHabilitar.addEventListener('click', () => {
+            inputsPerfil.forEach(input => input.removeAttribute('disabled'));
+            btnHabilitar.style.display = 'none';
+            btnGuardar.style.display = 'inline-block';
+            mensajePerfil.textContent = '';
+        });
+
+        formPerfil.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Actualizar objeto usuario
+            currentUser.name = document.getElementById('perfil-nombre').value.trim();
+            currentUser.email = document.getElementById('perfil-email').value.trim();
+            currentUser.phone = document.getElementById('perfil-telefono').value.trim();
+            currentUser.document = document.getElementById('perfil-documento').value.trim();
+            currentUser.secondaryPhone = document.getElementById('perfil-telefono-secundario').value.trim();
+
+            // Guardar en LocalStorage
+            localStorage.setItem('jepira_current_user', JSON.stringify(currentUser));
+
+            // Bloquear inputs nuevamente
+            inputsPerfil.forEach(input => input.setAttribute('disabled', 'true'));
+            btnGuardar.style.display = 'none';
+            btnHabilitar.style.display = 'inline-block';
+
+            // Mensaje de exito
+            mensajePerfil.style.color = '#2e7d32';
+            mensajePerfil.textContent = '¡Perfil actualizado correctamente!';
+        });
+
+        // 4. Renderizar reservas del usuario
         function renderReservations() {
             const container = document.getElementById('contenedor-reservas');
             if (!container) return;
@@ -488,30 +524,22 @@
             });
         }
 
-        // 4. Edición rápida de campos de perfil
-        document.querySelectorAll('.btn-edit-field').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const campoNombre = e.target.getAttribute('data-campo');
-                const targetId = e.target.getAttribute('data-target');
-                const elemento = document.getElementById(targetId);
-                const nuevoValor = prompt(`Ingresa tu nuevo ${campoNombre}:`, elemento.textContent);
-                if (nuevoValor !== null && nuevoValor.trim() !== "") {
-                    elemento.textContent = nuevoValor.trim();
+        // 5. Cargar vista previa de imagen de perfil (si existe input)
+        const avatarInput = document.getElementById('avatar-input');
+        if (avatarInput) {
+            avatarInput.addEventListener('change', (event) => {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    const output = document.getElementById('avatar-preview');
+                    if (output) {
+                        output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                    }
+                };
+                if(event.target.files[0]) {
+                    reader.readAsDataURL(event.target.files[0]);
                 }
             });
-        });
-
-        // 5. Cargar vista previa de imagen de perfil
-        document.getElementById('avatar-input').addEventListener('change', (event) => {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const output = document.getElementById('avatar-preview');
-                output.innerHTML = `<img src="${reader.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-            };
-            if(event.target.files[0]) {
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        });
+        }
 
         // 6. Evento de Cerrar Sesión
         document.getElementById('btn-logout-user').addEventListener('click', () => {
